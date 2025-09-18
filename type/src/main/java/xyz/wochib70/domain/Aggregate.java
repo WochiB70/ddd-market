@@ -21,7 +21,7 @@ public interface Aggregate<ID, EventID> {
     Collection<? super AggregateEvent<ID, EventID>> getEvents();
 
 
-    default void create(UserId userId) {
+    default void create() {
         throw new UnsupportedOperationException("当前聚合不支持当前操作");
     }
 
