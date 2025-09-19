@@ -11,8 +11,11 @@ public class AccountFactory {
 
     private final AccountIdGenerator accountIdGenerator;
 
-    public Account create(UserId userId) {
+    public Account create(UserId userId, IdentifierId<Long> currencyId) {
         IdentifierId<Long> accountId = accountIdGenerator.nextAggregateId();
-        return new AccountImpl(accountId);
+        AccountImpl account = new AccountImpl(accountId);
+        account.setUserId(userId);
+        account.setCurrencyId(currencyId);
+        return account;
     }
 }

@@ -15,6 +15,8 @@ public non-sealed class AccountImpl extends AbstractAggregate<Long> implements A
 
     private UserId userId;
 
+    private IdentifierId<Long> currencyId;
+
     private int balance;
 
     public AccountImpl(IdentifierId<Long> identifierId) {
