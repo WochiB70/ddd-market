@@ -26,10 +26,10 @@ public class ActivityFactory {
         Objects.requireNonNull(awardType, "Activity奖品类型不能为null");
         var activityId = activityIdGenerator.nextAggregateId();
         var activity = new ActivityImpl(activityId);
-        activity.modifyActivityInfo(info);
-        activity.modifyDuration(duration);
-        activity.modifyCountLimit(countLimit);
-        activity.modifyCredentialLimit(credentialLimit);
+        activity.setInfo(info);
+        activity.setDuration(duration);
+        activity.setCountLimit(countLimit);
+        activity.setCredentialLimit(credentialLimit);
         activity.setAwardType(awardType);
         activity.create();
         return activity;
