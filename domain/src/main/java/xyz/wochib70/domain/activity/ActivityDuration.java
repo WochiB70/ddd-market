@@ -1,5 +1,7 @@
 package xyz.wochib70.domain.activity;
 
+import xyz.wochib70.domain.utils.DurationUtil;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -19,28 +21,8 @@ public record ActivityDuration(
         }
     }
 
-    /**
-     * startTime   endTime
-     * null        null     永久生效
-     * null        not null      endTime之前有效
-     * not null    null      startTime之后有效
-     * not null    not null      startTime和endTime之间有效
-     *
-     * @return true  在活动时间段内; false  不在活动时间段内
-     */
+
     public boolean inActiveTime() {
-        if (Objects.isNull(startTime) && Objects.isNull(endTime)) {
-            return true;
-        }
-        LocalDateTime now = LocalDateTime.now();
-        if (Objects.isNull(startTime) && endTime.isAfter(now)) {
-            return true;
-        }
-        if (Objects.isNull(endTime) && startTime.isBefore(now)) {
-            return true;
-        }
-
-        return startTime.isBefore(now) && endTime.isAfter(now);
-
+        return DurationUtil.validTimeWithDuration(LocalDateTime.now(), startTime, endTime);
     }
 }
