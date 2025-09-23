@@ -142,11 +142,12 @@ public non-sealed class ActivityImpl extends AbstractAggregate<Long> implements 
     public void modifyAwardType(ActivityAwardType awardType) {
         Objects.requireNonNull(awardType, "AwardType不能为null");
         if (!Objects.equals(this.awardType, awardType)) {
-            this.awardType = awardType;
             publishEvent(new ActivityAwardTypeModifiedEvent(
                     getActivityId(),
+                    this.awardType,
                     awardType
             ));
+            this.awardType = awardType;
         }
     }
 
