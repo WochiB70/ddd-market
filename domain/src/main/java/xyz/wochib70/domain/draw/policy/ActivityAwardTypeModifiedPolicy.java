@@ -1,0 +1,39 @@
+package xyz.wochib70.domain.draw.policy;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
+import xyz.wochib70.domain.activity.ActivityAwardType;
+import xyz.wochib70.domain.activity.events.ActivityAwardTypeModifiedEvent;
+import xyz.wochib70.domain.draw.DrawPool;
+import xyz.wochib70.domain.draw.DrawPoolRepository;
+
+import java.util.List;
+import java.util.Objects;
+
+@Slf4j
+@RequiredArgsConstructor
+@Component
+public class ActivityAwardTypeModifiedPolicy {
+
+    private final DrawPoolRepository drawPoolRepository;
+
+    private final ApplicationEventPublisher eventPublisher;
+
+    @EventListener
+    public void handle(ActivityAwardTypeModifiedEvent event) {
+        if (Objects.equals(event.getOldType(), ActivityAwardType.DRAW)) {
+            log.info("检测到活动:[ {} ] 的奖励类型从:[{}]修改为:[{}], 现在需要活清空活动配置的抽奖池", event.getActivityId(), event.getOldType(), event.getAwardType());
+            List<DrawPool> drawPools = drawPoolRepository.findByActivityId(event.getActivityId());
+            for (DrawPool drawPool : drawPools) {
+                log.info("正在删除活动:[ {} ] 的抽奖池:[ {} ]", event.getActivityId(), drawPool.getDrawPoolId());
+                drawPool.delete();
+                drawPoolRepository.delete(drawPool);
+                drawPool.getEvents().forEach(eventPublisher::publishEvent);
+            }
+            log.info("活动:[ {} ] 的抽奖池已全部删除", event.getActivityId());
+        }
+    }
+}

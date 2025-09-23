@@ -25,7 +25,7 @@ public interface Aggregate<ID, EventID> {
         throw new UnsupportedOperationException("当前聚合不支持当前操作");
     }
 
-    default void delete(UserId userId) {
+    default void delete() {
         throw new UnsupportedOperationException("当前聚合不支持当前操作");
     }
 
