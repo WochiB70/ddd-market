@@ -6,6 +6,10 @@ import java.util.Objects;
 public class DurationUtil {
 
 
+    private DurationUtil() {
+        throw new UnsupportedOperationException("这是一个工具类禁止实例化");
+    }
+
     /**
      * startTime   endTime
      * null        null     永久生效
@@ -25,11 +29,11 @@ public class DurationUtil {
         if (Objects.isNull(startTime) && Objects.isNull(endTime)) {
             return true;
         }
-        if (Objects.isNull(startTime) && endTime.isAfter(time)) {
-            return true;
+        if (Objects.isNull(startTime)) {
+            return endTime.isAfter(time);
         }
-        if (Objects.isNull(endTime) && startTime.isBefore(time)) {
-            return true;
+        if (Objects.isNull(endTime)) {
+            return startTime.isBefore(time);
         }
 
         return startTime.isBefore(time) && endTime.isAfter(time);
