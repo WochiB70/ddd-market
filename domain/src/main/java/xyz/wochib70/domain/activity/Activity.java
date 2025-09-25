@@ -8,6 +8,7 @@ public sealed interface Activity extends Aggregate<Long, Long> permits ActivityI
 
     IdentifierId<Long> getActivityId();
 
+    ActivityDuration getDuration();
 
     boolean useCredentialLimit();
 
