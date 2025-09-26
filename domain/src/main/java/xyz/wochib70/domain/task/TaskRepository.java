@@ -3,6 +3,8 @@ package xyz.wochib70.domain.task;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
 
+import java.util.List;
+
 public interface TaskRepository {
 
     /**
@@ -36,4 +38,10 @@ public interface TaskRepository {
      */
     Integer countReceivedTaskByUserIdInDuration(UserId userId, IdentifierId<Long> taskId);
 
+    /**
+     * 按照完成条件查询可领取的任务
+     *
+     * @param completeEvent 完成条件
+     */
+    List<Task> queryReceivableTaskByCompleteEvent(CompleteEvent completeEvent);
 }

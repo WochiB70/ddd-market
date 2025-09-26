@@ -10,6 +10,10 @@ public sealed interface Task extends Aggregate<Long, Long> permits TaskImpl {
 
     IdentifierId<Long> getActivityId();
 
+    ReceivedTaskExpireTime getReceivedTaskExpireTime();
+
+    CompleteEvent getCompleteEvent();
+
     /**
      * 接收任务
      *
