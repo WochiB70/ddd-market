@@ -3,6 +3,8 @@ package xyz.wochib70.domain.activity;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
 
+import java.util.Optional;
+
 public interface ActivityRepository {
 
     /**
@@ -90,4 +92,12 @@ public interface ActivityRepository {
      * @param activity 活动
      */
     void update(Activity activity);
+
+    /**
+     * 查询活动
+     *
+     * @param activityId 活动Id
+     * @return Optional.empty() 活动不存在
+     */
+    Optional<Activity> queryActivityById(IdentifierId<Long> activityId);
 }
