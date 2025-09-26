@@ -11,6 +11,9 @@ public sealed interface DrawPool extends Aggregate<Long, Long> permits DrawPoolI
     DrawPrice getDrawPrice();
 
 
+    IdentifierId<Long> getCurrencyId();
+
+
     void modifyDrawPoolName(String name);
 
     /**
