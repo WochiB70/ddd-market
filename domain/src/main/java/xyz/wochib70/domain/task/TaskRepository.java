@@ -44,4 +44,12 @@ public interface TaskRepository {
      * @param completeEvent 完成条件
      */
     List<Task> queryReceivableTaskByCompleteEvent(CompleteEvent completeEvent);
+
+    /**
+     * 按照活动查询任务
+     *
+     * @param activityId 活动id
+     * @return empty list 如果不存在
+     */
+    List<Task> queryTaskByActivityId(IdentifierId<Long> activityId);
 }
