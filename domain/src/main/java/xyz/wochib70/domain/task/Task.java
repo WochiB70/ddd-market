@@ -14,6 +14,9 @@ public sealed interface Task extends Aggregate<Long, Long> permits TaskImpl {
 
     CompleteEvent getCompleteEvent();
 
+
+    TaskAward getTaskAward();
+
     /**
      * 接收任务
      *
@@ -56,4 +59,11 @@ public sealed interface Task extends Aggregate<Long, Long> permits TaskImpl {
      */
     void modifyReceivedTaskExpireTime(ReceivedTaskExpireTime receivedTaskExpireTime);
 
+
+    /**
+     * 修改任务奖品
+     *
+     * @param taskAward 奖品
+     */
+    void modifyTaskAward(TaskAward taskAward);
 }

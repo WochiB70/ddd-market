@@ -27,6 +27,8 @@ public non-sealed class TaskImpl extends AbstractAggregate<Long> implements Task
 
     private ReceivedTaskExpireTime receivedTaskExpireTime;
 
+    private TaskAward taskAward;
+
     public TaskImpl(IdentifierId<Long> identifierId) {
         super(identifierId);
     }
@@ -130,6 +132,17 @@ public non-sealed class TaskImpl extends AbstractAggregate<Long> implements Task
         }
     }
 
+    @Override
+    public void modifyTaskAward(TaskAward taskAward) {
+        Objects.requireNonNull(taskAward, "任务奖励不能为空");
+        if (!Objects.equals(this.taskAward, taskAward)) {
+            this.taskAward = taskAward;
+            publishEvent(new TaskAwardModifiedEvent(
+                    getTaskId(),
+                    taskAward
+            ));
+        }
+    }
 
     @Override
     public void create() {
