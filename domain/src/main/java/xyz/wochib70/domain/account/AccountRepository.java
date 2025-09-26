@@ -12,4 +12,12 @@ public interface AccountRepository {
      * @return Account 如果数据库不存在则需要创建一个账户
      */
     Account queryAccountByCurrencyIdAndUserId(IdentifierId<Long> currencyId, UserId userId);
+
+
+    /**
+     * 保存账户
+     *
+     * @param account 账户
+     */
+    void update(Account account);
 }

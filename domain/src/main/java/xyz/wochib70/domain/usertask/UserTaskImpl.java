@@ -43,7 +43,9 @@ public non-sealed class UserTaskImpl extends AbstractAggregate<Long> implements 
         if (!Objects.equals(status, UserTaskStatus.COMPLETED)) {
             status = UserTaskStatus.COMPLETED;
             publishEvent(new UserTaskCompletedEvent(
-                    getUserTaskId()
+                    getUserTaskId(),
+                    getTaskId(),
+                    getUserId()
             ));
         }
     }

@@ -33,4 +33,13 @@ public interface UserTaskRepository {
      * @return Optional.empty() 如果没有找到
      */
     Optional<UserTask> queryUncompletedUserTaskByUserIdAndTaskId(UserId userId, IdentifierId<Long> taskId);
+
+    /**
+     * 查询用户任务
+     *
+     * @param userTaskId 用户任务id
+     * @return 用户任务
+     * @throws NoSuchUserTaskException 用户任务不存在
+     */
+    UserTask queryUserTaskByIdOrThrow(IdentifierId<Long> userTaskId);
 }
