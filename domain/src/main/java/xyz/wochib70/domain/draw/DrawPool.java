@@ -8,6 +8,8 @@ public sealed interface DrawPool extends Aggregate<Long, Long> permits DrawPoolI
 
     IdentifierId<Long> getDrawPoolId();
 
+    DrawPrice getDrawPrice();
+
 
     void modifyDrawPoolName(String name);
 
@@ -25,6 +27,13 @@ public sealed interface DrawPool extends Aggregate<Long, Long> permits DrawPoolI
      * @param drawStrategyType 抽奖策略
      */
     void modifyDrawStrategy(DrawStrategyType drawStrategyType);
+
+    /**
+     * 修改抽奖价格
+     *
+     * @param drawPrice 抽奖价格
+     */
+    void modifyDrawPrice(DrawPrice drawPrice);
 
     /**
      * 修改奖品库存

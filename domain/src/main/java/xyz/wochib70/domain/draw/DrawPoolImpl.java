@@ -23,6 +23,8 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
 
     private DrawStrategyType strategyType;
 
+    private DrawPrice drawPrice;
+
 
     public DrawPoolImpl(IdentifierId<Long> identifierId) {
         super(identifierId);
@@ -69,6 +71,18 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
             publishEvent(new DrawStrategyModifiedEvent(
                     getDrawPoolId(),
                     strategyType
+            ));
+        }
+    }
+
+    @Override
+    public void modifyDrawPrice(DrawPrice drawPrice) {
+        Objects.requireNonNull(drawPrice, "抽奖价格不能为null");
+        if (!Objects.equals(this.drawPrice, drawPrice)){
+            this.drawPrice = drawPrice;
+            publishEvent(new DrawPoolPriceModifiedEvent(
+                    getDrawPoolId(),
+                    drawPrice
             ));
         }
     }
