@@ -24,7 +24,7 @@ public sealed interface Activity extends Aggregate<Long, Long> permits ActivityI
 
     void modifyDuration(ActivityDuration duration);
 
-    void modifyCountLimit(CountLimit countLimit);
+    void modifyCountLimit(ActivityCountLimit countLimit);
 
     void modifyCredentialLimit(Boolean credentialLimit);
 

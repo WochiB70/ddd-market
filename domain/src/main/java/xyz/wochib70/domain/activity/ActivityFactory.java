@@ -15,7 +15,7 @@ public class ActivityFactory {
     public Activity createActivity(
             ActivityInfo info,
             ActivityDuration duration,
-            CountLimit countLimit,
+            ActivityCountLimit countLimit,
             Boolean credentialLimit,
             ActivityAwardType awardType
     ) {

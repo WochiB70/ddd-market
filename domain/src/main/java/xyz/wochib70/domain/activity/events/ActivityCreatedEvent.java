@@ -14,7 +14,7 @@ public class ActivityCreatedEvent extends AbstractAggregateEvent<Long> {
 
     private final ActivityDuration duration;
 
-    private final CountLimit countLimit;
+    private final ActivityCountLimit countLimit;
 
     private final Boolean credentialLimit;
 
@@ -24,7 +24,7 @@ public class ActivityCreatedEvent extends AbstractAggregateEvent<Long> {
             IdentifierId<Long> activityId,
             ActivityInfo info,
             ActivityDuration duration,
-            CountLimit countLimit,
+            ActivityCountLimit countLimit,
             Boolean credentialLimit,
             ActivityAwardType awardType
     ) {

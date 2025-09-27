@@ -18,7 +18,7 @@ public non-sealed class ActivityImpl extends AbstractAggregate<Long> implements 
 
     private ActivityDuration duration;
 
-    private CountLimit countLimit;
+    private ActivityCountLimit countLimit;
 
     private Boolean credentialLimit;
 
@@ -87,7 +87,7 @@ public non-sealed class ActivityImpl extends AbstractAggregate<Long> implements 
 
     @Override
     public void participate(UserId userId) {
-        countLimit.participate(userId);
+        countLimit.participate(getActivityId(), userId);
     }
 
     @Override
@@ -115,7 +115,7 @@ public non-sealed class ActivityImpl extends AbstractAggregate<Long> implements 
     }
 
     @Override
-    public void modifyCountLimit(CountLimit countLimit) {
+    public void modifyCountLimit(ActivityCountLimit countLimit) {
         Objects.requireNonNull(countLimit, "CountLimit不能为null");
         if (!Objects.equals(this.countLimit, countLimit)) {
             this.countLimit = countLimit;
