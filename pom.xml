@@ -11,6 +11,7 @@
     <modules>
         <module>type</module>
         <module>domain</module>
+        <module>domain-web</module>
     </modules>
 
     <properties>
