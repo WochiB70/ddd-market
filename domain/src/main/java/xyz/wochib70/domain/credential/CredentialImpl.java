@@ -41,7 +41,7 @@ public non-sealed class CredentialImpl extends AbstractAggregate<Long> implement
         if (unusedCount <= 0) {
             throw new CredentialUnusedCountInvalidException("凭证已使用完毕！" + usageCode);
         }
-        if (Objects.equals(userId, user)) {
+        if (!Objects.equals(userId, user)) {
             throw new IllegalCredentialException("非法的凭证" + usageCode);
         }
 

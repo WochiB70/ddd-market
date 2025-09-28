@@ -1,26 +1,17 @@
 package xyz.wochib70.domain.credential;
 
-import lombok.Getter;
 import xyz.wochib70.domain.activity.ActivityDuration;
 import xyz.wochib70.domain.utils.DurationUtil;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Getter
-public class CredentialDuration {
 
-    private final LocalDateTime startTime;
+public record CredentialDuration(
+        LocalDateTime startTime,
+        LocalDateTime expiredTime
+) {
 
-    private final LocalDateTime expiredTime;
-
-    private CredentialDuration(
-            LocalDateTime startTime,
-            LocalDateTime expiredTime
-    ) {
-        this.startTime = startTime;
-        this.expiredTime = expiredTime;
-    }
 
     public boolean valid() {
         return DurationUtil.validTimeWithDuration(LocalDateTime.now(), startTime, expiredTime);

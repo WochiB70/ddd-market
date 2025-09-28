@@ -17,12 +17,18 @@ public class CredentialFactory {
             Integer unusedCount,
             UserId user
     ) {
+        Objects.requireNonNull(duration, "有效期不能为null");
+        Objects.requireNonNull(user, "用户Id不能为null");
+        Objects.requireNonNull(unusedCount, "使用次数不能为null");
+        if (unusedCount < 1) {
+            throw new IllegalArgumentException("使用次数不能小于1");
+        }
         var credentialId = credentialIdGenerator.nextAggregateId();
         var credential = new CredentialImpl(credentialId);
         credential.setDuration(duration);
         credential.setStatus(CredentialStatus.VALID);
         credential.setUser(user);
-        credential.setUnusedCount(Objects.isNull(unusedCount) ? 1 : unusedCount);
+        credential.setUnusedCount(unusedCount);
         credential.setUsageCode(credentialIdGenerator.generateUsageCode());
         return credential;
     }
