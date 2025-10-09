@@ -3,6 +3,8 @@ package xyz.wochib70.domain.currency;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @RequiredArgsConstructor
 @Component
 public class CurrencyFactory {
@@ -10,6 +12,7 @@ public class CurrencyFactory {
     private final CurrencyIdGenerator currencyIdGenerator;
 
     public Currency create(CurrencyInfo info) {
+        Objects.requireNonNull(info, "CurrencyInfo不能为null");
         CurrencyImpl currency = new CurrencyImpl(
                 currencyIdGenerator.nextAggregateId()
         );
