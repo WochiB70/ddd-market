@@ -1,6 +1,8 @@
 package xyz.wochib70.domain;
 
 import java.util.Collection;
+import java.util.Deque;
+import java.util.List;
 
 /**
  * @author WochiB70
@@ -18,7 +20,7 @@ public interface Aggregate<ID, EventID> {
     /**
      * @return 领域内发生的事件，按照发生顺序
      */
-    Collection<? super AggregateEvent<ID, EventID>> getEvents();
+    List<? super AggregateEvent<ID, EventID>> getEvents();
 
 
     default void create() {

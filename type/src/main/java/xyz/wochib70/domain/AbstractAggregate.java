@@ -10,12 +10,12 @@ public abstract class AbstractAggregate<ID> implements Aggregate<ID, Long> {
 
     private final IdentifierId<ID> identifierId;
 
-    private final Deque<AggregateEvent<ID, Long>> events;
+    private final List<AggregateEvent<ID, Long>> events;
 
     public AbstractAggregate(IdentifierId<ID> identifierId) {
         Objects.requireNonNull(identifierId, "identifierId 不能为null");
         this.identifierId = identifierId;
-        this.events = new ArrayDeque<>();
+        this.events = new ArrayList<>(2);
     }
 
     @Override
@@ -24,8 +24,8 @@ public abstract class AbstractAggregate<ID> implements Aggregate<ID, Long> {
     }
 
     @Override
-    public Collection<? super AggregateEvent<ID, Long>> getEvents() {
-        return Collections.unmodifiableCollection(events);
+    public List<? super AggregateEvent<ID, Long>> getEvents() {
+        return Collections.unmodifiableList( events);
     }
 
     protected void publishEvent(AbstractAggregateEvent<ID> event) {
