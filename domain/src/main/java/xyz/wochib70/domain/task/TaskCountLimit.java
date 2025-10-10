@@ -9,14 +9,14 @@ import java.util.Objects;
 import static xyz.wochib70.domain.task.TaskDomainRegistry.taskRepository;
 
 public record TaskCountLimit(
-        CountLimitType type,
+        TaskCountLimitType type,
         Integer count
 ) {
     public TaskCountLimit {
         if (type == null) {
             throw new IllegalArgumentException("任务限制类型不能为空");
         }
-        if (!Objects.equals(type, CountLimitType.INFINITE) && (count == null || count <= 0)) {
+        if (!Objects.equals(type, TaskCountLimitType.INFINITE) && (count == null || count <= 0)) {
             throw new IllegalArgumentException("当前类型不是无限制，次数不能小于等于0");
         }
     }

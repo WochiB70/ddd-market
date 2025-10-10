@@ -1,6 +1,6 @@
 package xyz.wochib70.domain.task;
 
-public enum CountLimitType {
+public enum TaskCountLimitType {
 
     INFINITE,
     DAY_COUNT,
