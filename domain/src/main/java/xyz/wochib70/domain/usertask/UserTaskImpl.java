@@ -38,7 +38,7 @@ public non-sealed class UserTaskImpl extends AbstractAggregate<Long> implements 
     @Override
     public void complete() {
         if (LocalDateTime.now().isAfter(expireTime)) {
-            throw new UserTaskExpiredException("凭证已过期");
+            throw new UserTaskExpiredException("任务已过期");
         }
         if (!Objects.equals(status, UserTaskStatus.COMPLETED)) {
             status = UserTaskStatus.COMPLETED;
