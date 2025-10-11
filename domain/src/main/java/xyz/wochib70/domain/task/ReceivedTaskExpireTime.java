@@ -1,10 +1,13 @@
 package xyz.wochib70.domain.task;
 
+import lombok.extern.slf4j.Slf4j;
 import xyz.wochib70.domain.activity.Activity;
+import xyz.wochib70.domain.utils.DurationUtil;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Slf4j
 public record ReceivedTaskExpireTime(
         ReceivedTaskExpireTimeType type,
         Long seconds
@@ -26,19 +29,30 @@ public record ReceivedTaskExpireTime(
                 Objects.requireNonNull(activity, "当前结束类型与Activity相关， Activity不能为null");
                 yield activity.getDuration().endTime();
             }
-            case EXPIRE_TODAY_END -> LocalDateTime.now()
-                    .plusDays(1)
-                    .withHour(0)
-                    .withMinute(0)
-                    .withSecond(0)
-                    .withNano(0);
-            case EXPIRE_THIS_WEEK_END -> {
-                LocalDateTime now = LocalDateTime.now();
-                yield now.plusDays((7 - now.getDayOfWeek().getValue()))
+            case EXPIRE_TODAY_END -> {
+                LocalDateTime time = LocalDateTime.now()
+                        .plusDays(1)
                         .withHour(0)
                         .withMinute(0)
                         .withSecond(0)
                         .withNano(0);
+                if (activity != null && activity.getDuration().endTime() != null) {
+                    yield DurationUtil.min(time, activity.getDuration().endTime());
+                }
+                yield time;
+            }
+            case EXPIRE_THIS_WEEK_END -> {
+                LocalDateTime now = LocalDateTime.now();
+                LocalDateTime time = now.plusDays((7 - now.getDayOfWeek().getValue()))
+                        .withHour(0)
+                        .withMinute(0)
+                        .withSecond(0)
+                        .withNano(0);
+                if (activity != null && activity.getDuration().endTime() != null) {
+                    log.info("当前结束类型为本周结束，且配置了Activity，取本周结束和Activity结束的最小值作为结束事件");
+                    yield DurationUtil.min(time, activity.getDuration().endTime());
+                }
+                yield time;
             }
             case null -> throw new IllegalArgumentException("非法的expire time type");
         };
