@@ -4,6 +4,7 @@ import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.draw.DrawItem;
 import xyz.wochib70.domain.draw.DrawStrategy;
+import xyz.wochib70.domain.draw.InsufficientInventoryException;
 
 import java.security.SecureRandom;
 import java.util.Objects;
@@ -20,6 +21,9 @@ public class RandomDrawStrategy implements DrawStrategy {
                 .map(DrawItem::getWeight)
                 .mapToInt(Integer::intValue)
                 .sum();
+        if (allWeight == 0) {
+            throw new InsufficientInventoryException("奖池已经空啦！！");
+        }
         long[] randomNumbers = new long[allWeight];
         int index = 0;
         for (DrawItem drawItem : drawItems) {
@@ -36,7 +40,7 @@ public class RandomDrawStrategy implements DrawStrategy {
         DrawItem drawDrawItem = drawItems.stream()
                 .filter(award -> Objects.equals(award.getId().getId(), randomNumbers[idx]))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new InsufficientInventoryException("奖池已经空啦！！"));
         drawDrawItem.receive();
         return drawDrawItem.getId();
     }

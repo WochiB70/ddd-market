@@ -57,7 +57,7 @@ public class DrawItem {
 
     public void setWeight(Integer weight) {
         if (Objects.isNull(weight) || weight < 0) {
-            throw new DomainException("奖品权重不能为null或者小于0");
+            throw new IllegalArgumentException("奖品权重不能为null或者小于0");
         }
         this.weight = weight;
     }
