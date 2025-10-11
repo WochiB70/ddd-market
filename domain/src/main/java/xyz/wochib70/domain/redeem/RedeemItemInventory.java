@@ -17,7 +17,7 @@ public class RedeemItemInventory {
     public RedeemItemInventory(RedeemItemInventoryType type, Integer validCount) {
         this.type = Objects.requireNonNull(type, "兑换项的库存类型不能为null");
         if (!Objects.equals(this.type, RedeemItemInventoryType.INFINITE)
-                && (validCount == null || validCount <= 0)
+                && (validCount == null || validCount < 0)
         ) {
             throw new IllegalArgumentException("当前的库存类型不是[INFINITE], 库存数量不能为null或是小于等于0");
         }
@@ -25,6 +25,10 @@ public class RedeemItemInventory {
     }
 
     public void redeem(Integer count) {
+        if (Objects.equals(type, RedeemItemInventoryType.INFINITE)){
+            // 无限库存
+            return;
+        }
         if (validCount < count) {
             throw new InsufficientRedeemItemInventoryException("库存不足");
         }
