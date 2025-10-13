@@ -52,11 +52,7 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
 
     @Override
     public RedeemItemPrice getRedeemItemPriceOrThrow(IdentifierId<Long> redeemItemId) {
-        return redeemItems.stream()
-                .filter(redeemItem -> Objects.equals(redeemItem.getId(), redeemItemId))
-                .findFirst()
-                .map(RedeemItem::getPrice)
-                .orElseThrow(() -> new NoSuchRedeemItemException("兑换项不存在"));
+        return findRedeemItemOrThrow(redeemItemId).getPrice();
     }
 
     @Override
@@ -64,32 +60,20 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
         if (count <= 0) {
             throw new IllegalArgumentException("兑换数量不能小于0");
         }
-        redeemItems.stream()
-                .filter(redeemItem -> Objects.equals(redeemItem.getId(), redeemItemId))
-                .findFirst()
-                .ifPresentOrElse(redeemItem -> {
-                            redeemItem.redeem(count);
-                            publishEvent(new RedeemItemRedeemedEvent(
-                                    getRedeemId(),
-                                    redeemItemId,
-                                    count,
-                                    userId
-                            ));
-                        },
-                        () -> {
-                            throw new NoSuchRedeemItemException("兑换项不存在");
-                        });
+        RedeemItem redeemItem = findRedeemItemOrThrow(redeemItemId);
+        redeemItem.redeem(count);
+        publishEvent(new RedeemItemRedeemedEvent(
+                getRedeemId(),
+                redeemItemId,
+                count,
+                userId
+        ));
     }
 
     @Override
     public void addRedeemItem(RedeemItemInfo info) {
         ParameterUtil.requireNonNull(info, "RedeemItemInfo不能为null");
-        redeemItems.stream()
-                .filter(redeemItem -> Objects.equals(redeemItem.getName(), info.name()))
-                .findFirst()
-                .ifPresent(redeemItem -> {
-                    throw new DuplicatedRedeemItemNameException("兑换项名称重复");
-                });
+        checkDuplicateRedeemItemName(info.name());
 
         RedeemItem item = new RedeemItem();
         item.setId(redeemItemIdGenerator().nextRedeemItemId());
@@ -119,78 +103,54 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
     public void modifyRedeemItemBasicInfo(IdentifierId<Long> redeemItemId, String name, String description) {
         ParameterUtil.requireNonBlank(name, "名称不能为空");
         ParameterUtil.requireExpression(Objects.nonNull(description) && description.length() > 50, "描述不能为空");
-        redeemItems.stream()
-                .filter(redeemItem -> Objects.equals(redeemItem.getId(), redeemItemId))
-                .findFirst()
-                .ifPresentOrElse(redeemItem -> {
-                            redeemItem.setItemInfo(name, description);
-                            publishEvent(new RedeemItemInfoModifiedEvent(
-                                    getRedeemId(),
-                                    redeemItemId,
-                                    name,
-                                    description
-                            ));
-                        },
-                        () -> {
-                            throw new NoSuchRedeemItemException("兑换项不存在");
-                        });
+
+        RedeemItem redeemItem = findRedeemItemOrThrow(redeemItemId);
+        redeemItem.setItemInfo(name, description);
+        publishEvent(new RedeemItemInfoModifiedEvent(
+                getRedeemId(),
+                redeemItemId,
+                name,
+                description
+        ));
     }
 
     @Override
     public void modifyRedeemItemInventory(IdentifierId<Long> redeemItemId, RedeemItemInventory inventory) {
         ParameterUtil.requireNonNull(inventory, "RedeemItemInventory不能为null");
-        redeemItems.stream()
-                .filter(redeemItem -> Objects.equals(redeemItem.getId(), redeemItemId))
-                .findFirst()
-                .ifPresentOrElse(redeemItem -> {
-                            redeemItem.setInventory(inventory);
-                            publishEvent(new RedeemItemInventoryModifiedEvent(
-                                    getRedeemId(),
-                                    redeemItemId,
-                                    inventory
-                            ));
-                        },
-                        () -> {
-                            throw new NoSuchRedeemItemException("兑换项不存在");
-                        });
+
+        RedeemItem redeemItem = findRedeemItemOrThrow(redeemItemId);
+        redeemItem.setInventory(inventory);
+        publishEvent(new RedeemItemInventoryModifiedEvent(
+                getRedeemId(),
+                redeemItemId,
+                inventory
+        ));
     }
 
     @Override
     public void modifyRedeemItemPrice(IdentifierId<Long> redeemItemId, RedeemItemPrice price) {
         ParameterUtil.requireNonNull(price, "RedeemItemPrice不能为null");
-        redeemItems.stream()
-                .filter(redeemItem -> Objects.equals(redeemItem.getId(), redeemItemId))
-                .findFirst()
-                .ifPresentOrElse(redeemItem -> {
-                            redeemItem.setItemPrice(price);
-                            publishEvent(new RedeemItemPriceModifiedEvent(
-                                    getRedeemId(),
-                                    redeemItemId,
-                                    price
-                            ));
-                        },
-                        () -> {
-                            throw new NoSuchRedeemItemException("兑换项不存在");
-                        });
+
+        RedeemItem redeemItem = findRedeemItemOrThrow(redeemItemId);
+        redeemItem.setItemPrice(price);
+        publishEvent(new RedeemItemPriceModifiedEvent(
+                getRedeemId(),
+                redeemItemId,
+                price
+        ));
     }
 
     @Override
     public void modifyRedeemItemType(IdentifierId<Long> redeemItemId, RedeemItemType type) {
         ParameterUtil.requireNonNull(type, "RedeemItemType不能为null");
-        redeemItems.stream()
-                .filter(redeemItem -> Objects.equals(redeemItem.getId(), redeemItemId))
-                .findFirst()
-                .ifPresentOrElse(redeemItem -> {
-                            redeemItem.setItemType(type);
-                            publishEvent(new RedeemItemTypeModifiedEvent(
-                                    getRedeemId(),
-                                    redeemItemId,
-                                    type
-                            ));
-                        },
-                        () -> {
-                            throw new NoSuchRedeemItemException("兑换项不存在");
-                        });
+
+        RedeemItem redeemItem = findRedeemItemOrThrow(redeemItemId);
+        redeemItem.setItemType(type);
+        publishEvent(new RedeemItemTypeModifiedEvent(
+                getRedeemId(),
+                redeemItemId,
+                type
+        ));
     }
 
     @Override
@@ -205,5 +165,34 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
         publishEvent(new RedeemPoolDeletedEvent(
                 this
         ));
+    }
+
+    /**
+     * 根据ID查找RedeemItem，如果不存在则抛出异常
+     *
+     * @param redeemItemId 兑换项ID
+     * @return RedeemItem
+     * @throws NoSuchRedeemItemException 如果兑换项不存在
+     */
+    private RedeemItem findRedeemItemOrThrow(IdentifierId<Long> redeemItemId) {
+        return redeemItems.stream()
+                .filter(item -> Objects.equals(item.getId(), redeemItemId))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchRedeemItemException("兑换项不存在"));
+    }
+
+    /**
+     * 检查是否存在重复的兑换项名称
+     *
+     * @param name 要检查的名称
+     * @throws DuplicatedRedeemItemNameException 如果存在重复名称
+     */
+    private void checkDuplicateRedeemItemName(String name) {
+        redeemItems.stream()
+                .filter(item -> Objects.equals(item.getName(), name))
+                .findFirst()
+                .ifPresent(item -> {
+                    throw new DuplicatedRedeemItemNameException("兑换项名称重复");
+                });
     }
 }
