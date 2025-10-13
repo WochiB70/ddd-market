@@ -1,6 +1,8 @@
 package xyz.wochib70.domain;
 
 
+import xyz.wochib70.domain.utils.ParameterUtil;
+
 import java.util.Objects;
 
 public record DefaultIdentifierId<ID>(
@@ -8,7 +10,7 @@ public record DefaultIdentifierId<ID>(
 ) implements IdentifierId<ID> {
 
     public DefaultIdentifierId {
-        Objects.requireNonNull(id, "id不能为null");
+        ParameterUtil.requireNonNull(id, "id不能为null");
     }
 
     @Override

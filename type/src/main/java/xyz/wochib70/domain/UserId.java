@@ -1,5 +1,7 @@
 package xyz.wochib70.domain;
 
+import xyz.wochib70.domain.utils.ParameterUtil;
+
 import java.util.Objects;
 
 public record UserId(
@@ -7,7 +9,7 @@ public record UserId(
 ) implements IdentifierId<Long> {
 
     public UserId {
-        Objects.requireNonNull(id, "用户Id不能为null");
+        ParameterUtil.requireNonNull(id, "用户Id不能为null");
     }
 
     @Override

@@ -1,6 +1,8 @@
 package xyz.wochib70.domain;
 
 
+import xyz.wochib70.domain.utils.ParameterUtil;
+
 import java.util.*;
 
 /**
@@ -13,7 +15,7 @@ public abstract class AbstractAggregate<ID> implements Aggregate<ID, Long> {
     private final List<AggregateEvent<ID, Long>> events;
 
     public AbstractAggregate(IdentifierId<ID> identifierId) {
-        Objects.requireNonNull(identifierId, "identifierId 不能为null");
+        ParameterUtil.requireNonNull(identifierId, "identifierId 不能为null");
         this.identifierId = identifierId;
         this.events = new ArrayList<>(2);
     }

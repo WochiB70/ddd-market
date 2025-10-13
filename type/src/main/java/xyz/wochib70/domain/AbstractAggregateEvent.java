@@ -1,5 +1,7 @@
 package xyz.wochib70.domain;
 
+import xyz.wochib70.domain.utils.ParameterUtil;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -22,8 +24,8 @@ public abstract class AbstractAggregateEvent<AggregateID> implements AggregateEv
             Class<? extends Aggregate<AggregateID, Long>> aggregateClass,
             Class<? extends AggregateEvent<AggregateID, Long>> eventClass
     ) {
-        Objects.requireNonNull(aggregateClass, "聚合类型的Class不能为null");
-        Objects.requireNonNull(eventClass, "事件类型的Class不能为null");
+        ParameterUtil.requireNonNull(aggregateClass, "聚合类型的Class不能为null");
+        ParameterUtil.requireNonNull(eventClass, "事件类型的Class不能为null");
         this.eventId = DomainIdRegistry.nextEventId();
         this.aggregateClass = aggregateClass;
         this.eventClass = eventClass;
