@@ -91,7 +91,7 @@ class ReceivedTaskExpireTimeTest {
     @Test
     void calculate_shouldThrowException_whenTypeIsExpireThisActivityEndAndActivityIsNull() {
         ReceivedTaskExpireTime expireTime = new ReceivedTaskExpireTime(ReceivedTaskExpireTimeType.EXPIRE_THIS_ACTIVITY_END, 100L);
-        Exception exception = assertThrows(NullPointerException.class, () -> expireTime.calculate(null));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> expireTime.calculate(null));
         assertEquals("当前结束类型与Activity相关， Activity不能为null", exception.getMessage());
     }
 

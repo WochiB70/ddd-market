@@ -64,7 +64,7 @@ class RedeemItemTest {
     @Test
     void setId_shouldThrowException_whenIdIsNull() {
         // When & Then
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             redeemItem.setId(null);
         });
         assertEquals("兑换项的id不能为null", exception.getMessage());
@@ -117,7 +117,7 @@ class RedeemItemTest {
     @Test
     void setItemType_shouldThrowException_whenTypeIsNull() {
         // When & Then
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             redeemItem.setItemType(null);
         });
         assertEquals("兑换项的类型不能为null", exception.getMessage());
@@ -138,7 +138,7 @@ class RedeemItemTest {
     @Test
     void setItemPrice_shouldThrowException_whenPriceIsNull() {
         // When & Then
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             redeemItem.setItemPrice(null);
         });
         assertEquals("兑换项的价格不能为null", exception.getMessage());
@@ -159,7 +159,7 @@ class RedeemItemTest {
     @Test
     void setInventory_shouldThrowException_whenInventoryIsNull() {
         // When & Then
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             redeemItem.setInventory(null);
         });
         assertEquals("兑换项的库存不能为null", exception.getMessage());

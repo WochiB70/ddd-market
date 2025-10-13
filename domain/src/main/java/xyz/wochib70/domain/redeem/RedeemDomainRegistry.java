@@ -1,8 +1,7 @@
 package xyz.wochib70.domain.redeem;
 
 import org.springframework.context.ApplicationContext;
-
-import java.util.Objects;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 public class RedeemDomainRegistry {
 
@@ -13,13 +12,14 @@ public class RedeemDomainRegistry {
     }
 
     public static void setApplicationContext(ApplicationContext applicationContext) {
-        Objects.requireNonNull(applicationContext, "applicationContext不能为null");
+        ParameterUtil.requireNonNull(applicationContext, "applicationContext不能为null");
         RedeemDomainRegistry.applicationContext = applicationContext;
     }
 
     public static RedeemItemIdGenerator redeemItemIdGenerator() {
-        Objects.requireNonNull(applicationContext, "applicationContext不能为null, 需要手动配置一个Spring容器的实例到RedeemDomainRegistry中");
+        ParameterUtil.requireNonNull(applicationContext, "applicationContext不能为null, 需要手动配置一个Spring容器的实例到RedeemDomainRegistry中");
         RedeemItemIdGenerator bean = applicationContext.getBean(RedeemItemIdGenerator.class);
-        return Objects.requireNonNull(bean, "awardIdGenerator不能为null，需要手动设置一个实例到Spring容器中");
+        ParameterUtil.requireNonNull(bean, "awardIdGenerator不能为null，需要手动设置一个实例到Spring容器中");
+        return bean;
     }
 }

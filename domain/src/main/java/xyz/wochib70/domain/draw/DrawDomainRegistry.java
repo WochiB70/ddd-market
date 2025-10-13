@@ -1,8 +1,7 @@
 package xyz.wochib70.domain.draw;
 
 import org.springframework.context.ApplicationContext;
-
-import java.util.Objects;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 public class DrawDomainRegistry {
 
@@ -13,14 +12,14 @@ public class DrawDomainRegistry {
     }
 
     public static void setApplicationContext(ApplicationContext applicationContext) {
-        Objects.requireNonNull(applicationContext, "applicationContext不能为null");
+        ParameterUtil.requireNonNull(applicationContext, "applicationContext不能为null");
         DrawDomainRegistry.applicationContext = applicationContext;
     }
 
     public static DrawItemIdGenerator awardIdGenerator() {
-        Objects.requireNonNull(applicationContext, "applicationContext不能为null, 需要手动配置一个Spring容器的实例到DrawDomainRegistry中");
+        ParameterUtil.requireNonNull(applicationContext, "applicationContext不能为null, 需要手动配置一个Spring容器的实例到DrawDomainRegistry中");
         DrawItemIdGenerator bean = applicationContext.getBean(DrawItemIdGenerator.class);
-        Objects.requireNonNull(bean, "awardIdGenerator不能为null，需要手动设置一个实例到Spring容器中");
+        ParameterUtil.requireNonNull(bean, "awardIdGenerator不能为null，需要手动设置一个实例到Spring容器中");
         return bean;
     }
 }

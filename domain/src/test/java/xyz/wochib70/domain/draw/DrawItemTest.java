@@ -104,7 +104,7 @@ class DrawItemTest {
     @Test
     void setInventory_shouldThrowException_whenInventoryIsNull() {
         // When & Then
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             drawItem.setInventory(null);
         });
         assertEquals("奖品数量不能为空", exception.getMessage());

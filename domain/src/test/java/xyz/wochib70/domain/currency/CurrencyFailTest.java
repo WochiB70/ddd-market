@@ -24,7 +24,7 @@ class CurrencyFailTest extends AggregateTestBase {
             factory.create(null);
 
         } catch (Exception e) {
-            Assert.isTrue(e instanceof NullPointerException, "CCurrencyInfo不能为null");
+            Assert.isTrue(e instanceof IllegalArgumentException, "CCurrencyInfo不能为null");
         }
     }
 

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import xyz.wochib70.domain.DomainException;
 import xyz.wochib70.domain.IdentifierId;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.Objects;
 
@@ -63,7 +64,7 @@ public class DrawItem {
     }
 
     public void setInventory(DrawItemInventory inventory) {
-        Objects.requireNonNull(inventory, "奖品数量不能为空");
+        ParameterUtil.requireNonNull(inventory, "奖品数量不能为空");
         this.drawItemInventory = inventory;
     }
 

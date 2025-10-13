@@ -45,7 +45,7 @@ public class TaskDurationTest {
                     .expiredTime(now.plusDays(1))
                     .build();
         } catch (Exception e) {
-            Assert.isTrue(e instanceof NullPointerException, "任务时间有效");
+            Assert.isTrue(e instanceof IllegalArgumentException, "任务时间有效");
             Assert.hasText(e.getMessage(), "ActivityDuration不能为null");
         }
     }

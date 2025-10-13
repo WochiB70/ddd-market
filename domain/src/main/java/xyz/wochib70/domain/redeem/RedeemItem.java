@@ -3,6 +3,7 @@ package xyz.wochib70.domain.redeem;
 import lombok.Getter;
 import lombok.Setter;
 import xyz.wochib70.domain.IdentifierId;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.Objects;
 
@@ -27,7 +28,8 @@ public class RedeemItem {
     }
 
     public void setId(IdentifierId<Long> id) {
-        this.id = Objects.requireNonNull(id, "兑换项的id不能为null");
+        ParameterUtil.requireNonNull(id, "兑换项的id不能为null");
+        this.id = id;
     }
 
     public void setItemInfo(String name, String description) {
@@ -39,17 +41,19 @@ public class RedeemItem {
     }
 
     public void setItemType(RedeemItemType type) {
-        this.type = Objects.requireNonNull(type, "兑换项的类型不能为null");
+        ParameterUtil.requireNonNull(type, "兑换项的类型不能为null");
+        this.type = type;
     }
 
     public void setItemPrice(RedeemItemPrice price) {
-        Objects.requireNonNull(price, "兑换项的价格不能为null");
+        ParameterUtil.requireNonNull(price, "兑换项的价格不能为null");
         this.price = price;
     }
 
 
     public void setInventory(RedeemItemInventory inventory) {
-        this.inventory = Objects.requireNonNull(inventory, "兑换项的库存不能为null");
+        ParameterUtil.requireNonNull(inventory, "兑换项的库存不能为null");
+        this.inventory = inventory;
     }
 
 

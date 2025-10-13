@@ -25,7 +25,7 @@ public record ReceivedTaskExpireTime(
         return switch (type) {
             case EXPIRE_IN_TIME -> LocalDateTime.now().plusSeconds(seconds);
             case EXPIRE_THIS_ACTIVITY_END -> {
-                Objects.requireNonNull(activity, "当前结束类型与Activity相关， Activity不能为null");
+                ParameterUtil.requireNonNull(activity, "当前结束类型与Activity相关， Activity不能为null");
                 yield activity.getDuration().endTime();
             }
             case EXPIRE_TODAY_END -> {
