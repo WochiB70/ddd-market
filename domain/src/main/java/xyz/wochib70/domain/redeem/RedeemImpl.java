@@ -6,6 +6,7 @@ import xyz.wochib70.domain.AbstractAggregate;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.redeem.events.*;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.Objects;
 import java.util.Set;
@@ -39,6 +40,7 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
 
     @Override
     public void modifyRedeemName(String name) {
+        ParameterUtil.requireNonBlank(name, "名称不能为空");
         if (!Objects.equals(this.name, name)) {
             this.name = name;
             publishEvent(new RedeemNameModifiedEvent(
@@ -81,6 +83,7 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
 
     @Override
     public void addRedeemItem(RedeemItemInfo info) {
+        ParameterUtil.requireNonNull(info, "RedeemItemInfo不能为null");
         redeemItems.stream()
                 .filter(redeemItem -> Objects.equals(redeemItem.getName(), info.name()))
                 .findFirst()
@@ -114,6 +117,8 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
 
     @Override
     public void modifyRedeemItemBasicInfo(IdentifierId<Long> redeemItemId, String name, String description) {
+        ParameterUtil.requireNonBlank(name, "名称不能为空");
+        ParameterUtil.requireExpression(Objects.nonNull(description) && description.length() > 50, "描述不能为空");
         redeemItems.stream()
                 .filter(redeemItem -> Objects.equals(redeemItem.getId(), redeemItemId))
                 .findFirst()
@@ -133,6 +138,7 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
 
     @Override
     public void modifyRedeemItemInventory(IdentifierId<Long> redeemItemId, RedeemItemInventory inventory) {
+        ParameterUtil.requireNonNull(inventory, "RedeemItemInventory不能为null");
         redeemItems.stream()
                 .filter(redeemItem -> Objects.equals(redeemItem.getId(), redeemItemId))
                 .findFirst()
@@ -151,6 +157,7 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
 
     @Override
     public void modifyRedeemItemPrice(IdentifierId<Long> redeemItemId, RedeemItemPrice price) {
+        ParameterUtil.requireNonNull(price, "RedeemItemPrice不能为null");
         redeemItems.stream()
                 .filter(redeemItem -> Objects.equals(redeemItem.getId(), redeemItemId))
                 .findFirst()
@@ -169,6 +176,7 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
 
     @Override
     public void modifyRedeemItemType(IdentifierId<Long> redeemItemId, RedeemItemType type) {
+        ParameterUtil.requireNonNull(type, "RedeemItemType不能为null");
         redeemItems.stream()
                 .filter(redeemItem -> Objects.equals(redeemItem.getId(), redeemItemId))
                 .findFirst()

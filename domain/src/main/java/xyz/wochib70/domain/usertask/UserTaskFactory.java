@@ -10,6 +10,7 @@ import xyz.wochib70.domain.task.CompleteEvent;
 import xyz.wochib70.domain.task.ReceivedTaskExpireTime;
 import xyz.wochib70.domain.task.Task;
 import xyz.wochib70.domain.task.TaskRepository;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -26,8 +27,8 @@ public class UserTaskFactory {
     private final ActivityRepository activityRepository;
 
     public UserTask create(IdentifierId<Long> taskId, UserId userId) {
-        Objects.requireNonNull(taskId, "任务Id不能为null");
-        Objects.requireNonNull(userId, "用户Id不能为null");
+        ParameterUtil.requireNonNull(taskId, "任务Id不能为null");
+        ParameterUtil.requireNonNull(userId, "用户Id不能为null");
         Task task = taskRepository.queryTaskByIdOrThrow(taskId);
         CompleteEvent completeEvent = task.getCompleteEvent();
         final ReceivedTaskExpireTime expireTime = task.getReceivedTaskExpireTime();

@@ -7,6 +7,7 @@ import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.draw.events.*;
 import xyz.wochib70.domain.draw.strategy.RandomDrawStrategy;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.Objects;
 import java.util.Set;
@@ -37,6 +38,7 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
 
     @Override
     public Reward draw(UserId userId) {
+        ParameterUtil.requireNonNull(userId, "用户id不能为null");
         IdentifierId<Long> awardId = switch (strategyType) {
             case RANDOM -> new RandomDrawStrategy().draw(drawItems, userId);
         };
@@ -66,6 +68,7 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
 
     @Override
     public void modifyDrawStrategy(DrawStrategyType drawStrategyType) {
+        ParameterUtil.requireNonNull(drawStrategyType, "抽奖策略不能为null");
         if (!Objects.equals(strategyType, drawStrategyType)) {
             this.strategyType = drawStrategyType;
             publishEvent(new DrawStrategyModifiedEvent(
@@ -77,7 +80,7 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
 
     @Override
     public void modifyDrawPrice(DrawPrice drawPrice) {
-        Objects.requireNonNull(drawPrice, "抽奖价格不能为null");
+        ParameterUtil.requireNonNull(drawPrice, "抽奖价格不能为null");
         if (!Objects.equals(this.drawPrice, drawPrice)){
             this.drawPrice = drawPrice;
             publishEvent(new DrawPoolPriceModifiedEvent(

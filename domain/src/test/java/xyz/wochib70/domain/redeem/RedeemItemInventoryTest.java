@@ -28,7 +28,7 @@ class RedeemItemInventoryTest {
         Integer validCount = 10;
 
         // When & Then
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             new RedeemItemInventory(type, validCount);
         });
         assertEquals("兑换项的库存类型不能为null", exception.getMessage());
@@ -44,21 +44,9 @@ class RedeemItemInventoryTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             new RedeemItemInventory(type, validCount);
         });
-        assertEquals("当前的库存类型不是[INFINITE], 库存数量不能为null或是小于等于0", exception.getMessage());
+        assertEquals("当前的库存类型不是[INFINITE], 库存数量不能为null或是小于0", exception.getMessage());
     }
 
-    @Test
-    void constructor_shouldThrowException_whenTypeIsNotInfiniteAndValidCountIsZero() {
-        // Given
-        RedeemItemInventoryType type = RedeemItemInventoryType.LIMITED;
-        Integer validCount = 0;
-
-        // When & Then
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new RedeemItemInventory(type, validCount);
-        });
-        assertEquals("当前的库存类型不是[INFINITE], 库存数量不能为null或是小于等于0", exception.getMessage());
-    }
 
     @Test
     void constructor_shouldThrowException_whenTypeIsNotInfiniteAndValidCountIsNegative() {
@@ -70,7 +58,7 @@ class RedeemItemInventoryTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             new RedeemItemInventory(type, validCount);
         });
-        assertEquals("当前的库存类型不是[INFINITE], 库存数量不能为null或是小于等于0", exception.getMessage());
+        assertEquals("当前的库存类型不是[INFINITE], 库存数量不能为null或是小于0", exception.getMessage());
     }
 
     @Test

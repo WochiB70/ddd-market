@@ -6,6 +6,7 @@ import xyz.wochib70.domain.AbstractAggregate;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.activity.events.*;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.Objects;
 
@@ -92,7 +93,7 @@ public non-sealed class ActivityImpl extends AbstractAggregate<Long> implements 
 
     @Override
     public void modifyActivityInfo(ActivityInfo info) {
-        Objects.requireNonNull(info, "ActivityInfo不能为null");
+        ParameterUtil.requireNonNull(info, "ActivityInfo不能为null");
         if (!Objects.equals(this.info, info)) {
             this.info = info;
             publishEvent(new ActivityInfoModifiedEvent(
@@ -104,7 +105,7 @@ public non-sealed class ActivityImpl extends AbstractAggregate<Long> implements 
 
     @Override
     public void modifyDuration(ActivityDuration duration) {
-        Objects.requireNonNull(duration, "ActivityDuration不能为null");
+        ParameterUtil.requireNonNull(duration, "ActivityDuration不能为null");
         if (!Objects.equals(this.duration, duration)) {
             this.duration = duration;
             publishEvent(new ActivityDurationModifiedEvent(
@@ -116,7 +117,7 @@ public non-sealed class ActivityImpl extends AbstractAggregate<Long> implements 
 
     @Override
     public void modifyCountLimit(ActivityCountLimit countLimit) {
-        Objects.requireNonNull(countLimit, "CountLimit不能为null");
+        ParameterUtil.requireNonNull(countLimit, "CountLimit不能为null");
         if (!Objects.equals(this.countLimit, countLimit)) {
             this.countLimit = countLimit;
             publishEvent(new ActivityCountLimitModifiedEvent(
@@ -128,7 +129,7 @@ public non-sealed class ActivityImpl extends AbstractAggregate<Long> implements 
 
     @Override
     public void modifyCredentialLimit(Boolean credentialLimit) {
-        Objects.requireNonNull(credentialLimit, "CredentialLimit不能为null");
+        ParameterUtil.requireNonNull(credentialLimit, "CredentialLimit不能为null");
         if (!Objects.equals(this.credentialLimit, credentialLimit)) {
             this.credentialLimit = credentialLimit;
             publishEvent(new ActivityCredentialLimitModifiedEvent(
@@ -140,7 +141,7 @@ public non-sealed class ActivityImpl extends AbstractAggregate<Long> implements 
 
     @Override
     public void modifyAwardType(ActivityAwardType awardType) {
-        Objects.requireNonNull(awardType, "AwardType不能为null");
+        ParameterUtil.requireNonNull(awardType, "AwardType不能为null");
         if (!Objects.equals(this.awardType, awardType)) {
             publishEvent(new ActivityAwardTypeModifiedEvent(
                     getActivityId(),

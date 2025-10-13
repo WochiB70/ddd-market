@@ -6,6 +6,7 @@ import xyz.wochib70.domain.AbstractAggregate;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.task.events.*;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.Objects;
 
@@ -40,9 +41,7 @@ public non-sealed class TaskImpl extends AbstractAggregate<Long> implements Task
 
     @Override
     public void receive(UserId userId) {
-        if (userId == null) {
-            throw new IllegalArgumentException("任务已过期");
-        }
+        ParameterUtil.requireNonNull(userId, "用户不能为空");
         if (!duration.valid()) {
             throw new TaskCountLimitException("任务已过期");
         }
@@ -78,9 +77,7 @@ public non-sealed class TaskImpl extends AbstractAggregate<Long> implements Task
 
     @Override
     public void modifyInfo(TaskInfo info) {
-        if (info == null) {
-            throw new IllegalArgumentException("任务信息不能为空");
-        }
+        ParameterUtil.requireNonNull(info, "任务信息不能为空");
         if (!Objects.equals(this.info, info)) {
             this.info = info;
             publishEvent(new TaskInfoModifiedEvent(
@@ -92,9 +89,7 @@ public non-sealed class TaskImpl extends AbstractAggregate<Long> implements Task
 
     @Override
     public void modifyCompleteEvent(CompleteEvent completeEvent) {
-        if (completeEvent == null) {
-            throw new IllegalArgumentException("任务完成事件不能为空");
-        }
+        ParameterUtil.requireNonNull(completeEvent, "任务完成事件不能为空");
         if (!Objects.equals(this.completeEvent, completeEvent)) {
             this.completeEvent = completeEvent;
             publishEvent(new TaskCompleteEventModifiedEvent(
@@ -106,9 +101,7 @@ public non-sealed class TaskImpl extends AbstractAggregate<Long> implements Task
 
     @Override
     public void modifyCountLimit(TaskCountLimit taskCountLimit) {
-        if (taskCountLimit == null) {
-            throw new IllegalArgumentException("任务限制不能为空");
-        }
+        ParameterUtil.requireNonNull(taskCountLimit, "任务限制不能为空");
         if (!Objects.equals(this.taskCountLimit, taskCountLimit)) {
             this.taskCountLimit = taskCountLimit;
             publishEvent(new TaskCountLimitModifiedEvent(
@@ -120,9 +113,7 @@ public non-sealed class TaskImpl extends AbstractAggregate<Long> implements Task
 
     @Override
     public void modifyReceivedTaskExpireTime(ReceivedTaskExpireTime receivedTaskExpireTime) {
-        if (receivedTaskExpireTime == null) {
-            throw new IllegalArgumentException("任务领取的过期时间不能为空");
-        }
+        ParameterUtil.requireNonNull(receivedTaskExpireTime, "任务领取的过期时间不能为空");
         if (!Objects.equals(this.receivedTaskExpireTime, receivedTaskExpireTime)) {
             this.receivedTaskExpireTime = receivedTaskExpireTime;
             publishEvent(new TaskReceivedTaskExpireTimeModifiedEvent(
@@ -134,7 +125,7 @@ public non-sealed class TaskImpl extends AbstractAggregate<Long> implements Task
 
     @Override
     public void modifyTaskAward(TaskAward taskAward) {
-        Objects.requireNonNull(taskAward, "任务奖励不能为空");
+        ParameterUtil.requireNonNull(taskAward, "任务奖励不能为空");
         if (!Objects.equals(this.taskAward, taskAward)) {
             this.taskAward = taskAward;
             publishEvent(new TaskAwardModifiedEvent(

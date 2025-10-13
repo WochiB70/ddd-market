@@ -181,7 +181,7 @@ class DrawPoolImplTest extends AggregateTestBase {
     @Test
     void modifyDrawPrice_shouldThrowException_whenPriceIsNull() {
         // When & Then
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             drawPool.modifyDrawPrice(null);
         });
         // Exception from Objects.requireNonNull

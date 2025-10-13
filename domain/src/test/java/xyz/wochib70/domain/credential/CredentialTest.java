@@ -41,7 +41,7 @@ public class CredentialTest extends AggregateTestBase {
     @Test
     void participate() {
         CredentialDuration duration = new CredentialDuration.Builder(new ActivityDuration(null, null))
-                .startTime(LocalDateTime.now())
+                .startTime(LocalDateTime.now().minusDays(1))
                 .expiredTime(LocalDateTime.now().plusDays(1))
                 .build();
 

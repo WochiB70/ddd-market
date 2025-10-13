@@ -7,8 +7,11 @@ import xyz.wochib70.domain.AggregateTestBase;
 import xyz.wochib70.domain.DefaultIdentifierId;
 import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.activity.ActivityDuration;
+import xyz.wochib70.domain.redeem.events.RedeemNameModifiedEvent;
 
 import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 public class CredentialFailTest extends AggregateTestBase {
 
@@ -27,7 +30,7 @@ public class CredentialFailTest extends AggregateTestBase {
 
             factory.create(null, 1, new UserId(1L));
         } catch (Exception e) {
-            Assert.isTrue(e instanceof NullPointerException, "凭证创建失败");
+            Assert.isTrue(e instanceof IllegalArgumentException, "凭证创建失败");
             Assert.hasText(e.getMessage(), "有效期不能为null");
         }
     }
@@ -49,7 +52,7 @@ public class CredentialFailTest extends AggregateTestBase {
 
             factory.create(duration, 1, null);
         } catch (Exception e) {
-            Assert.isTrue(e instanceof NullPointerException, "凭证创建失败");
+            Assert.isTrue(e instanceof IllegalArgumentException, "凭证创建失败");
             Assert.hasText(e.getMessage(), "用户Id不能为null");
         }
     }
@@ -80,7 +83,7 @@ public class CredentialFailTest extends AggregateTestBase {
     void participateWithOtherUserFailTest() {
         try {
             CredentialDuration duration = new CredentialDuration.Builder(new ActivityDuration(null, null))
-                    .startTime(LocalDateTime.now())
+                    .startTime(LocalDateTime.now().minusDays(1))
                     .expiredTime(LocalDateTime.now().plusDays(1))
                     .build();
 
@@ -92,7 +95,7 @@ public class CredentialFailTest extends AggregateTestBase {
 
             credential.participate(new UserId(2L));
         } catch (Exception e) {
-            Assert.isTrue(e instanceof IllegalCredentialException, "非法的凭证");
+            assertInstanceOf(IllegalCredentialException.class, e);
         }
     }
 

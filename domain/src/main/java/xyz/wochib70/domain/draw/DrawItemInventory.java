@@ -1,5 +1,7 @@
 package xyz.wochib70.domain.draw;
 
+import xyz.wochib70.domain.utils.ParameterUtil;
+
 import java.util.Objects;
 
 public class DrawItemInventory {
@@ -9,8 +11,8 @@ public class DrawItemInventory {
     private Integer surplus;
 
     public DrawItemInventory(DrawInventoryType type, Integer surplus) {
-        Objects.requireNonNull(type, "奖品库存类型不能为null");
-        Objects.requireNonNull(surplus, "奖品库存不能为null");
+        ParameterUtil.requireNonNull(type, "奖品库存类型不能为null");
+        ParameterUtil.requireNonNull(surplus, "奖品库存不能为null");
         if (Objects.equals(type, DrawInventoryType.LIMITED) && surplus < 0) {
             throw new IllegalArgumentException("奖品库存不能小于0");
         }

@@ -1,6 +1,7 @@
 package xyz.wochib70.domain.draw;
 
 import xyz.wochib70.domain.IdentifierId;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.Objects;
 
@@ -10,8 +11,8 @@ public record DrawPrice(
 ) {
 
     public DrawPrice {
-        Objects.requireNonNull(currencyId);
-        Objects.requireNonNull(price);
+        ParameterUtil.requireNonNull(currencyId);
+        ParameterUtil.requireNonNull(price);
         if (price < 0) {
             throw new IllegalArgumentException("抽奖价格不能小于0");
         }

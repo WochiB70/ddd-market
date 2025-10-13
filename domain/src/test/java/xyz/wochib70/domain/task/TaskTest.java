@@ -48,7 +48,7 @@ class TaskTest extends AggregateTestBase {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             task.receive(null);
         });
-        assertEquals("任务已过期", exception.getMessage());
+        assertEquals("用户不能为空", exception.getMessage());
     }
 
     @Test
@@ -262,7 +262,7 @@ class TaskTest extends AggregateTestBase {
 
     @Test
     void modifyTaskAward_shouldThrowException_whenTaskAwardIsNull() {
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             task.modifyTaskAward(null);
         });
         assertEquals("任务奖励不能为空", exception.getMessage());

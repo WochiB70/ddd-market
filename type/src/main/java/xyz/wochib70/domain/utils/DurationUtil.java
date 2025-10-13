@@ -63,4 +63,11 @@ public class DurationUtil {
         }
         return time1.isBefore(time2) ? time1 : time2;
     }
+
+    public static boolean validDuration(LocalDateTime startTime, LocalDateTime endTime) {
+        if (Objects.nonNull(startTime) && Objects.nonNull(endTime)) {
+            return endTime.isAfter(startTime);
+        }
+        return true;
+    }
 }

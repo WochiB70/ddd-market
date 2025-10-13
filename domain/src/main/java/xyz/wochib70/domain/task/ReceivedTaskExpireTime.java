@@ -3,6 +3,7 @@ package xyz.wochib70.domain.task;
 import lombok.extern.slf4j.Slf4j;
 import xyz.wochib70.domain.activity.Activity;
 import xyz.wochib70.domain.utils.DurationUtil;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -14,9 +15,7 @@ public record ReceivedTaskExpireTime(
 ) {
 
     public ReceivedTaskExpireTime {
-        if (type == null) {
-            throw new IllegalArgumentException("任务过期类型不能为空");
-        }
+        ParameterUtil.requireNonNull(type, "任务过期类型不能为空");
         if (Objects.equals(type, ReceivedTaskExpireTimeType.EXPIRE_IN_TIME) && (seconds == null || seconds <= 0)) {
             throw new IllegalArgumentException("当前领取任务的过期类型为指定时间后过期，秒数不能小于等于0");
         }

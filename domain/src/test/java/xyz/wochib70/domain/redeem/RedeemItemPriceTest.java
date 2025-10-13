@@ -30,7 +30,7 @@ class RedeemItemPriceTest {
         Integer price = 100;
 
         // When & Then
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             new RedeemItemPrice(currencyId, price);
         });
         assertEquals("货币Id不能为null", exception.getMessage());

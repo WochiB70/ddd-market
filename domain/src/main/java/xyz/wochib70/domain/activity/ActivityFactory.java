@@ -2,6 +2,7 @@ package xyz.wochib70.domain.activity;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.Objects;
 
@@ -19,11 +20,11 @@ public class ActivityFactory {
             Boolean credentialLimit,
             ActivityAwardType awardType
     ) {
-        Objects.requireNonNull(info, "Activity基本信息不能为null");
-        Objects.requireNonNull(duration, "Activity持续时间不能为null");
-        Objects.requireNonNull(countLimit, "Activity人数限制不能为null");
-        Objects.requireNonNull(credentialLimit, "Activity凭证限制不能为null");
-        Objects.requireNonNull(awardType, "Activity奖品类型不能为null");
+        ParameterUtil.requireNonNull(info, "Activity基本信息不能为null");
+        ParameterUtil.requireNonNull(duration, "Activity持续时间不能为null");
+        ParameterUtil.requireNonNull(countLimit, "Activity人数限制不能为null");
+        ParameterUtil.requireNonNull(credentialLimit, "Activity凭证限制不能为null");
+        ParameterUtil.requireNonNull(awardType, "Activity奖品类型不能为null");
         var activityId = activityIdGenerator.nextAggregateId();
         var activity = new ActivityImpl(activityId);
         activity.setInfo(info);

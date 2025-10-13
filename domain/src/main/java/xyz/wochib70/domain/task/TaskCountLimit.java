@@ -3,6 +3,7 @@ package xyz.wochib70.domain.task;
 
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.Objects;
 
@@ -13,15 +14,14 @@ public record TaskCountLimit(
         Integer count
 ) {
     public TaskCountLimit {
-        if (type == null) {
-            throw new IllegalArgumentException("任务限制类型不能为空");
-        }
+        ParameterUtil.requireNonNull(type, "任务限制类型不能为null");
         if (!Objects.equals(type, TaskCountLimitType.INFINITE) && (count == null || count <= 0)) {
             throw new IllegalArgumentException("当前类型不是无限制，次数不能小于等于0");
         }
     }
 
     public void receiveTask(UserId userId, IdentifierId<Long> taskId) {
+        ParameterUtil.requireNonNull(userId, "用户Id不能为null");
         switch (type) {
             case INFINITE -> {
                 // 无限制

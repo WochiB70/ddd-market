@@ -47,7 +47,7 @@ class CredentialDurationTest {
                     .expiredTime(now.plusDays(1))
                     .build();
         } catch (Exception e) {
-            Assert.isTrue(e instanceof NullPointerException, "凭证时间有效");
+            Assert.isTrue(e instanceof IllegalArgumentException, "凭证时间有效");
             Assert.hasText(e.getMessage(), "ActivityDuration不能为null");
         }
     }

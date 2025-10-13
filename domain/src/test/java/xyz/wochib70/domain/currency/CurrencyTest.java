@@ -54,7 +54,7 @@ class CurrencyTest extends AggregateTestBase {
     void deactivateCurrencyTest() {
         CurrencyImpl currency = new CurrencyImpl(new DefaultIdentifierId<>(1L));
         currency.setStatus(CurrencyStatus.VALID);
-
+        currency.setReferenceCount(0);
         currency.deactivate();
 
         for (Object event : currency.getEvents()) {

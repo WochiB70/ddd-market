@@ -27,7 +27,7 @@ class DrawItemInventoryTest {
         Integer surplus = 10;
 
         // When & Then
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             new DrawItemInventory(type, surplus);
         });
         assertEquals("奖品库存类型不能为null", exception.getMessage());
@@ -40,7 +40,7 @@ class DrawItemInventoryTest {
         Integer surplus = null;
 
         // When & Then
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             new DrawItemInventory(type, surplus);
         });
         assertEquals("奖品库存不能为null", exception.getMessage());

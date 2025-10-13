@@ -2,6 +2,7 @@ package xyz.wochib70.domain.redeem;
 
 import lombok.Getter;
 import lombok.Setter;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.Objects;
 
@@ -15,11 +16,12 @@ public class RedeemItemInventory {
 
 
     public RedeemItemInventory(RedeemItemInventoryType type, Integer validCount) {
-        this.type = Objects.requireNonNull(type, "兑换项的库存类型不能为null");
+        ParameterUtil.requireNonNull(type, "兑换项的库存类型不能为null");
+        this.type = type;
         if (!Objects.equals(this.type, RedeemItemInventoryType.INFINITE)
                 && (validCount == null || validCount < 0)
         ) {
-            throw new IllegalArgumentException("当前的库存类型不是[INFINITE], 库存数量不能为null或是小于等于0");
+            throw new IllegalArgumentException("当前的库存类型不是[INFINITE], 库存数量不能为null或是小于0");
         }
         this.validCount = validCount;
     }

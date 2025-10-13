@@ -8,6 +8,7 @@ import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.account.events.AccountBalanceDecreasedEvent;
 import xyz.wochib70.domain.account.events.AccountBalanceIncreasedEvent;
 import xyz.wochib70.domain.account.events.AccountCreatedEvent;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 @Getter
 @Setter
@@ -35,9 +36,7 @@ public non-sealed class AccountImpl extends AbstractAggregate<Long> implements A
 
     @Override
     public void increateBalance(int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("增加的金额必须大于0");
-        }
+        ParameterUtil.requireExpression(amount <= 0, "增加的金额必须大于0");
         balance += amount;
         publishEvent(new AccountBalanceIncreasedEvent(
                 this.getAccountId(),
@@ -47,9 +46,7 @@ public non-sealed class AccountImpl extends AbstractAggregate<Long> implements A
 
     @Override
     public void decreaseBalance(int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("减少的金额必须大于0");
-        }
+        ParameterUtil.requireExpression(amount <= 0, "减少的金额必须小于等于0");
         if (this.balance < amount) {
             throw new InsufficientBalanceException("余额不足");
         }

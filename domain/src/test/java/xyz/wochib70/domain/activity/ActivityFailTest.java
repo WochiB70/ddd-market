@@ -108,7 +108,7 @@ public class ActivityFailTest extends AggregateTestBase {
                     ActivityAwardType.REDEEM
             );
         } catch (Exception e) {
-            Assert.isTrue(e instanceof NullPointerException, "应该是NullPointException");
+            Assert.isTrue(e instanceof IllegalArgumentException, "应该是NullPointException");
             Assert.hasText(e.getMessage(), "Activity持续时间不能为null");
         }
 
@@ -160,7 +160,7 @@ public class ActivityFailTest extends AggregateTestBase {
                     ActivityAwardType.REDEEM
             );
         } catch (Exception e) {
-            Assert.isTrue(e instanceof NullPointerException, "应该是NullPointException");
+            Assert.isTrue(e instanceof IllegalArgumentException, "应该是IllegalArgumentException");
             Assert.hasText(e.getMessage(), "Activity人数限制不能为null");
         }
 
@@ -174,7 +174,7 @@ public class ActivityFailTest extends AggregateTestBase {
                     ActivityAwardType.REDEEM
             );
         } catch (Exception e) {
-            Assert.isTrue(e instanceof NullPointerException, "应该是NullPointException");
+            Assert.isTrue(e instanceof IllegalArgumentException, "应该是NullPointException");
             Assert.hasText(e.getMessage(), "限制类型不能为空");
         }
 
@@ -211,7 +211,7 @@ public class ActivityFailTest extends AggregateTestBase {
                     ActivityAwardType.REDEEM
             );
         } catch (Exception e) {
-            Assert.isTrue(e instanceof NullPointerException, "应该是NullPointException");
+            Assert.isTrue(e instanceof IllegalArgumentException, "应该是NullPointException");
             Assert.hasText(e.getMessage(), "Activity凭证限制不能为null");
         }
     }
@@ -234,7 +234,7 @@ public class ActivityFailTest extends AggregateTestBase {
                     null
             );
         } catch (Exception e) {
-            Assert.isTrue(e instanceof NullPointerException, "应该是NullPointException");
+            Assert.isTrue(e instanceof IllegalArgumentException, "应该是NullPointException");
             Assert.hasText(e.getMessage(), "Activity奖品类型不能为null");
         }
     }
@@ -248,7 +248,7 @@ public class ActivityFailTest extends AggregateTestBase {
                     null
             );
         } catch (Exception e) {
-            Assert.isTrue(e instanceof NullPointerException, "应该是NullPointerException");
+            Assert.isTrue(e instanceof IllegalArgumentException, "应该是IllegalArgumentException");
             Assert.hasText(e.getMessage(), "ActivityInfo不能为null");
         }
     }
@@ -262,7 +262,7 @@ public class ActivityFailTest extends AggregateTestBase {
                     null
             );
         } catch (Exception e) {
-            Assert.isTrue(e instanceof NullPointerException, "应该是NullPointerException");
+            Assert.isTrue(e instanceof IllegalArgumentException, "应该是IllegalArgumentException");
             Assert.hasText(e.getMessage(), "ActivityDuration不能为null");
         }
     }
@@ -276,7 +276,7 @@ public class ActivityFailTest extends AggregateTestBase {
                     null
             );
         } catch (Exception e) {
-            Assert.isTrue(e instanceof NullPointerException, "应该是NullPointerException");
+            Assert.isTrue(e instanceof IllegalArgumentException, "应该是IllegalArgumentException");
             Assert.hasText(e.getMessage(), "ActivityCountLimit不能为null");
         }
     }
@@ -290,7 +290,7 @@ public class ActivityFailTest extends AggregateTestBase {
                     null
             );
         } catch (Exception e) {
-            Assert.isTrue(e instanceof NullPointerException, "应该是NullPointerException");
+            Assert.isTrue(e instanceof IllegalArgumentException, "应该是IllegalArgumentException");
             Assert.hasText(e.getMessage(), "ActivityCredentialLimit不能为null");
         }
     }
@@ -304,7 +304,7 @@ public class ActivityFailTest extends AggregateTestBase {
                     null
             );
         } catch (Exception e) {
-            Assert.isTrue(e instanceof NullPointerException, "应该是NullPointerException");
+            Assert.isTrue(e instanceof IllegalArgumentException, "应该是IllegalArgumentException");
             Assert.hasText(e.getMessage(), "ActivityAwardType不能为null");
         }
     }

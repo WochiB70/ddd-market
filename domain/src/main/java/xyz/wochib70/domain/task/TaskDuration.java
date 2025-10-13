@@ -3,6 +3,7 @@ package xyz.wochib70.domain.task;
 import lombok.Getter;
 import xyz.wochib70.domain.activity.ActivityDuration;
 import xyz.wochib70.domain.utils.DurationUtil;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -60,6 +61,7 @@ public class TaskDuration {
 
             // 情况1：活动无时间限制，任务时间只要自身合理即可
             if (Objects.isNull(activityStart) && Objects.isNull(activityEnd)) {
+                ParameterUtil.requireExpression(!DurationUtil.validDuration(startTime, expiredTime), "活动无时间限制，任务的结束时间不能小于开始时间");
                 return;
             }
 

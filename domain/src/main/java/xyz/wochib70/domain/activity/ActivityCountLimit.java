@@ -2,6 +2,7 @@ package xyz.wochib70.domain.activity;
 
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.Objects;
 
@@ -14,10 +15,8 @@ public record ActivityCountLimit(
 
 
     public ActivityCountLimit {
-        Objects.requireNonNull(type, "限制类型不能为空");
-        if (count < 0) {
-            throw new IllegalArgumentException("限制数量不能小于0");
-        }
+        ParameterUtil.requireNonNull(type, "限制类型不能为空");
+        ParameterUtil.requireExpression(count < 0, "限制数量不能小于0");
     }
 
     /**
@@ -26,7 +25,7 @@ public record ActivityCountLimit(
      * @throws ActivityLimitException 参与活动次数已达上限
      */
     public void participate(IdentifierId<Long> activityId, UserId userId) {
-        Objects.requireNonNull(userId, "用户ID不能为空");
+        ParameterUtil.requireNonNull(userId, "用户ID不能为空");
         switch (type) {
             case INFINITE -> {
             }

@@ -6,6 +6,7 @@ import xyz.wochib70.domain.AbstractAggregate;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.credential.events.*;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.Objects;
 
@@ -84,6 +85,7 @@ public non-sealed class CredentialImpl extends AbstractAggregate<Long> implement
 
     @Override
     public void modifyDuration(CredentialDuration duration) {
+        ParameterUtil.requireNonNull(duration, "CredentialDuration不能为null");
         if (!Objects.equals(this.duration, duration)) {
             this.duration = duration;
             publishEvent(new CredentialDurationModifiedEvent(
@@ -95,9 +97,7 @@ public non-sealed class CredentialImpl extends AbstractAggregate<Long> implement
 
     @Override
     public void modifyUnusedCount(int unusedCount) {
-        if (unusedCount < 0) {
-            throw new IllegalArgumentException("不能设置小于0的次数");
-        }
+        ParameterUtil.requireExpression(unusedCount < 0, "不能设置小于0的次数");
         if (!Objects.equals(this.unusedCount, unusedCount)) {
             this.unusedCount = unusedCount;
             publishEvent(new CredentialUnsedCountModifiedEvent(

@@ -23,21 +23,21 @@ class ReceivedTaskExpireTimeTest {
     @Test
     void constructor_shouldThrowException_whenSecondsIsNullAndTypeIsNotExpireInTime() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> 
-            new ReceivedTaskExpireTime(ReceivedTaskExpireTimeType.EXPIRE_TODAY_END, null));
+            new ReceivedTaskExpireTime(ReceivedTaskExpireTimeType.EXPIRE_IN_TIME, null));
         assertEquals("当前领取任务的过期类型为指定时间后过期，秒数不能小于等于0", exception.getMessage());
     }
 
     @Test
     void constructor_shouldThrowException_whenSecondsIsZeroAndTypeIsNotExpireInTime() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> 
-            new ReceivedTaskExpireTime(ReceivedTaskExpireTimeType.EXPIRE_TODAY_END, 0L));
+            new ReceivedTaskExpireTime(ReceivedTaskExpireTimeType.EXPIRE_IN_TIME, 0L));
         assertEquals("当前领取任务的过期类型为指定时间后过期，秒数不能小于等于0", exception.getMessage());
     }
 
     @Test
     void constructor_shouldThrowException_whenSecondsIsNegativeAndTypeIsNotExpireInTime() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> 
-            new ReceivedTaskExpireTime(ReceivedTaskExpireTimeType.EXPIRE_TODAY_END, -1L));
+            new ReceivedTaskExpireTime(ReceivedTaskExpireTimeType.EXPIRE_IN_TIME, -1L));
         assertEquals("当前领取任务的过期类型为指定时间后过期，秒数不能小于等于0", exception.getMessage());
     }
 
@@ -98,7 +98,10 @@ class ReceivedTaskExpireTimeTest {
     @Test
     void calculate_shouldReturnNextDayStart_whenTypeIsExpireTodayEnd() {
         ReceivedTaskExpireTime expireTime = new ReceivedTaskExpireTime(ReceivedTaskExpireTimeType.EXPIRE_TODAY_END, 100L);
-        LocalDateTime result = expireTime.calculate(mock(ActivityImpl.class));
+        ActivityImpl mock = mock(ActivityImpl.class);
+        ActivityDuration activityDuration = new ActivityDuration(LocalDateTime.now().minusDays(1), null);
+        when(mock.getDuration()).thenReturn(activityDuration);
+        LocalDateTime result = expireTime.calculate(mock);
         LocalDateTime expected = LocalDateTime.now().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
         
         // Compare year, month, day, hour, minute, second separately to avoid nanosecond precision issues
@@ -108,7 +111,10 @@ class ReceivedTaskExpireTimeTest {
     @Test
     void calculate_shouldReturnWeekEnd_whenTypeIsExpireThisWeekEnd() {
         ReceivedTaskExpireTime expireTime = new ReceivedTaskExpireTime(ReceivedTaskExpireTimeType.EXPIRE_THIS_WEEK_END, 100L);
-        LocalDateTime result = expireTime.calculate(mock(ActivityImpl.class));
+        ActivityImpl mock = mock(ActivityImpl.class);
+        ActivityDuration activityDuration = new ActivityDuration(LocalDateTime.now().minusDays(7), null);
+        when(mock.getDuration()).thenReturn(activityDuration);
+        LocalDateTime result = expireTime.calculate(mock);
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expected = now.plusDays(7 - now.getDayOfWeek().getValue())
                                    .withHour(0).withMinute(0).withSecond(0).withNano(0);

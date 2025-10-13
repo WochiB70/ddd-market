@@ -6,6 +6,7 @@ import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.activity.Activity;
 import xyz.wochib70.domain.activity.ActivityDuration;
 import xyz.wochib70.domain.activity.ActivityRepository;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.Objects;
 
@@ -23,10 +24,10 @@ public class TaskFactory {
                        IdentifierId<Long> activityId,
                        ReceivedTaskExpireTime receivedTaskExpireTime
     ) {
-        Objects.requireNonNull(info, "任务信息不能为空");
-        Objects.requireNonNull(taskCountLimit, "任务限制不能为空");
-        Objects.requireNonNull(duration, "任务时间不能为空");
-        Objects.requireNonNull(receivedTaskExpireTime, "任务领取时间不能为空");
+        ParameterUtil.requireNonNull(info, "任务信息不能为空");
+        ParameterUtil.requireNonNull(taskCountLimit, "任务限制不能为空");
+        ParameterUtil.requireNonNull(duration, "任务时间不能为空");
+        ParameterUtil.requireNonNull(receivedTaskExpireTime, "任务领取时间不能为空");
 
         TaskImpl task = new TaskImpl(taskIdGenerator.nextAggregateId());
         task.setDuration(duration);

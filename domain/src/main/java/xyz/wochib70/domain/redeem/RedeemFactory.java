@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.activity.ActivityRepository;
+import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.Set;
 
@@ -16,6 +17,7 @@ public class RedeemFactory {
     private final ActivityRepository activityRepository;
 
     public RedeemImpl createRedeem(IdentifierId<Long> activityId, String name) {
+        ParameterUtil.requireNonBlank(name, "名称不能为空");
         activityRepository.queryActivityByIdOrThrow(activityId);
         RedeemImpl redeem = new RedeemImpl(redeemItemIdGenerator.nextRedeemItemId());
         redeem.setName(name);

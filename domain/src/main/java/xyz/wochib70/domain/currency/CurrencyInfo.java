@@ -1,5 +1,7 @@
 package xyz.wochib70.domain.currency;
 
+import xyz.wochib70.domain.utils.ParameterUtil;
+
 import java.util.Objects;
 
 public record CurrencyInfo(
@@ -9,16 +11,10 @@ public record CurrencyInfo(
 
 
     public CurrencyInfo {
-        if (Objects.isNull(name) || name.isBlank()) {
-            throw new IllegalArgumentException("Currency name不能为null或是空字符串");
-        }
-        if (name.length() > 20) {
-            throw new IllegalArgumentException("Currency name长度不能超过20个字符");
-        }
+        ParameterUtil.requireExpression(Objects.isNull(name) || name.isBlank(), "Currency name不能为null或是空字符串");
+        ParameterUtil.requireExpression(name.length() > 20, "Currency name长度不能超过20个字符");
         description = Objects.requireNonNullElse(description, "");
-        if (description.length() > 50) {
-            throw new IllegalArgumentException("Currency description长度不能超过50个字符");
-        }
+        ParameterUtil.requireExpression(description.length() > 50, "Currency description长度不能超过50个字符");
     }
 
 }

@@ -30,7 +30,7 @@ class DrawPriceTest {
         Integer price = 100;
 
         // When & Then
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             new DrawPrice(currencyId, price);
         });
         // Actual exception message will be from Objects.requireNonNull
@@ -43,7 +43,7 @@ class DrawPriceTest {
         Integer price = null;
 
         // When & Then
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             new DrawPrice(currencyId, price);
         });
         // Actual exception message will be from Objects.requireNonNull
