@@ -92,21 +92,15 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
 
     @Override
     public void modifyDrawItemInventory(IdentifierId<Long> awardId, DrawItemInventory inventory) {
-        drawItems.stream().filter(award -> Objects.equals(award.getId(), awardId))
-                .findFirst()
-                .ifPresentOrElse(award -> {
-                            if (!Objects.equals(award.getDrawItemInventory(), inventory)) {
-                                award.setDrawItemInventory(inventory);
-                                publishEvent(new DrawItemInventoryModifiedEvent(
-                                        getDrawPoolId(),
-                                        awardId,
-                                        inventory
-                                ));
-                            }
-                        },
-                        () -> {
-                            throw new NoSuchAwardException("Award not found, id = " + awardId);
-                        });
+        DrawItem award = findDrawItemOrThrow(awardId);
+        if (!Objects.equals(award.getDrawItemInventory(), inventory)) {
+            award.setDrawItemInventory(inventory);
+            publishEvent(new DrawItemInventoryModifiedEvent(
+                    getDrawPoolId(),
+                    awardId,
+                    inventory
+            ));
+        }
     }
 
     @Override
@@ -114,31 +108,19 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
         if (name == null) {
             throw new IllegalArgumentException("名称不能为null");
         }
-        drawItems.stream()
-                .filter(award -> !Objects.equals(award.getId(), awardId))
-                .filter(award -> Objects.equals(award.getName(), name))
-                .findFirst()
-                .ifPresent(award -> {
-                    throw new DuplicateAwardException("修改的name已存在, name = " + name);
-                });
+        checkDuplicateDrawItemName(name, awardId);
 
-        drawItems.stream().filter(award -> Objects.equals(award.getId(), awardId))
-                .findFirst()
-                .ifPresentOrElse(award -> {
-                            if (!Objects.equals(award.getName(), name) || !Objects.equals(award.getDescription(), description)) {
-                                award.setName(name);
-                                award.setDescription(description);
-                                publishEvent(new DrawItemBasicInfoModifiedEvent(
-                                        getDrawPoolId(),
-                                        awardId,
-                                        name,
-                                        description
-                                ));
-                            }
-                        },
-                        () -> {
-                            throw new NoSuchAwardException("Award not found, id = " + awardId);
-                        });
+        DrawItem award = findDrawItemOrThrow(awardId);
+        if (!Objects.equals(award.getName(), name) || !Objects.equals(award.getDescription(), description)) {
+            award.setName(name);
+            award.setDescription(description);
+            publishEvent(new DrawItemBasicInfoModifiedEvent(
+                    getDrawPoolId(),
+                    awardId,
+                    name,
+                    description
+            ));
+        }
     }
 
     @Override
@@ -146,21 +128,15 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
         if (type == null) {
             throw new IllegalArgumentException("AwardType不能为null");
         }
-        drawItems.stream().filter(award -> Objects.equals(award.getId(), awardId))
-                .findFirst()
-                .ifPresentOrElse(award -> {
-                            if (!Objects.equals(award.getType(), type)) {
-                                award.setType(type);
-                                publishEvent(new DrawItemTypeModifiedEvent(
-                                        getDrawPoolId(),
-                                        awardId,
-                                        type
-                                ));
-                            }
-                        },
-                        () -> {
-                            throw new NoSuchAwardException("Award not found, id = " + awardId);
-                        });
+        DrawItem award = findDrawItemOrThrow(awardId);
+        if (!Objects.equals(award.getType(), type)) {
+            award.setType(type);
+            publishEvent(new DrawItemTypeModifiedEvent(
+                    getDrawPoolId(),
+                    awardId,
+                    type
+            ));
+        }
     }
 
     @Override
@@ -168,30 +144,20 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
         if (weight == null || weight < 0) {
             throw new IllegalArgumentException("权重不能小于0或为null");
         }
-        drawItems.stream().filter(award -> Objects.equals(award.getId(), awardId))
-                .findFirst()
-                .ifPresentOrElse(award -> {
-                            if (!Objects.equals(award.getWeight(), weight)) {
-                                award.setWeight(weight);
-                                publishEvent(new DrawItemWeightModifiedEvent(
-                                        getDrawPoolId(),
-                                        awardId,
-                                        weight
-                                ));
-                            }
-                        },
-                        () -> {
-                            throw new NoSuchAwardException("Award not found, id = " + awardId);
-                        });
+        DrawItem award = findDrawItemOrThrow(awardId);
+        if (!Objects.equals(award.getWeight(), weight)) {
+            award.setWeight(weight);
+            publishEvent(new DrawItemWeightModifiedEvent(
+                    getDrawPoolId(),
+                    awardId,
+                    weight
+            ));
+        }
     }
 
     @Override
     public void addDrawItem(DrawItemInfo drawItemInfo) {
-        drawItems.stream().filter(award -> Objects.equals(award.getName(), drawItemInfo.name()))
-                .findFirst()
-                .ifPresent(award -> {
-                    throw new DuplicateAwardException("Award已存在, name = " + drawItemInfo.name());
-                });
+        checkDuplicateDrawItemName(drawItemInfo.name(), null);
 
         DrawItem drawItem = new DrawItem(
                 DrawDomainRegistry.awardIdGenerator().nextAwardId(),
@@ -231,5 +197,36 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
         publishEvent(new DrawPoolDeletedEvent(
                 this
         ));
+    }
+
+    /**
+     * 根据ID查找DrawItem，如果不存在则抛出异常
+     *
+     * @param awardId 奖品ID
+     * @return DrawItem
+     * @throws NoSuchAwardException 如果奖品不存在
+     */
+    private DrawItem findDrawItemOrThrow(IdentifierId<Long> awardId) {
+        return drawItems.stream()
+                .filter(award -> Objects.equals(award.getId(), awardId))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchAwardException("Award not found, id = " + awardId));
+    }
+
+    /**
+     * 检查是否存在重复的奖品名称（排除指定ID的奖品）
+     *
+     * @param name      要检查的名称
+     * @param excludeId 要排除的奖品ID（可以为null）
+     * @throws DuplicateAwardException 如果存在重复名称
+     */
+    private void checkDuplicateDrawItemName(String name, IdentifierId<Long> excludeId) {
+        drawItems.stream()
+                .filter(award -> excludeId == null || !Objects.equals(award.getId(), excludeId))
+                .filter(award -> Objects.equals(award.getName(), name))
+                .findFirst()
+                .ifPresent(award -> {
+                    throw new DuplicateAwardException("修改的name已存在, name = " + name);
+                });
     }
 }
