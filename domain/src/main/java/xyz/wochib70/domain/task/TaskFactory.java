@@ -29,7 +29,7 @@ public class TaskFactory {
         ParameterUtil.requireNonNull(duration, "任务时间不能为空");
         ParameterUtil.requireNonNull(receivedTaskExpireTime, "任务领取时间不能为空");
 
-        TaskImpl task = new TaskImpl(taskIdGenerator.nextAggregateId());
+        TaskImpl task = new TaskImpl(taskIdGenerator.nextTaskId());
         task.setDuration(duration);
         task.setInfo(info);
         task.setTaskCountLimit(taskCountLimit);

@@ -32,7 +32,7 @@ public class UserTaskFactory {
         Task task = taskRepository.queryTaskByIdOrThrow(taskId);
         CompleteEvent completeEvent = task.getCompleteEvent();
         final ReceivedTaskExpireTime expireTime = task.getReceivedTaskExpireTime();
-        var userTask = new UserTaskImpl(userTaskIdGenerator.nextAggregateId());
+        var userTask = new UserTaskImpl(userTaskIdGenerator.nextUserTaskId());
         userTask.setTaskId(taskId);
         userTask.setUserId(userId);
         LocalDateTime userTaskExpireTime = activityRepository.queryActivityById(task.getActivityId())

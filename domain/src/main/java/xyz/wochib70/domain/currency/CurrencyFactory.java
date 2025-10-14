@@ -13,7 +13,7 @@ public class CurrencyFactory {
     public Currency create(CurrencyInfo info) {
         ParameterUtil.requireNonNull(info, "CurrencyInfo不能为null");
         CurrencyImpl currency = new CurrencyImpl(
-                currencyIdGenerator.nextAggregateId()
+                currencyIdGenerator.nextCurrencyId()
         );
         currency.setInfo(info);
         currency.setStatus(CurrencyStatus.VALID);

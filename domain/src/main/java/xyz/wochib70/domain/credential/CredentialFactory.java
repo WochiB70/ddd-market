@@ -20,7 +20,7 @@ public class CredentialFactory {
         ParameterUtil.requireNonNull(user, "用户Id不能为null");
         ParameterUtil.requireNonNull(unusedCount, "使用次数不能为null");
         ParameterUtil.requireExpression(unusedCount < 1, "使用次数不能小于1");
-        var credentialId = credentialIdGenerator.nextAggregateId();
+        var credentialId = credentialIdGenerator.nextCredentialId();
         var credential = new CredentialImpl(credentialId);
         credential.setDuration(duration);
         credential.setStatus(CredentialStatus.VALID);

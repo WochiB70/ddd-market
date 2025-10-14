@@ -19,7 +19,7 @@ public class DrawPoolFactory {
         }
         ParameterUtil.requireNonNull(activityId, "活动Id不能为空");
         ParameterUtil.requireNonNull(strategyType, "抽奖策略不能为空");
-        IdentifierId<Long> drawPoolId = drawPoolIdGenerator.nextAggregateId();
+        IdentifierId<Long> drawPoolId = drawPoolIdGenerator.nextDrawPoolId();
         DrawPoolImpl drawPool = new DrawPoolImpl(drawPoolId);
         drawPool.setName(name);
         drawPool.setActivityId(activityId);

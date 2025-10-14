@@ -12,14 +12,14 @@ import java.util.Set;
 @Component
 public class RedeemFactory {
 
-    private final RedeemItemIdGenerator redeemItemIdGenerator;
+    private final RedeemPoolIdGenerator redeemPoolIdGenerator;
 
     private final ActivityRepository activityRepository;
 
     public RedeemImpl createRedeem(IdentifierId<Long> activityId, String name) {
         ParameterUtil.requireNonBlank(name, "名称不能为空");
         activityRepository.queryActivityByIdOrThrow(activityId);
-        RedeemImpl redeem = new RedeemImpl(redeemItemIdGenerator.nextRedeemItemId());
+        RedeemImpl redeem = new RedeemImpl(redeemPoolIdGenerator.nextRedeemPoolId());
         redeem.setName(name);
         redeem.setRedeemItems(Set.of());
         redeem.create();

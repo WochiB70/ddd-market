@@ -10,5 +10,5 @@ public interface DomainIdGenerator<ID> {
      *
      * @return 聚合Id
      */
-    IdentifierId<ID> nextAggregateId();
+    IdentifierId<ID> nextAggregateId(String aggregateName);
 }

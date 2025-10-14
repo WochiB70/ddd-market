@@ -12,7 +12,7 @@ public class AccountFactory {
     private final AccountIdGenerator accountIdGenerator;
 
     public Account create(UserId userId, IdentifierId<Long> currencyId) {
-        IdentifierId<Long> accountId = accountIdGenerator.nextAggregateId();
+        IdentifierId<Long> accountId = accountIdGenerator.nextAccountId();
         AccountImpl account = new AccountImpl(accountId);
         account.setUserId(userId);
         account.setCurrencyId(currencyId);

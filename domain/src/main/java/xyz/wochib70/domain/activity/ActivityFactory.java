@@ -25,7 +25,7 @@ public class ActivityFactory {
         ParameterUtil.requireNonNull(countLimit, "Activity人数限制不能为null");
         ParameterUtil.requireNonNull(credentialLimit, "Activity凭证限制不能为null");
         ParameterUtil.requireNonNull(awardType, "Activity奖品类型不能为null");
-        var activityId = activityIdGenerator.nextAggregateId();
+        var activityId = activityIdGenerator.nextActivityId();
         var activity = new ActivityImpl(activityId);
         activity.setInfo(info);
         activity.setDuration(duration);
