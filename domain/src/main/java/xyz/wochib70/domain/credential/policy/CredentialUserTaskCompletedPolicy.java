@@ -22,7 +22,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Slf4j
 @Component
-public class UserTaskCompletedPolicy {
+public class CredentialUserTaskCompletedPolicy {
 
     private final TaskRepository taskRepository;
 

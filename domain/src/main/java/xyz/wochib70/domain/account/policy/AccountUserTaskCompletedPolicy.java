@@ -5,15 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.account.Account;
 import xyz.wochib70.domain.account.AccountRepository;
 import xyz.wochib70.domain.task.Task;
 import xyz.wochib70.domain.task.TaskAward;
 import xyz.wochib70.domain.task.TaskAwardType;
 import xyz.wochib70.domain.task.TaskRepository;
-import xyz.wochib70.domain.usertask.UserTask;
-import xyz.wochib70.domain.usertask.UserTaskRepository;
 import xyz.wochib70.domain.usertask.events.UserTaskCompletedEvent;
 
 import java.util.Objects;
@@ -21,7 +18,7 @@ import java.util.Objects;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class UserTaskCompletedPolicy {
+public class AccountUserTaskCompletedPolicy {
 
 
     private final TaskRepository taskRepository;
