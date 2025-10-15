@@ -21,7 +21,7 @@ public class CredentialTest extends AggregateTestBase {
     void createCredential() {
         DefaultIdentifierId<Long> id = new DefaultIdentifierId<>(0L);
         CredentialIdGenerator credentialIdGenerator = Mockito.mock(CredentialIdGenerator.class);
-        Mockito.when(credentialIdGenerator.nextAggregateId())
+        Mockito.when(credentialIdGenerator.nextCredentialId())
                 .thenReturn(id);
 
 

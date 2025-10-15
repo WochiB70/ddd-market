@@ -18,7 +18,7 @@ public class ActivityTest extends AggregateTestBase {
     @Test
     void createActivityTest() {
         ActivityIdGenerator activityIdGenerator = Mockito.mock(ActivityIdGenerator.class);
-        Mockito.when(activityIdGenerator.nextAggregateId())
+        Mockito.when(activityIdGenerator.nextActivityId())
                 .thenReturn(new DefaultIdentifierId<>(0L));
 
         ActivityFactory factory = new ActivityFactory(activityIdGenerator);

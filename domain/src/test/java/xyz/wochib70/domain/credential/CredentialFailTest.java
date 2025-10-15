@@ -21,7 +21,7 @@ public class CredentialFailTest extends AggregateTestBase {
         try {
             DefaultIdentifierId<Long> id = new DefaultIdentifierId<>(0L);
             CredentialIdGenerator credentialIdGenerator = Mockito.mock(CredentialIdGenerator.class);
-            Mockito.when(credentialIdGenerator.nextAggregateId())
+            Mockito.when(credentialIdGenerator.nextCredentialId())
                     .thenReturn(id);
 
 
@@ -40,7 +40,7 @@ public class CredentialFailTest extends AggregateTestBase {
         try {
             DefaultIdentifierId<Long> id = new DefaultIdentifierId<>(0L);
             CredentialIdGenerator credentialIdGenerator = Mockito.mock(CredentialIdGenerator.class);
-            Mockito.when(credentialIdGenerator.nextAggregateId())
+            Mockito.when(credentialIdGenerator.nextCredentialId())
                     .thenReturn(id);
 
 
@@ -62,7 +62,7 @@ public class CredentialFailTest extends AggregateTestBase {
         try {
             DefaultIdentifierId<Long> id = new DefaultIdentifierId<>(0L);
             CredentialIdGenerator credentialIdGenerator = Mockito.mock(CredentialIdGenerator.class);
-            Mockito.when(credentialIdGenerator.nextAggregateId())
+            Mockito.when(credentialIdGenerator.nextCredentialId())
                     .thenReturn(id);
 
 

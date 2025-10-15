@@ -15,7 +15,7 @@ class CurrencyTest extends AggregateTestBase {
     void createCurrencyTest() {
         CurrencyIdGenerator currencyIdGenerator = Mockito.mock(CurrencyIdGenerator.class);
 
-        Mockito.when(currencyIdGenerator.nextAggregateId())
+        Mockito.when(currencyIdGenerator.nextCurrencyId())
                 .thenReturn(new DefaultIdentifierId<>(1L));
 
 

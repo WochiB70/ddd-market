@@ -15,7 +15,7 @@ public class ActivityFailTest extends AggregateTestBase {
     @Test
     void createActivityFail1() {
         ActivityIdGenerator activityIdGenerator = Mockito.mock(ActivityIdGenerator.class);
-        Mockito.when(activityIdGenerator.nextAggregateId())
+        Mockito.when(activityIdGenerator.nextActivityId())
                 .thenReturn(new DefaultIdentifierId<>(0L));
 
         ActivityFactory factory = new ActivityFactory(activityIdGenerator);
@@ -92,7 +92,7 @@ public class ActivityFailTest extends AggregateTestBase {
     @Test
     void createActivityFail2() {
         ActivityIdGenerator activityIdGenerator = Mockito.mock(ActivityIdGenerator.class);
-        Mockito.when(activityIdGenerator.nextAggregateId())
+        Mockito.when(activityIdGenerator.nextActivityId())
                 .thenReturn(new DefaultIdentifierId<>(0L));
 
         ActivityFactory factory = new ActivityFactory(activityIdGenerator);
@@ -144,7 +144,7 @@ public class ActivityFailTest extends AggregateTestBase {
     @Test
     void createActivityFail3() {
         ActivityIdGenerator activityIdGenerator = Mockito.mock(ActivityIdGenerator.class);
-        Mockito.when(activityIdGenerator.nextAggregateId())
+        Mockito.when(activityIdGenerator.nextActivityId())
                 .thenReturn(new DefaultIdentifierId<>(0L));
 
         ActivityFactory factory = new ActivityFactory(activityIdGenerator);
@@ -196,7 +196,7 @@ public class ActivityFailTest extends AggregateTestBase {
     @Test
     void createActivityFail4() {
         ActivityIdGenerator activityIdGenerator = Mockito.mock(ActivityIdGenerator.class);
-        Mockito.when(activityIdGenerator.nextAggregateId())
+        Mockito.when(activityIdGenerator.nextActivityId())
                 .thenReturn(new DefaultIdentifierId<>(0L));
 
         ActivityFactory factory = new ActivityFactory(activityIdGenerator);
@@ -219,7 +219,7 @@ public class ActivityFailTest extends AggregateTestBase {
     @Test
     void createActivityFail5() {
         ActivityIdGenerator activityIdGenerator = Mockito.mock(ActivityIdGenerator.class);
-        Mockito.when(activityIdGenerator.nextAggregateId())
+        Mockito.when(activityIdGenerator.nextActivityId())
                 .thenReturn(new DefaultIdentifierId<>(0L));
 
         ActivityFactory factory = new ActivityFactory(activityIdGenerator);
