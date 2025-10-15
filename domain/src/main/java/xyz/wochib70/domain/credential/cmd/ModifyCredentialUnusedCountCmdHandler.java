@@ -17,7 +17,7 @@ public class ModifyCredentialUnusedCountCmdHandler {
     public void handle(ModifyCredentialUnusedCountCmd cmd) {
         Credential credential = credentialRepository.findByIdOrThrow(cmd.credentialId());
         credential.modifyUnusedCount(cmd.unusedCount());
-        credentialRepository.save(credential);
+        credentialRepository.update(credential);
         credential.getEvents().forEach(eventPublisher::publishEvent);
     }
 }
