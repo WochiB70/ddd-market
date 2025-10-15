@@ -17,7 +17,7 @@ public class EnableTaskCmdHandler {
     public void handle(EnableTaskCmd cmd) {
         Task task = taskRepository.queryTaskByIdOrThrow(cmd.taskId());
         task.enable();
-        taskRepository.save(task);
+        taskRepository.update(task);
         task.getEvents().forEach(eventPublisher::publishEvent);
     }
 }

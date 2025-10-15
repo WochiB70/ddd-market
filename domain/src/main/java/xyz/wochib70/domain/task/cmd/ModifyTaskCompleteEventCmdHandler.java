@@ -17,6 +17,7 @@ public class ModifyTaskCompleteEventCmdHandler {
     public void handle(ModifyTaskCompleteEventCmd cmd) {
         Task task = taskRepository.queryTaskByIdOrThrow(cmd.taskId());
         task.modifyCompleteEvent(cmd.completeEvent());
+        taskRepository.update(task);
         task.getEvents().forEach(eventPublisher::publishEvent);
     }
 }

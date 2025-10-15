@@ -17,6 +17,7 @@ public class ModifyTaskInfoCmdHandler {
     public void handle(ModifyTaskInfoCmd cmd) {
         Task task = taskRepository.queryTaskByIdOrThrow(cmd.taskId());
         task.modifyInfo(cmd.info());
+        taskRepository.update(task);
         task.getEvents().forEach(eventPublisher::publishEvent);
     }
 }

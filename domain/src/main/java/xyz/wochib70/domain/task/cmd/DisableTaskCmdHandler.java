@@ -17,6 +17,7 @@ public class DisableTaskCmdHandler {
     public void handle(DisableTaskCmd cmd) {
         Task task = taskRepository.queryTaskByIdOrThrow(cmd.taskId());
         task.disable();
+        taskRepository.update(task);
         task.getEvents().forEach(eventPublisher::publishEvent);
     }
 }

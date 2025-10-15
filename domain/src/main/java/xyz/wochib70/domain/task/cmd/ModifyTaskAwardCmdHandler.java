@@ -17,7 +17,7 @@ public class ModifyTaskAwardCmdHandler {
     public void handle(ModifyTaskAwardCmd cmd) {
         Task task = taskRepository.queryTaskByIdOrThrow(cmd.taskId());
         task.modifyTaskAward(cmd.taskAward());
-        taskRepository.save(task);
+        taskRepository.update(task);
         task.getEvents().forEach(eventPublisher::publishEvent);
     }
 }

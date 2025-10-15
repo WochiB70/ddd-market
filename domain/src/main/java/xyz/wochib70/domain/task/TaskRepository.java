@@ -52,4 +52,6 @@ public interface TaskRepository {
      * @return empty list 如果不存在
      */
     List<Task> queryTaskByActivityId(IdentifierId<Long> activityId);
+
+    void update(Task task);
 }

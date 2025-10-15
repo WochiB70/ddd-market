@@ -17,6 +17,7 @@ public class ModifyTaskCountLimitCmdHandler {
     public void handle(ModifyTaskCountLimitCmd cmd) {
         Task task = taskRepository.queryTaskByIdOrThrow(cmd.taskId());
         task.modifyCountLimit(cmd.countLimit());
+        taskRepository.update(task);
         task.getEvents().forEach(eventPublisher::publishEvent);
     }
 }

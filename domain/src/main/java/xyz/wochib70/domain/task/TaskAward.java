@@ -12,7 +12,6 @@ public record TaskAward(
 ) {
     public TaskAward {
         ParameterUtil.requireNonNull(type, "任务完成奖励类型不能为null");
-        ParameterUtil.requireNonNull(awardId, "任务完成奖励Id不能为null");
         ParameterUtil.requireNonNull(count, "任务完成奖励数量不能为null");
     }
 }

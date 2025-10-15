@@ -17,7 +17,7 @@ public class ModifyTaskReceivedTaskExpireTimeCmdHandler {
     public void handle(ModifyTaskReceivedTaskExpireTimeCmd cmd) {
         Task task = taskRepository.queryTaskByIdOrThrow(cmd.taskId());
         task.modifyReceivedTaskExpireTime(cmd.receivedTaskExpireTime());
-        taskRepository.save(task);
+        taskRepository.update(task);
         task.getEvents().forEach(eventPublisher::publishEvent);
     }
 }
