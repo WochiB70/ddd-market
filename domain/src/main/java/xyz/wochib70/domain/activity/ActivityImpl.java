@@ -89,6 +89,10 @@ public non-sealed class ActivityImpl extends AbstractAggregate<Long> implements 
     @Override
     public void participate(UserId userId) {
         countLimit.participate(getActivityId(), userId);
+        publishEvent(new ActivityParticipatedEvent(
+                userId,
+                getActivityId()
+        ));
     }
 
     @Override
