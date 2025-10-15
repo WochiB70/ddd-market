@@ -16,7 +16,7 @@ public class ModifyCurrencyInfoCmdHandler {
     private final ApplicationEventPublisher eventPublisher;
 
     public void handle(ModifyCurrencyInfoCmd cmd) {
-        Currency currency = currencyRepository.findById(cmd.currencyId());
+        Currency currency = currencyRepository.findByIdOrThrow(cmd.currencyId());
         currency.modifyInfo(cmd.info());
         currencyRepository.save(currency);
         currency.getEvents().forEach(eventPublisher::publishEvent);

@@ -15,7 +15,7 @@ public class DeactivateCurrencyCmdHandler {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     public void handle(DeactivateCurrencyCmd cmd) {
-        var currency = currencyRepository.findById(cmd.currencyId());
+        var currency = currencyRepository.findByIdOrThrow(cmd.currencyId());
         currency.deactivate();
         currency.getEvents().forEach(applicationEventPublisher::publishEvent);
         currencyRepository.save(currency);

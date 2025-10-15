@@ -14,7 +14,7 @@ public class EnableCurrencyCmdHandler {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     public void handle(EnableCurrencyCmd cmd) {
-        var currency = currencyRepository.findById(cmd.currencyId());
+        var currency = currencyRepository.findByIdOrThrow(cmd.currencyId());
         currency.enable();
         currency.getEvents().forEach(applicationEventPublisher::publishEvent);
         currencyRepository.save(currency);

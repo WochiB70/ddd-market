@@ -12,7 +12,7 @@ public interface CurrencyRepository {
      *
      * @param id 货币Id
      * @return 货币聚合
-     * @throws java.util.NoSuchElementException 如果找不到该Id的货币聚合则抛出此异常
+     * @throws NoSuchCurrencyException 如果找不到该Id的货币聚合则抛出此异常
      */
-    Currency findById(IdentifierId<Long> id);
+    Currency findByIdOrThrow(IdentifierId<Long> id);
 }
