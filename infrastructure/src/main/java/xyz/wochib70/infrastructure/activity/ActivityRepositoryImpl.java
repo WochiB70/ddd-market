@@ -78,7 +78,7 @@ public class ActivityRepositoryImpl implements ActivityRepository {
     @Override
     public void update(Activity activity) {
         ActivityEntity entity = toEntity(activity);
-        activityDao.updateById(entity);
+        activityDao.save(entity);
     }
 
     @Override

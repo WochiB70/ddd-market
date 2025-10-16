@@ -13,5 +13,4 @@ public interface CredentialDao extends JpaRepository<CredentialEntity, Long> {
 
     Optional<CredentialEntity> queryByUsageCode(String usageCode);
 
-    void updateById(CredentialEntity entity);
 }

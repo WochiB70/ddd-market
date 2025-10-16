@@ -16,7 +16,7 @@ import java.util.Objects;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class ActivityAwardTypeModifiedPolicy {
+public class RedeemActivityAwardTypeModifiedPolicy {
 
     private final RedeemRepository redeemRepository;
 

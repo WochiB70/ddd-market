@@ -36,7 +36,7 @@ public class CredentialRepositoryImpl implements CredentialRepository {
     @Override
     public void update(Credential credential) {
         CredentialEntity entity = toEntity(credential);
-        credentialDao.updateById(entity);
+        credentialDao.save(entity);
     }
 
     @Override

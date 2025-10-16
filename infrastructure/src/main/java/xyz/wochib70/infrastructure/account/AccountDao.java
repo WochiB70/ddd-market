@@ -9,5 +9,4 @@ import java.util.Optional;
 public interface AccountDao extends JpaRepository<AccountEntity, Long> {
     Optional<AccountEntity> queryAccountEntityByCurrencyIdAndUserId(Long currencyId, Long userId);
 
-    void updateById(AccountEntity entity);
 }

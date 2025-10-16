@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface TaskDao extends JpaRepository<TaskEntity, Long> {
+    @Query("SELECT t FROM TaskEntity t WHERE t.id = :id")
     Optional<TaskEntity> queryTaskById(Long id);
     
     @Query("SELECT t FROM TaskEntity t WHERE t.activityId = :activityId")

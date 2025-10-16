@@ -9,7 +9,6 @@ import java.util.Optional;
 @Repository
 public interface ActivityDao extends JpaRepository<ActivityEntity, Long> {
 
-    void updateById(ActivityEntity entity);
 
     Optional<ActivityEntity> queryActivityEntitiesById(Long id);
 }

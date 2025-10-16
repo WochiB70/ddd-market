@@ -32,7 +32,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     @Override
     public void update(Account account) {
         AccountEntity entity = toEntity(account);
-        accountDao.updateById(entity);
+        accountDao.save(entity);
     }
 
     private static AccountEntity toEntity(Account account) {
