@@ -15,7 +15,7 @@ public interface UserTaskRepository {
      * @return 用户任务
      * @throws NoSuchUserTaskException 用户任务不存在
      */
-    UserTask queryUncompletedUserTaskByIdAndUserIdOrThrow(IdentifierId<Long> userTaskId, UserId userId);
+    UserTask queryUncompletedUserTaskByTaskIdAndUserIdOrThrow(IdentifierId<Long> userTaskId, UserId userId);
 
 
     /**

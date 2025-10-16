@@ -15,7 +15,7 @@ public class CompleteUserTaskCmdHandler {
     private final ApplicationEventPublisher eventPublisher;
 
     public void handle(CompleteUserTaskCmd cmd) {
-        UserTask userTask = userTaskRepository.queryUncompletedUserTaskByIdAndUserIdOrThrow(
+        UserTask userTask = userTaskRepository.queryUncompletedUserTaskByTaskIdAndUserIdOrThrow(
                 cmd.userTaskId(),
                 cmd.userId()
         );

@@ -39,7 +39,6 @@ public class UserTaskFactory {
                 .map(expireTime::calculate)
                 .orElseThrow();
         userTask.setExpireTime(userTaskExpireTime);
-        userTask.setCompleteEvent(completeEvent);
         return userTask;
     }
 }

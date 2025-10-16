@@ -23,9 +23,6 @@ public non-sealed class UserTaskImpl extends AbstractAggregate<Long> implements 
 
     private UserTaskStatus status;
 
-    private CompleteEvent completeEvent;
-
-
     public UserTaskImpl(IdentifierId<Long> identifierId) {
         super(identifierId);
     }
