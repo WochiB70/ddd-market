@@ -1,9 +1,11 @@
 package xyz.wochib70.domain.draw;
 
+import lombok.Getter;
 import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.Objects;
 
+@Getter
 public class DrawItemInventory {
 
     private final DrawInventoryType type;
