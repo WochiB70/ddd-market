@@ -1,13 +1,11 @@
 package xyz.wochib70.web.mutation.draw;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
-import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.draw.cmd.ModifyDrawItemWeightCmd;
-
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Min;
 
 @Data
 @Schema(description = "修改抽奖物品权重请求")

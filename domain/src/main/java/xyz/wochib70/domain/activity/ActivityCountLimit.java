@@ -4,8 +4,6 @@ import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.utils.ParameterUtil;
 
-import java.util.Objects;
-
 import static xyz.wochib70.domain.activity.ActivityDomainRegistry.activityRepository;
 
 public record ActivityCountLimit(

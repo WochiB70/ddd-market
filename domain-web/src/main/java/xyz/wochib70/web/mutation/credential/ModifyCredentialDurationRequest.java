@@ -1,13 +1,12 @@
 package xyz.wochib70.web.mutation.credential;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
-import xyz.wochib70.domain.IdentifierId;
-import xyz.wochib70.domain.credential.cmd.ModifyCredentialDurationCmd;
 import xyz.wochib70.domain.credential.CredentialDuration;
+import xyz.wochib70.domain.credential.cmd.ModifyCredentialDurationCmd;
 
-import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data

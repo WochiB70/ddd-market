@@ -1,15 +1,11 @@
 package xyz.wochib70.web.mutation.activity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import xyz.wochib70.domain.activity.cmd.CreateActivityCmd;
-import xyz.wochib70.domain.activity.ActivityInfo;
-import xyz.wochib70.domain.activity.ActivityDuration;
-import xyz.wochib70.domain.activity.ActivityCountLimit;
-import xyz.wochib70.domain.activity.ActivityAwardType;
-import xyz.wochib70.domain.activity.CountLimitType;
-
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import xyz.wochib70.domain.activity.*;
+import xyz.wochib70.domain.activity.cmd.CreateActivityCmd;
+
 import java.time.LocalDateTime;
 import java.util.List;
 

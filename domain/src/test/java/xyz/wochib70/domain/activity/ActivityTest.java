@@ -1,6 +1,5 @@
 package xyz.wochib70.domain.activity;
 
-import org.assertj.core.util.Strings;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.util.Assert;

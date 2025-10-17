@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
-import xyz.wochib70.domain.activity.Activity;
 import xyz.wochib70.domain.activity.ActivityRepository;
 import xyz.wochib70.domain.task.CompleteEvent;
 import xyz.wochib70.domain.task.ReceivedTaskExpireTime;
@@ -13,7 +12,6 @@ import xyz.wochib70.domain.task.TaskRepository;
 import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @RequiredArgsConstructor
 @Component

@@ -10,7 +10,6 @@ import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.redeem.events.*;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

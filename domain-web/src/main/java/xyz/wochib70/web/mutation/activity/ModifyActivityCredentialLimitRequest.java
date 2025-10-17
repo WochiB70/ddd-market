@@ -1,12 +1,10 @@
 package xyz.wochib70.web.mutation.activity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
-import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.activity.cmd.ModifyActivityCredentialLimitCmd;
-
-import jakarta.validation.constraints.NotNull;
 
 @Data
 @Schema(description = "修改活动凭证限制请求")

@@ -1,7 +1,6 @@
 package xyz.wochib70.domain.redeem;
 
 import lombok.Getter;
-import lombok.Setter;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.utils.ParameterUtil;
 

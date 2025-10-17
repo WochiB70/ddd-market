@@ -1,13 +1,11 @@
 package xyz.wochib70.web.mutation.redeem;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
-import xyz.wochib70.domain.IdentifierId;
-import xyz.wochib70.domain.redeem.cmd.ModifyRedeemItemTypeCmd;
 import xyz.wochib70.domain.redeem.RedeemItemType;
-
-import jakarta.validation.constraints.NotNull;
+import xyz.wochib70.domain.redeem.cmd.ModifyRedeemItemTypeCmd;
 
 @Data
 @Schema(description = "修改兑换商品类型请求")

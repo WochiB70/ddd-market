@@ -3,7 +3,10 @@ package xyz.wochib70.infrastructure.task;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import xyz.wochib70.domain.task.*;
+import xyz.wochib70.domain.task.CompleteEvent;
+import xyz.wochib70.domain.task.ReceivedTaskExpireTimeType;
+import xyz.wochib70.domain.task.TaskCountLimitType;
+import xyz.wochib70.domain.task.TaskStatus;
 
 import java.time.LocalDateTime;
 

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import xyz.wochib70.domain.usertask.UserTaskStatus;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Repository

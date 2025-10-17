@@ -2,7 +2,6 @@ package xyz.wochib70.domain.redeem;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.Null;
 import xyz.wochib70.domain.DefaultIdentifierId;
 import xyz.wochib70.domain.IdentifierId;
 

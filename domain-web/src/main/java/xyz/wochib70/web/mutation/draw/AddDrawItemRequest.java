@@ -1,18 +1,16 @@
 package xyz.wochib70.web.mutation.draw;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
-import xyz.wochib70.domain.IdentifierId;
-import xyz.wochib70.domain.draw.cmd.AddDrawItemCmd;
-import xyz.wochib70.domain.draw.DrawItemInfo;
-import xyz.wochib70.domain.draw.DrawItemType;
-import xyz.wochib70.domain.draw.DrawItemInventory;
 import xyz.wochib70.domain.draw.DrawInventoryType;
-
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Min;
+import xyz.wochib70.domain.draw.DrawItemInfo;
+import xyz.wochib70.domain.draw.DrawItemInventory;
+import xyz.wochib70.domain.draw.DrawItemType;
+import xyz.wochib70.domain.draw.cmd.AddDrawItemCmd;
 
 @Data
 @Schema(description = "添加抽奖物品请求")

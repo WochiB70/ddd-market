@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import xyz.wochib70.domain.utils.ParameterUtil;
 
-import java.util.Objects;
-
 @RequiredArgsConstructor
 @Component
 public class ActivityFactory {

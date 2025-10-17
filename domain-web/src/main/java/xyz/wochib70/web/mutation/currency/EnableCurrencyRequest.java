@@ -1,12 +1,10 @@
 package xyz.wochib70.web.mutation.currency;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
-import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.currency.cmd.EnableCurrencyCmd;
-import io.swagger.v3.oas.annotations.media.Schema;
-
-import jakarta.validation.constraints.NotNull;
 
 @Data
 @Schema(description = "启用货币请求")

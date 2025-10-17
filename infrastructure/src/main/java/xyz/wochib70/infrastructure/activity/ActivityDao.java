@@ -2,7 +2,6 @@ package xyz.wochib70.infrastructure.activity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import xyz.wochib70.domain.activity.Activity;
 
 import java.util.Optional;
 

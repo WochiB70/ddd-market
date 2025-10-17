@@ -10,7 +10,6 @@ import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.draw.events.*;
 
 import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -5,7 +5,6 @@ import lombok.Setter;
 import xyz.wochib70.domain.AbstractAggregate;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
-import xyz.wochib70.domain.task.CompleteEvent;
 import xyz.wochib70.domain.usertask.events.UserTaskCompletedEvent;
 
 import java.time.LocalDateTime;

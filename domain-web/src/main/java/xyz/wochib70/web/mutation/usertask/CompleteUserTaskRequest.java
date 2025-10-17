@@ -1,13 +1,12 @@
 package xyz.wochib70.web.mutation.usertask;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.usertask.cmd.CompleteUserTaskCmd;
-
-import jakarta.validation.constraints.NotNull;
 
 @Data
 @Schema(description = "完成用户任务请求")

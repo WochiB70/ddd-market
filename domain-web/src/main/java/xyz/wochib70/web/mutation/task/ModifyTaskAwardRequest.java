@@ -1,14 +1,13 @@
 package xyz.wochib70.web.mutation.task;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
 import xyz.wochib70.domain.IdentifierId;
-import xyz.wochib70.domain.task.cmd.ModifyTaskAwardCmd;
 import xyz.wochib70.domain.task.TaskAward;
 import xyz.wochib70.domain.task.TaskAwardType;
-
-import jakarta.validation.constraints.NotNull;
+import xyz.wochib70.domain.task.cmd.ModifyTaskAwardCmd;
 
 @Data
 @Schema(description = "修改任务奖励请求")

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import xyz.wochib70.domain.activity.ActivityAwardType;
-import xyz.wochib70.domain.activity.ActivityCountLimit;
 import xyz.wochib70.domain.activity.ActivityStatus;
 import xyz.wochib70.domain.activity.CountLimitType;
 

@@ -3,7 +3,6 @@ package xyz.wochib70.domain;
 import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 /**
  * 由于事件只存在于本系统内部，一般不会去对接外部的系统，所以事件ID可以在Type模块的Abstract层面直接确定使用Long

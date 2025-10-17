@@ -4,8 +4,6 @@ import xyz.wochib70.domain.Aggregate;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
 
-import java.time.LocalDateTime;
-
 public sealed interface Credential extends Aggregate<Long, Long> permits CredentialImpl {
 
     IdentifierId<Long> getCredentialId();

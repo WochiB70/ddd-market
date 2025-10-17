@@ -1,13 +1,12 @@
 package xyz.wochib70.web.mutation.task;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
 import xyz.wochib70.domain.IdentifierId;
-import xyz.wochib70.domain.task.cmd.ModifyTaskInfoCmd;
 import xyz.wochib70.domain.task.TaskInfo;
-
-import jakarta.validation.constraints.NotNull;
+import xyz.wochib70.domain.task.cmd.ModifyTaskInfoCmd;
 
 @Data
 @Schema(description = "修改任务信息请求")

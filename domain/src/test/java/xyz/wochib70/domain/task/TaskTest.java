@@ -7,8 +7,6 @@ import xyz.wochib70.domain.activity.ActivityDuration;
 import xyz.wochib70.domain.task.events.*;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

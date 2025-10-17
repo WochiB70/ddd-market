@@ -7,7 +7,6 @@ import xyz.wochib70.domain.AggregateTestBase;
 import xyz.wochib70.domain.DefaultIdentifierId;
 import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.activity.ActivityDuration;
-import xyz.wochib70.domain.redeem.events.RedeemNameModifiedEvent;
 
 import java.time.LocalDateTime;
 

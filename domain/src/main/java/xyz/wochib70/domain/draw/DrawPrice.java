@@ -3,8 +3,6 @@ package xyz.wochib70.domain.draw;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.utils.ParameterUtil;
 
-import java.util.Objects;
-
 public record DrawPrice(
         IdentifierId<Long> currencyId,
         Integer price

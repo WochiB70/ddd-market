@@ -1,12 +1,11 @@
 package xyz.wochib70.web.mutation.usertask;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.task.CompleteEvent;
 import xyz.wochib70.domain.usertask.cmd.ReceiveAndCompleteTaskByEventCmd;
-
-import jakarta.validation.constraints.NotNull;
 
 @Data
 @Schema(description = "通过事件接收并完成任务请求")

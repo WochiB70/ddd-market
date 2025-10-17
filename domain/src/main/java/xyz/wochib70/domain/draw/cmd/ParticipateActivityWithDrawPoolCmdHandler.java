@@ -3,7 +3,6 @@ package xyz.wochib70.domain.draw.cmd;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
-import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.account.Account;
 import xyz.wochib70.domain.account.AccountRepository;
 import xyz.wochib70.domain.activity.Activity;

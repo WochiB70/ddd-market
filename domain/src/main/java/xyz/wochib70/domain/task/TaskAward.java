@@ -3,8 +3,6 @@ package xyz.wochib70.domain.task;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.utils.ParameterUtil;
 
-import java.util.Objects;
-
 public record TaskAward(
         TaskAwardType type,
         IdentifierId<Long> awardId,

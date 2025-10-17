@@ -1,14 +1,12 @@
 package xyz.wochib70.web.mutation.draw;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
-import xyz.wochib70.domain.IdentifierId;
-import xyz.wochib70.domain.draw.cmd.ModifyDrawPoolPriceCmd;
 import xyz.wochib70.domain.draw.DrawPrice;
-
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Min;
+import xyz.wochib70.domain.draw.cmd.ModifyDrawPoolPriceCmd;
 
 @Data
 @Schema(description = "修改抽奖池价格请求")

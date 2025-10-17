@@ -1,7 +1,6 @@
 package xyz.wochib70.domain.task;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import xyz.wochib70.domain.activity.Activity;
 import xyz.wochib70.domain.activity.ActivityDuration;
 import xyz.wochib70.domain.activity.ActivityImpl;
@@ -9,7 +8,8 @@ import xyz.wochib70.domain.activity.ActivityImpl;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ReceivedTaskExpireTimeTest {
 

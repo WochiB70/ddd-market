@@ -1,13 +1,11 @@
 package xyz.wochib70.web.mutation.draw;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
-import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.draw.cmd.ModifyDrawPoolNameCmd;
-
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.NotBlank;
 
 @Data
 @Schema(description = "修改抽奖池名称请求")

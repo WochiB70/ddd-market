@@ -2,7 +2,6 @@ package xyz.wochib70.domain.redeem;
 
 import org.junit.jupiter.api.Test;
 import xyz.wochib70.domain.DefaultIdentifierId;
-import xyz.wochib70.domain.IdentifierId;
 
 import static org.junit.jupiter.api.Assertions.*;
 

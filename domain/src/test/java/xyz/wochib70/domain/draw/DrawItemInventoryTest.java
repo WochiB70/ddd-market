@@ -1,7 +1,6 @@
 package xyz.wochib70.domain.draw;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.Null;
 
 import static org.junit.jupiter.api.Assertions.*;
 
