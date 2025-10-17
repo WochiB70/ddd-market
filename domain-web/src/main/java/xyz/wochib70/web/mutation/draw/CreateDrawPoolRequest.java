@@ -1,0 +1,32 @@
+package xyz.wochib70.web.mutation.draw;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import xyz.wochib70.domain.DefaultIdentifierId;
+import xyz.wochib70.domain.IdentifierId;
+import xyz.wochib70.domain.draw.cmd.CreateDrawPoolCmd;
+import xyz.wochib70.domain.draw.DrawStrategyType;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+
+@Data
+@Schema(description = "创建抽奖池请求")
+public class CreateDrawPoolRequest {
+
+    @NotBlank
+    @Schema(description = "抽奖池名称", example = "新年抽奖池")
+    private String name;
+    
+    @NotNull
+    @Schema(description = "活动ID", example = "1")
+    private Long activityId;
+    
+    @NotNull
+    @Schema(description = "抽奖策略类型", example = "WEIGHTED_RANDOM")
+    private DrawStrategyType strategyType;
+
+    public CreateDrawPoolCmd toCmd() {
+        return new CreateDrawPoolCmd(name, new DefaultIdentifierId<>(activityId), strategyType);
+    }
+}
