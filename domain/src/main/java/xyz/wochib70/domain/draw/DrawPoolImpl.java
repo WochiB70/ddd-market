@@ -156,7 +156,7 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
     }
 
     @Override
-    public void addDrawItem(DrawItemInfo drawItemInfo) {
+    public IdentifierId<Long> addDrawItem(DrawItemInfo drawItemInfo) {
         checkDuplicateDrawItemName(drawItemInfo.name(), null);
 
         DrawItem drawItem = new DrawItem(
@@ -172,6 +172,7 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
                 getDrawPoolId(),
                 drawItem
         ));
+        return drawItem.getId();
     }
 
     @Override

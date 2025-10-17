@@ -13,6 +13,7 @@ import xyz.wochib70.domain.credential.CredentialRepository;
 import xyz.wochib70.domain.draw.DrawPool;
 import xyz.wochib70.domain.draw.DrawPoolRepository;
 import xyz.wochib70.domain.draw.DrawPrice;
+import xyz.wochib70.domain.draw.Reward;
 
 @RequiredArgsConstructor
 @Service
@@ -28,7 +29,7 @@ public class ParticipateActivityWithDrawPoolCmdHandler {
 
     private final ApplicationEventPublisher eventPublisher;
 
-    public void handle(ParticipateActivityWithDrawPoolCmd cmd) {
+    public Reward handle(ParticipateActivityWithDrawPoolCmd cmd) {
         Activity activity = activityRepository.queryActivityByIdOrThrow(cmd.activityId());
 
         if (activity.useCredentialLimit()) {
@@ -44,13 +45,14 @@ public class ParticipateActivityWithDrawPoolCmdHandler {
         account.decreaseBalance(drawPrice.price());
         activity.participate(cmd.userId());
 
-        drawPool.draw(cmd.userId());
+        Reward draw = drawPool.draw(cmd.userId());
 
         drawPoolRepository.update(drawPool);
         activityRepository.update(activity);
 
         activity.getEvents().forEach(eventPublisher::publishEvent);
         drawPool.getEvents().forEach(eventPublisher::publishEvent);
+        return draw;
     }
 
 }

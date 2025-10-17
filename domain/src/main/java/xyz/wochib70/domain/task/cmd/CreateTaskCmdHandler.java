@@ -3,6 +3,7 @@ package xyz.wochib70.domain.task.cmd;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.task.TaskFactory;
 import xyz.wochib70.domain.task.TaskRepository;
 
@@ -16,7 +17,7 @@ public class CreateTaskCmdHandler {
 
     private final ApplicationEventPublisher eventPublisher;
 
-    public void handle(CreateTaskCmd cmd) {
+    public IdentifierId<Long> handle(CreateTaskCmd cmd) {
         var task = taskFactory.create(
                 cmd.info(),
                 cmd.taskCountLimit(),
@@ -26,5 +27,6 @@ public class CreateTaskCmdHandler {
         );
         taskRepository.save(task);
         task.getEvents().forEach(eventPublisher::publishEvent);
+        return task.getTaskId();
     }
 }

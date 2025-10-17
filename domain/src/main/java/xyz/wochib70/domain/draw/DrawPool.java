@@ -82,7 +82,7 @@ public sealed interface DrawPool extends Aggregate<Long, Long> permits DrawPoolI
      * @param drawItemInfo 奖品信息
      * @throws DuplicateAwardException 奖品已存在
      */
-    void addDrawItem(DrawItemInfo drawItemInfo);
+    IdentifierId<Long> addDrawItem(DrawItemInfo drawItemInfo);
 
     /**
      * 删除奖品

@@ -3,6 +3,7 @@ package xyz.wochib70.domain.draw.cmd;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.draw.DrawPool;
 import xyz.wochib70.domain.draw.DrawPoolFactory;
 import xyz.wochib70.domain.draw.DrawPoolRepository;
@@ -17,7 +18,7 @@ public class CreateDrawPoolCmdHandler {
 
     private final ApplicationEventPublisher eventPublisher;
 
-    public void handle(CreateDrawPoolCmd cmd) {
+    public IdentifierId<Long> handle(CreateDrawPoolCmd cmd) {
         DrawPool drawPool = drawPoolFactory.create(
                 cmd.name(),
                 cmd.activityId(),
@@ -25,6 +26,7 @@ public class CreateDrawPoolCmdHandler {
         );
         drawPoolRepository.save(drawPool);
         drawPool.getEvents().forEach(eventPublisher::publishEvent);
+        return drawPool.getDrawPoolId();
     }
 
 }

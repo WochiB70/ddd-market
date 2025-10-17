@@ -3,6 +3,7 @@ package xyz.wochib70.domain.credential.cmd;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.credential.Credential;
 import xyz.wochib70.domain.credential.CredentialFactory;
 import xyz.wochib70.domain.credential.CredentialRepository;
@@ -16,12 +17,13 @@ public class CreateCredentialCmdHandler {
 
     private final CredentialFactory credentialFactory;
 
-    public void handle(CreateCredentialCmd cmd) {
+    public IdentifierId<Long> handle(CreateCredentialCmd cmd) {
         Credential credential = credentialFactory.create(
                 cmd.duration(),
                 cmd.unusedCount(),
                 cmd.userId()
         );
         credentialRepository.save(credential);
+        return credential.getCredentialId();
     }
 }

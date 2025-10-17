@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import xyz.wochib70.domain.AggregateEvent;
+import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.currency.Currency;
 import xyz.wochib70.domain.currency.CurrencyFactory;
 import xyz.wochib70.domain.currency.CurrencyRepository;
@@ -20,12 +21,12 @@ public class CreateCurrencyCmdHandler {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    public Long handle(CreateCurrencyCmd cmd) {
+    public IdentifierId<Long> handle(CreateCurrencyCmd cmd) {
         Currency currency = currencyFactory.create(cmd.info());
         currencyRepository.save(currency);
         Collection<? super AggregateEvent<Long, Long>> events = currency.getEvents();
         events.forEach(applicationEventPublisher::publishEvent);
-        return currency.getCurrencyId().getId();
+        return currency.getCurrencyId();
     }
 
 }
