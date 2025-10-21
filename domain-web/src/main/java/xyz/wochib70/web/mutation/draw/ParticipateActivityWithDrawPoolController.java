@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.wochib70.domain.IdentifierId;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.draw.Reward;
 import xyz.wochib70.domain.draw.cmd.ParticipateActivityWithDrawPoolCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/draw")
@@ -37,6 +39,7 @@ public class ParticipateActivityWithDrawPoolController {
             @Parameter(description = "参与抽奖活动请求参数", required = true)
             @RequestBody @Valid ParticipateActivityWithDrawPoolRequest request
     ) {
+        UserId userId = AuthorizedThreadLocal.getUserId();
         //TODO QUERY模块完成之后再改
         return participateActivityWithDrawPoolCmdHandler.handle(request.toCmd());
     }

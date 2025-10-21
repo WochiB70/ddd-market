@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.wochib70.domain.IdentifierId;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.credential.cmd.CreateCredentialCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/credential")
@@ -39,6 +41,7 @@ public class CreateCredentialController {
             @Parameter(description = "创建凭证的请求参数", required = true)
             @RequestBody @Valid CreateCredentialRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         return createCredentialCmdHandler.handle(request.toCmd());
     }
 }

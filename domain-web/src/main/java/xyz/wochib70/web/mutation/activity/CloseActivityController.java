@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.activity.cmd.CloseActivityCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/activity")
@@ -34,6 +36,7 @@ public class CloseActivityController {
             @Parameter(description = "关闭活动请求参数", required = true)
             @RequestBody @Valid CloseActivityRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         closeActivityCmdHandler.handle(request.toCmd());
     }
 }

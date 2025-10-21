@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.wochib70.domain.IdentifierId;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.draw.cmd.AddDrawItemCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/draw")
@@ -37,6 +39,7 @@ public class AddDrawItemController {
             @Parameter(description = "添加抽奖物品请求参数", required = true)
             @RequestBody @Valid AddDrawItemRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         return addDrawItemCmdHandler.handle(request.toCmd());
     }
 }

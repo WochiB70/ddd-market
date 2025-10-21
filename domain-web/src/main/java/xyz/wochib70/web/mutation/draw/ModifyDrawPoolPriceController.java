@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.draw.cmd.ModifyDrawPoolPriceCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/draw")
@@ -33,6 +35,7 @@ public class ModifyDrawPoolPriceController {
             @Parameter(description = "修改抽奖池价格请求参数", required = true)
             @RequestBody @Valid ModifyDrawPoolPriceRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         modifyDrawPoolPriceCmdHandler.handle(request.toCmd());
     }
 }

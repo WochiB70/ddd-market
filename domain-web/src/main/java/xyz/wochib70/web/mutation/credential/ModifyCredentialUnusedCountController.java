@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.credential.cmd.ModifyCredentialUnusedCountCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/credential")
@@ -35,6 +37,7 @@ public class ModifyCredentialUnusedCountController {
             @Parameter(description = "修改凭证剩余使用次数的请求参数", required = true)
             @RequestBody @Valid ModifyCredentialUnusedCountRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         modifyCredentialUnusedCountCmdHandler.handle(request.toCmd());
     }
 }

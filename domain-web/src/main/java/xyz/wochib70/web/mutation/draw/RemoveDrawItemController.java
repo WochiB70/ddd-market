@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.draw.cmd.RemoveDrawItemCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/draw")
@@ -33,6 +35,7 @@ public class RemoveDrawItemController {
             @Parameter(description = "移除抽奖物品请求参数", required = true)
             @RequestBody @Valid RemoveDrawItemRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         removeDrawItemCmdHandler.handle(request.toCmd());
     }
 }

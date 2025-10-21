@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.credential.cmd.ModifyCredentialDurationCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/credential")
@@ -35,6 +37,7 @@ public class ModifyCredentialDurationController {
             @Parameter(description = "修改凭证有效期的请求参数", required = true)
             @RequestBody @Valid ModifyCredentialDurationRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         modifyCredentialDurationCmdHandler.handle(request.toCmd());
     }
 }

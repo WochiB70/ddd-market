@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.wochib70.domain.IdentifierId;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.task.cmd.CreateTaskCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/task")
@@ -35,6 +37,7 @@ public class CreateTaskController {
             @Parameter(description = "创建任务请求参数", required = true)
             @RequestBody @Valid CreateTaskRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         return createTaskCmdHandler.handle(request.toCmd());
     }
 }

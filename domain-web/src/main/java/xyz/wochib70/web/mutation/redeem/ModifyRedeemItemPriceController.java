@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.redeem.cmd.ModifyRedeemItemPriceCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/redeem")
@@ -33,6 +35,7 @@ public class ModifyRedeemItemPriceController {
             @Parameter(description = "修改兑换物品价格请求参数", required = true)
             @RequestBody @Valid ModifyRedeemItemPriceRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         modifyRedeemItemPriceCmdHandler.handle(request.toCmd());
     }
 }

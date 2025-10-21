@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.task.cmd.ModifyTaskInfoCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/task")
@@ -33,6 +35,7 @@ public class ModifyTaskInfoController {
             @Parameter(description = "修改任务信息请求参数", required = true)
             @RequestBody @Valid ModifyTaskInfoRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         modifyTaskInfoCmdHandler.handle(request.toCmd());
     }
 }

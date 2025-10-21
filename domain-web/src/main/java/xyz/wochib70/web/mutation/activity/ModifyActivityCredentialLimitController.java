@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.activity.cmd.ModifyActivityCredentialLimitCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/activity")
@@ -34,6 +36,7 @@ public class ModifyActivityCredentialLimitController {
             @Parameter(description = "修改活动凭证限制请求参数", required = true)
             @RequestBody @Valid ModifyActivityCredentialLimitRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         modifyActivityCredentialLimitCmdHandler.handle(request.toCmd());
     }
 }

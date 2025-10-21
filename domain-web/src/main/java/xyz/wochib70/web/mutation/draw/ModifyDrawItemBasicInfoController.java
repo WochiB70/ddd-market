@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.draw.cmd.ModifyDrawItemBasicInfoCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/draw")
@@ -35,6 +37,7 @@ public class ModifyDrawItemBasicInfoController {
             @Parameter(description = "修改抽奖物品基本信息请求参数", required = true)
             @RequestBody @Valid ModifyDrawItemBasicInfoRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         modifyDrawItemBasicInfoCmdHandler.handle(request.toCmd());
     }
 }

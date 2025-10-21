@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.redeem.cmd.DeletedRedeemCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/redeem")
@@ -33,6 +35,7 @@ public class DeletedRedeemController {
             @Parameter(description = "删除兑换请求参数", required = true)
             @RequestBody @Valid DeletedRedeemRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         deletedRedeemCmdHandler.handle(request.toCmd());
     }
 }

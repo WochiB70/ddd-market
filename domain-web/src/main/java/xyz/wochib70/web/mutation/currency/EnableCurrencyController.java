@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.currency.cmd.EnableCurrencyCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/currency")
@@ -35,6 +37,7 @@ public class EnableCurrencyController {
             @Parameter(description = "启用货币请求参数", required = true)
             @RequestBody @Valid EnableCurrencyRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         enableCurrencyCmdHandler.handle(request.toCmd());
     }
 }

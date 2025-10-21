@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.activity.cmd.ModifyActivityCountLimitCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/activity")
@@ -34,6 +36,7 @@ public class ModifyActivityCountLimitController {
             @Parameter(description = "修改活动次数限制请求参数", required = true)
             @RequestBody @Valid ModifyActivityCountLimitRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         modifyActivityCountLimitCmdHandler.handle(request.toCmd());
     }
 }

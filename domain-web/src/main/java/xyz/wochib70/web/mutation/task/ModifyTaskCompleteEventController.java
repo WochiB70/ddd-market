@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.task.cmd.ModifyTaskCompleteEventCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/task")
@@ -33,6 +35,7 @@ public class ModifyTaskCompleteEventController {
             @Parameter(description = "修改任务完成事件请求参数", required = true)
             @RequestBody @Valid ModifyTaskCompleteEventRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         modifyTaskCompleteEventCmdHandler.handle(request.toCmd());
     }
 }

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.credential.cmd.ValidCredentialCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/credential")
@@ -36,6 +38,7 @@ public class ValidCredentialController {
             @Parameter(description = "验证凭证的请求参数", required = true)
             @RequestBody @Valid ValidCredentialRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         validCredentialCmdHandler.handle(request.toCmd());
     }
 }

@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.task.cmd.ModifyTaskReceivedTaskExpireTimeCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/task")
@@ -33,6 +35,7 @@ public class ModifyTaskReceivedTaskExpireTimeController {
             @Parameter(description = "修改任务接收过期时间请求参数", required = true)
             @RequestBody @Valid ModifyTaskReceivedTaskExpireTimeRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         modifyTaskReceivedTaskExpireTimeCmdHandler.handle(request.toCmd());
     }
 }

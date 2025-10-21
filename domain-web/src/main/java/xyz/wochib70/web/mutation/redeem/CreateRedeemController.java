@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.wochib70.domain.IdentifierId;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.redeem.cmd.CreateRedeemCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/redeem")
@@ -35,6 +37,7 @@ public class CreateRedeemController {
             @Parameter(description = "创建兑换请求参数", required = true)
             @RequestBody @Valid CreateRedeemRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         return createRedeemCmdHandler.handle(request.toCmd());
     }
 }

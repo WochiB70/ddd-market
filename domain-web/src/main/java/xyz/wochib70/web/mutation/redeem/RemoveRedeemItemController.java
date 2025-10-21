@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.redeem.cmd.RemoveRedeemItemCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/redeem")
@@ -33,6 +35,7 @@ public class RemoveRedeemItemController {
             @Parameter(description = "移除兑换物品请求参数", required = true)
             @RequestBody @Valid RemoveRedeemItemRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         removeRedeemItemCmdHandler.handle(request.toCmd());
     }
 }

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.wochib70.domain.IdentifierId;
+import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.draw.cmd.CreateDrawPoolCmdHandler;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/draw")
@@ -37,6 +39,7 @@ public class CreateDrawPoolController {
             @Parameter(description = "创建抽奖池请求参数", required = true)
             @RequestBody @Valid CreateDrawPoolRequest request
     ) {
+        UserId adminId = AuthorizedThreadLocal.getAdminId();
         return createDrawPoolCmdHandler.handle(request.toCmd());
     }
 }

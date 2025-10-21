@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
-import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.redeem.cmd.ParticipateActivityWithRedeemCmd;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @Data
 @Schema(description = "参与活动兑换请求")
@@ -27,9 +27,6 @@ public class ParticipateActivityWithRedeemRequest {
     @Schema(description = "兑换数量", example = "2")
     private Integer count;
 
-    @NotNull
-    @Schema(description = "用户ID", example = "1001")
-    private Long userId;
 
     @NotNull
     @Schema(description = "凭证使用码", example = "ABC123XYZ")
@@ -41,7 +38,7 @@ public class ParticipateActivityWithRedeemRequest {
                 new DefaultIdentifierId<>(redeemId),
                 new DefaultIdentifierId<>(redeemItemId),
                 count,
-                new UserId(userId),
+                AuthorizedThreadLocal.getUserId(),
                 credentialUsageCode
         );
     }

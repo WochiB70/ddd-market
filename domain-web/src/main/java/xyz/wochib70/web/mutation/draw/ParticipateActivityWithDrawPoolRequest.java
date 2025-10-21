@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
-import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.draw.cmd.ParticipateActivityWithDrawPoolCmd;
+import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @Data
 @Schema(description = "参与活动抽奖请求")
@@ -19,11 +19,7 @@ public class ParticipateActivityWithDrawPoolRequest {
     @NotNull
     @Schema(description = "抽奖池ID", example = "1")
     private Long drawPoolId;
-    
-    @NotNull
-    @Schema(description = "用户ID", example = "1")
-    private Long userId;
-    
+
     @NotBlank
     @Schema(description = "凭证使用码", example = "CREDENTIAL_123")
     private String credentialUsageCode;
@@ -32,7 +28,7 @@ public class ParticipateActivityWithDrawPoolRequest {
         return new ParticipateActivityWithDrawPoolCmd(
                 new DefaultIdentifierId<>(activityId),
                 new DefaultIdentifierId<>(drawPoolId),
-                new UserId(userId),
+                AuthorizedThreadLocal.getUserId(),
                 credentialUsageCode
         );
     }
