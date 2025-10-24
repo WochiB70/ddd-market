@@ -13,7 +13,7 @@ public class AuthorizedThreadLocal {
     }
 
     public static UserId getAdminId() {
-        if (getOrThrow() > 100000L && getOrThrow() < 200000L) {
+        if (getOrThrow() > 0L && getOrThrow() < 1000000L) {
             return new UserId(getOrThrow());
         }
         throw new RuntimeException("用户权限不足");

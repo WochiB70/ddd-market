@@ -13,7 +13,7 @@ public class UserRoleInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String userId = request.getHeader("USER_ID_HEADER_NAME");
+        String userId = request.getHeader(USER_ID_HEADER_NAME);
         AuthorizedThreadLocal.set(Long.parseLong(userId));
         return true;
     }
