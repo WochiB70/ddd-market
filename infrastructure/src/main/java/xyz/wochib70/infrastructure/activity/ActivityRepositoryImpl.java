@@ -8,6 +8,7 @@ import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.activity.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -17,6 +18,7 @@ public class ActivityRepositoryImpl implements ActivityRepository {
 
     private final ActivityDao activityDao;
     private final UserParticipateActivityRecordDao userParticipateActivityRecordDao;
+    private final ActivityImageDao activityImageDao;
 
     @Override
     public Integer countParticipateActivityByUserIdInDay(IdentifierId<Long> activityId, UserId userId) {
@@ -67,23 +69,46 @@ public class ActivityRepositoryImpl implements ActivityRepository {
     @Override
     public void save(Activity activity) {
         ActivityEntity entity = toEntity(activity);
+        List<ActivityImageEntity> images = toImageEntity(activity);
         activityDao.save(entity);
+        activityImageDao.saveAll(images);
     }
 
     @Override
     public Activity queryActivityByIdOrThrow(IdentifierId<Long> activityId) {
-        return null;
+        List<ActivityImageEntity> images = activityImageDao.findByActivityId(activityId.getId());
+        return activityDao.queryActivityEntitiesById(activityId.getId())
+                .map(entity -> toDomain(entity, images))
+                .orElseThrow(() -> new NoSuchActivityException("活动不存在"));
     }
 
     @Override
     public void update(Activity activity) {
         ActivityEntity entity = toEntity(activity);
+        List<ActivityImageEntity> images = toImageEntity(activity);
         activityDao.save(entity);
+        activityImageDao.deleteByActivityId(activity.getActivityId().getId());
+        activityImageDao.saveAll(images);
     }
 
     @Override
     public Optional<Activity> queryActivityById(IdentifierId<Long> activityId) {
-        return activityDao.queryActivityEntitiesById(activityId.getId()).map(this::toDomain);
+        List<ActivityImageEntity> images = activityImageDao.findByActivityId(activityId.getId());
+        return activityDao.queryActivityEntitiesById(activityId.getId()).map(entity -> toDomain(entity, images));
+    }
+
+    private List<ActivityImageEntity> toImageEntity(Activity activity) {
+        ActivityImpl impl = (ActivityImpl) activity;
+        return impl.getInfo()
+                .images()
+                .stream()
+                .map(image -> {
+                    ActivityImageEntity entity = new ActivityImageEntity();
+                    entity.setActivityId(activity.getActivityId().getId());
+                    entity.setImage(image);
+                    return entity;
+                })
+                .toList();
     }
 
     private ActivityEntity toEntity(Activity activity) {
@@ -92,7 +117,6 @@ public class ActivityRepositoryImpl implements ActivityRepository {
         entity.setId(impl.getActivityId().getId());
         entity.setName(impl.getInfo().name());
         entity.setDescription(impl.getInfo().description());
-        entity.setImages(impl.getInfo().images());
         entity.setStartTime(impl.getDuration().startTime());
         entity.setEndTime(impl.getDuration().endTime());
         entity.setCountLimitType(impl.getCountLimit().type());
@@ -103,9 +127,10 @@ public class ActivityRepositoryImpl implements ActivityRepository {
         return entity;
     }
 
-    private Activity toDomain(ActivityEntity entity) {
+    private Activity toDomain(ActivityEntity entity, List<ActivityImageEntity> images) {
         ActivityImpl activity = new ActivityImpl(new DefaultIdentifierId<>(entity.getId()));
-        activity.setInfo(new ActivityInfo(entity.getName(), entity.getDescription(), entity.getImages()));
+        List<String> list = images.stream().map(ActivityImageEntity::getImage).toList();
+        activity.setInfo(new ActivityInfo(entity.getName(), entity.getDescription(), list));
         activity.setDuration(new ActivityDuration(entity.getStartTime(), entity.getEndTime()));
         activity.setCountLimit(new ActivityCountLimit(entity.getCountLimitType(), entity.getCountLimit()));
         activity.setCredentialLimit(entity.getCredentialLimit());

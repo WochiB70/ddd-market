@@ -1,5 +1,6 @@
 package xyz.wochib70.infrastructure.activity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,6 @@ public class ActivityEntity {
 
     private String description;
 
-    private List<String> images;
 
     private LocalDateTime startTime;
 
