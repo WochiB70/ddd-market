@@ -85,7 +85,11 @@ public non-sealed class CurrencyImpl extends AbstractAggregate<Long> implements 
     @Override
     public void create() {
         publishEvent(new CurrencyCreatedEvent(
-                this
+                getCurrencyId(),
+                info.name(),
+                info.description(),
+                status,
+                referenceCount
         ));
     }
 }
