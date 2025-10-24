@@ -7,7 +7,23 @@ spring:
   jpa:
     database: postgresql
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
   data:
     jdbc:
       dialect: postgresql
+
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.postgresql: DEBUG
+    org.postgresql.jdbc: DEBUG
+    org.springframework.data: DEBUG
+    org.springframework.orm.jpa: DEBUG
+    com.wochib70: DEBUG
