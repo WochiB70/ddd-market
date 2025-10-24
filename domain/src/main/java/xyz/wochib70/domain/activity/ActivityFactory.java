@@ -30,6 +30,7 @@ public class ActivityFactory {
         activity.setCountLimit(countLimit);
         activity.setCredentialLimit(credentialLimit);
         activity.setAwardType(awardType);
+        activity.setStatus(ActivityStatus.INIT);
         activity.create();
         return activity;
     }
