@@ -1,6 +1,7 @@
 package xyz.wochib70.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public abstract class AbstractAggregate<ID> implements Aggregate<ID, Long> {
 
     private final IdentifierId<ID> identifierId;
 
+    @JsonIgnore
     private final List<AggregateEvent<ID, Long>> events;
 
     public AbstractAggregate(IdentifierId<ID> identifierId) {
@@ -27,6 +29,7 @@ public abstract class AbstractAggregate<ID> implements Aggregate<ID, Long> {
         return identifierId;
     }
 
+    @JsonIgnore
     @Override
     public List<? super AggregateEvent<ID, Long>> getEvents() {
         return Collections.unmodifiableList( events);
