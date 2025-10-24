@@ -11,13 +11,14 @@ import xyz.wochib70.domain.AbstractAggregateEvent;
 @Component
 public class DomainEventListener {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
     private final EventDao eventDao;
 
     @EventListener
     public void handle(AbstractAggregateEvent<Long> event) throws JsonProcessingException {
         EventEntity entity = new EventEntity();
+        entity.setId(event.eventId().getId());
         entity.setAggregateClass(event.aggregateClass().getName());
         entity.setEventClass(event.eventClass().getName());
         entity.setCreatedTime(event.createTime());
