@@ -95,6 +95,10 @@ public class DrawPoolRepositoryImpl implements DrawPoolRepository {
         drawPool.setActivityId(new DefaultIdentifierId<>(entity.getActivityId()));
         drawPool.setStrategyType(entity.getStrategyType());
         drawPool.setDrawItems(drawItems);
+        drawPool.setDrawPrice(new DrawPrice(
+                new DefaultIdentifierId<>(entity.getCurrencyId()),
+                entity.getPrice()
+        ));
         return drawPool;
     }
     
@@ -105,6 +109,8 @@ public class DrawPoolRepositoryImpl implements DrawPoolRepository {
         entity.setName(impl.getName());
         entity.setActivityId(impl.getActivityId().getId());
         entity.setStrategyType(impl.getStrategyType());
+        entity.setCurrencyId(impl.getDrawPrice().currencyId().getId());
+        entity.setPrice(impl.getDrawPrice().price());
         return entity;
     }
     

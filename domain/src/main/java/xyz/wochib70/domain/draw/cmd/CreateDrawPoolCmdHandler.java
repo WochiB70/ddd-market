@@ -22,7 +22,8 @@ public class CreateDrawPoolCmdHandler {
         DrawPool drawPool = drawPoolFactory.create(
                 cmd.name(),
                 cmd.activityId(),
-                cmd.strategyType()
+                cmd.strategyType(),
+                cmd.drawPrice()
         );
         drawPoolRepository.save(drawPool);
         drawPool.getEvents().forEach(eventPublisher::publishEvent);

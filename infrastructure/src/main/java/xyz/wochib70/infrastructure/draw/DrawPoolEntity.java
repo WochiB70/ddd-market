@@ -20,4 +20,8 @@ public class DrawPoolEntity {
     
     @Enumerated(EnumType.STRING)
     private DrawStrategyType strategyType;
+
+    private Long currencyId;
+
+    private Integer price;
 }

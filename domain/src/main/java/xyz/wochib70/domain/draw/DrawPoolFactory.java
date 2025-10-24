@@ -11,7 +11,12 @@ public class DrawPoolFactory {
 
     private final DrawPoolIdGenerator drawPoolIdGenerator;
 
-    public DrawPool create(String name, IdentifierId<Long> activityId, DrawStrategyType strategyType) {
+    public DrawPool create(
+            String name,
+            IdentifierId<Long> activityId,
+            DrawStrategyType strategyType,
+            DrawPrice drawPrice
+    ) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("名字不能为空");
         }
@@ -22,6 +27,7 @@ public class DrawPoolFactory {
         drawPool.setName(name);
         drawPool.setActivityId(activityId);
         drawPool.setStrategyType(strategyType);
+        drawPool.setDrawPrice(drawPrice);
         return drawPool;
     }
 }
