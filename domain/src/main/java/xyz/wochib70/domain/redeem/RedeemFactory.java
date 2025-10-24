@@ -21,6 +21,7 @@ public class RedeemFactory {
         activityRepository.queryActivityByIdOrThrow(activityId);
         RedeemImpl redeem = new RedeemImpl(redeemPoolIdGenerator.nextRedeemPoolId());
         redeem.setName(name);
+        redeem.setActivityId(activityId);
         redeem.setRedeemItems(Set.of());
         redeem.create();
         return redeem;
