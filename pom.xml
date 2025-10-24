@@ -60,6 +60,22 @@
                 <version>8.0.2.Final</version>
             </dependency>
 
+            <!-- QueryDSL JPA  -->
+            <dependency>
+                <groupId>com.querydsl</groupId>
+                <artifactId>querydsl-jpa</artifactId>
+                <version>5.1.0</version>
+                <classifier>jakarta</classifier>
+            </dependency>
+
+            <!-- QueryDSL APT  -->
+            <dependency>
+                <groupId>com.querydsl</groupId>
+                <artifactId>querydsl-apt</artifactId>
+                <version>5.1.0</version>
+                <classifier>jakarta</classifier>
+            </dependency>
+
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -87,6 +103,11 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>2.18.3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>2.18.3</version> <!-- 建议使用与你项目中Jackson版本一致的版本 -->
             </dependency>
 
             <dependency>
