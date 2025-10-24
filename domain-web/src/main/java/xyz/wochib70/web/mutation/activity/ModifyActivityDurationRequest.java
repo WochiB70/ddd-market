@@ -1,5 +1,6 @@
 package xyz.wochib70.web.mutation.activity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -18,9 +19,11 @@ public class ModifyActivityDurationRequest {
     private Long activityId;
     
     @Schema(description = "活动开始时间", example = "2025-11-01T00:00:00")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startTime;
     
     @Schema(description = "活动结束时间", example = "2025-11-11T23:59:59")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime endTime;
 
     public ModifyActivityDurationCmd toCmd() {
