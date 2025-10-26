@@ -9,6 +9,7 @@ import xyz.wochib70.domain.task.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -34,8 +35,8 @@ public class TaskRepositoryImpl implements TaskRepository {
         TaskEntity entity = toEntity(task);
         TaskAwardEntity awardEntity = toAwardEntity(task.getTaskAward());
         awardEntity.setTaskId(entity.getId());
-        taskDao.save(entity);
         taskAwardDao.save(awardEntity);
+        taskDao.save(entity);
     }
 
     @Override
@@ -94,14 +95,16 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     private Task toDomain(TaskEntity entity, TaskAwardEntity awardEntity) {
         TaskImpl task = new TaskImpl(new DefaultIdentifierId<>(entity.getId()));
-        task.setActivityId(new DefaultIdentifierId<>(entity.getActivityId()));
+        if (Objects.nonNull(entity.getActivityId())) {
+            task.setActivityId(new DefaultIdentifierId<>(entity.getActivityId()));
+        }
         task.setInfo(new TaskInfo(entity.getName(), entity.getDescription()));
         task.setStatus(entity.getStatus());
         task.setDuration(new TaskDuration(entity.getStartTime(), entity.getExpiredTime()));
         task.setCompleteEvent(entity.getCompleteEvent());
         task.setTaskCountLimit(new TaskCountLimit(entity.getCountLimitType(), entity.getCountLimit()));
         task.setReceivedTaskExpireTime(new ReceivedTaskExpireTime(entity.getReceivedTaskExpireTimeType(), entity.getSeconds()));
-        task.setTaskAward(new TaskAward(awardEntity.getAwardType(), new DefaultIdentifierId<>(awardEntity.getId()), awardEntity.getAwardCount()));
+        task.setTaskAward(new TaskAward(awardEntity.getAwardType(), new DefaultIdentifierId<>(awardEntity.getAwardId()), awardEntity.getAwardCount()));
         return task;
     }
 
@@ -109,7 +112,9 @@ public class TaskRepositoryImpl implements TaskRepository {
         TaskImpl impl = (TaskImpl) task;
         TaskEntity entity = new TaskEntity();
         entity.setId(impl.getTaskId().getId());
-        entity.setActivityId(impl.getActivityId().getId());
+        if (Objects.nonNull(impl.getActivityId())) {
+            entity.setActivityId(impl.getActivityId().getId());
+        }
         entity.setName(impl.getInfo().name());
         entity.setDescription(impl.getInfo().description());
         entity.setStatus(impl.getStatus());
@@ -125,7 +130,7 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     private TaskAwardEntity toAwardEntity(TaskAward taskAward) {
         TaskAwardEntity entity = new TaskAwardEntity();
-        entity.setId(taskAward.awardId().getId());
+        entity.setAwardId(taskAward.awardId().getId());
         entity.setAwardType(taskAward.type());
         entity.setAwardCount(taskAward.count());
         return entity;

@@ -12,7 +12,10 @@ import xyz.wochib70.domain.task.TaskAwardType;
 public class TaskAwardEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    private Long awardId;
 
     private Long taskId;
 

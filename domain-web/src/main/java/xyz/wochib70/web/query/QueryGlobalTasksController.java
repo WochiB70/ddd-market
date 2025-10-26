@@ -78,7 +78,7 @@ public class QueryGlobalTasksController {
                 .stream()
                 .map(it -> {
                     QueryGlobalTasksResponse response = new QueryGlobalTasksResponse();
-                    Tuple tuple = map.get(it.get(task.id));
+                    Tuple tuple = map.get(it.get(award.taskId));
                     response.setId(tuple.get(task.id));
                     response.setName(tuple.get(task.name));
                     response.setDescription(tuple.get(task.description));
