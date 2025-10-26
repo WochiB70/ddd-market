@@ -23,7 +23,9 @@ public class CreateTaskCmdHandler {
                 cmd.taskCountLimit(),
                 cmd.duration(),
                 cmd.activityId(),
-                cmd.receivedTaskExpireTime()
+                cmd.receivedTaskExpireTime(),
+                cmd.completeEvent(),
+                cmd.award()
         );
         taskRepository.save(task);
         task.getEvents().forEach(eventPublisher::publishEvent);

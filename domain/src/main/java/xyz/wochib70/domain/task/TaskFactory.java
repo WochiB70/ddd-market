@@ -22,7 +22,9 @@ public class TaskFactory {
                        TaskCountLimit taskCountLimit,
                        TaskDuration duration,
                        IdentifierId<Long> activityId,
-                       ReceivedTaskExpireTime receivedTaskExpireTime
+                       ReceivedTaskExpireTime receivedTaskExpireTime,
+                       CompleteEvent completeEvent,
+                       TaskAward taskAward
     ) {
         ParameterUtil.requireNonNull(info, "任务信息不能为空");
         ParameterUtil.requireNonNull(taskCountLimit, "任务限制不能为空");
@@ -45,6 +47,8 @@ public class TaskFactory {
         }
         task.setStatus(TaskStatus.ENABLE);
         task.setReceivedTaskExpireTime(receivedTaskExpireTime);
+        task.setCompleteEvent(completeEvent);
+        task.setTaskAward(taskAward);
         task.create();
         return task;
     }
