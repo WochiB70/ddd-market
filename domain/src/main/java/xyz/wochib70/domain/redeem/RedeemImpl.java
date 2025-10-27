@@ -23,6 +23,8 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
 
     private Set<RedeemItem> redeemItems;
 
+    private RedeemParticipateScope scope;
+
 
     public RedeemImpl(IdentifierId<Long> identifierId) {
         super(identifierId);
@@ -46,6 +48,18 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
             publishEvent(new RedeemNameModifiedEvent(
                     getRedeemId(),
                     name
+            ));
+        }
+    }
+
+    @Override
+    public void modifyParticipateScope(RedeemParticipateScope scope) {
+        ParameterUtil.requireNonNull(scope, "参与范围不能为null");
+        if (!Objects.equals(this.scope, scope)) {
+            this.scope = scope;
+            publishEvent(new RedeemParticipateScopeModifiedEvent(
+                    getRedeemId(),
+                    scope
             ));
         }
     }

@@ -20,6 +20,14 @@ public sealed interface Redeem extends Aggregate<Long, Long> permits RedeemImpl 
      */
     void modifyRedeemName(String name);
 
+
+    /**
+     * 修改参与范围
+     *
+     * @param scope 参与范围
+     */
+    void modifyParticipateScope(RedeemParticipateScope scope);
+
     /**
      * 兑换
      *
@@ -39,6 +47,7 @@ public sealed interface Redeem extends Aggregate<Long, Long> permits RedeemImpl 
 
     /**
      * 删除兑换项
+     *
      * @param redeemItemId 兑换项id
      */
     void removeRedeemItem(IdentifierId<Long> redeemItemId);
