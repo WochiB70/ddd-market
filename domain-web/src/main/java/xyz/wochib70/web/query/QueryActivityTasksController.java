@@ -33,12 +33,17 @@ public class QueryActivityTasksController {
 
     @GetMapping("/query/activity-tasks/{activityId}")
     @Operation(summary = "查询活动任务列表", description = "根据活动ID获取该活动下的所有任务信息")
-    @ApiResponse(responseCode = "200", description = "成功返回活动任务列表", 
-        content = @Content(mediaType = "application/json", 
-        schema = @Schema(implementation = QueryActivityTasksResponse.class)))
+    @ApiResponse(
+            responseCode = "200",
+            description = "成功返回活动任务列表",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = QueryActivityTasksResponse.class)
+            )
+    )
     public List<QueryActivityTasksResponse> queryActivityTasks(
-        @Parameter(description = "活动ID", example = "1") 
-        @PathVariable("activityId") Long activityId) {
+            @Parameter(description = "活动ID", example = "1")
+            @PathVariable("activityId") Long activityId) {
         QTaskEntity task = QTaskEntity.taskEntity;
         QTaskAwardEntity award = QTaskAwardEntity.taskAwardEntity;
         Map<Long, Tuple> map = queryFactory.select(
@@ -51,7 +56,8 @@ public class QueryActivityTasksController {
                         task.expiredTime,
                         task.completeEvent,
                         task.receivedTaskExpireTimeType,
-                        task.seconds
+                        task.seconds,
+                        task.status
                 )
                 .from(task)
                 .where(task.activityId.eq(activityId))
@@ -62,7 +68,7 @@ public class QueryActivityTasksController {
                         Function.identity()
                 ));
 
-        if (map.isEmpty()){
+        if (map.isEmpty()) {
             return Collections.emptyList();
         }
 
@@ -99,6 +105,7 @@ public class QueryActivityTasksController {
                             it.get(award.id),
                             it.get(award.awardCount)
                     ));
+                    response.setStatus(tuple.get(task.status));
                     return response;
                 })
                 .toList();

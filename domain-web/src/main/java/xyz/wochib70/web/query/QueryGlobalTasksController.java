@@ -48,7 +48,8 @@ public class QueryGlobalTasksController {
                         task.expiredTime,
                         task.completeEvent,
                         task.receivedTaskExpireTimeType,
-                        task.seconds
+                        task.seconds,
+                        task.status
                 )
                 .from(task)
                 .where(task.activityId.isNull())
@@ -70,7 +71,8 @@ public class QueryGlobalTasksController {
                         award.id,
                         award.taskId,
                         award.awardType,
-                        award.awardCount
+                        award.awardCount,
+                        award.awardId
                 )
                 .from(award)
                 .where(award.taskId.in(taskIds))
@@ -95,9 +97,10 @@ public class QueryGlobalTasksController {
                     response.setExpireTime(tuple.get(task.expiredTime));
                     response.setAward(new QueryGlobalTasksResponse.TaskAward(
                             it.get(award.awardType),
-                            it.get(award.id),
+                            it.get(award.awardId),
                             it.get(award.awardCount)
                     ));
+                    response.setStatus(tuple.get(task.status));
                     return response;
                 })
                 .toList();
