@@ -26,6 +26,8 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
 
     private DrawPrice drawPrice;
 
+    private DrawPoolParticipateScope scope;
+
 
     public DrawPoolImpl(IdentifierId<Long> identifierId) {
         super(identifierId);
@@ -86,6 +88,18 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
             publishEvent(new DrawPoolPriceModifiedEvent(
                     getDrawPoolId(),
                     drawPrice
+            ));
+        }
+    }
+
+    @Override
+    public void modifyParticipateScope(DrawPoolParticipateScope scope) {
+        ParameterUtil.requireNonNull(scope, "参与范围不能为null");
+        if (!Objects.equals(this.scope, scope)) {
+            this.scope = scope;
+            publishEvent(new DrawPoolScopeModifiedEvent(
+                    getDrawPoolId(),
+                    scope
             ));
         }
     }

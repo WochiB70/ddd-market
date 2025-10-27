@@ -36,6 +36,13 @@ public sealed interface DrawPool extends Aggregate<Long, Long> permits DrawPoolI
     void modifyDrawPrice(DrawPrice drawPrice);
 
     /**
+     * 修改参与范围
+     *
+     * @param scope 参与范围
+     */
+    void modifyParticipateScope(DrawPoolParticipateScope scope);
+
+    /**
      * 修改奖品库存
      *
      * @param awardId   奖品Id
