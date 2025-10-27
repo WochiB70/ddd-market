@@ -77,7 +77,9 @@ public class QueryActivityTasksController {
         return queryFactory.select(
                         award.id,
                         award.awardType,
-                        award.awardCount
+                        award.awardCount,
+                        award.taskId,
+                        award.awardId
                 )
                 .from(award)
                 .where(award.taskId.in(taskIds))
@@ -85,7 +87,7 @@ public class QueryActivityTasksController {
                 .stream()
                 .map(it -> {
                     QueryActivityTasksResponse response = new QueryActivityTasksResponse();
-                    Tuple tuple = map.get(it.get(task.id));
+                    Tuple tuple = map.get(it.get(award.taskId));
                     response.setId(tuple.get(task.id));
                     response.setName(tuple.get(task.name));
                     response.setDescription(tuple.get(task.description));
@@ -102,7 +104,7 @@ public class QueryActivityTasksController {
                     response.setExpireTime(tuple.get(task.expiredTime));
                     response.setAward(new QueryActivityTasksResponse.TaskAward(
                             it.get(award.awardType),
-                            it.get(award.id),
+                            it.get(award.awardId),
                             it.get(award.awardCount)
                     ));
                     response.setStatus(tuple.get(task.status));
