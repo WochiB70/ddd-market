@@ -12,6 +12,7 @@ import xyz.wochib70.domain.task.TaskRepository;
 import xyz.wochib70.domain.utils.ParameterUtil;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Component
@@ -28,15 +29,20 @@ public class UserTaskFactory {
         ParameterUtil.requireNonNull(taskId, "任务Id不能为null");
         ParameterUtil.requireNonNull(userId, "用户Id不能为null");
         Task task = taskRepository.queryTaskByIdOrThrow(taskId);
-        CompleteEvent completeEvent = task.getCompleteEvent();
         final ReceivedTaskExpireTime expireTime = task.getReceivedTaskExpireTime();
         var userTask = new UserTaskImpl(userTaskIdGenerator.nextUserTaskId());
         userTask.setTaskId(taskId);
         userTask.setUserId(userId);
-        LocalDateTime userTaskExpireTime = activityRepository.queryActivityById(task.getActivityId())
-                .map(expireTime::calculate)
-                .orElseThrow();
-        userTask.setExpireTime(userTaskExpireTime);
+        userTask.setStatus(UserTaskStatus.PENDING);
+        if (Objects.nonNull(task.getActivityId())) {
+            LocalDateTime userTaskExpireTime = activityRepository.queryActivityById(task.getActivityId())
+                    .map(expireTime::calculate)
+                    .orElseThrow();
+            userTask.setExpireTime(userTaskExpireTime);
+        } else {
+            userTask.setExpireTime(expireTime.calculate(null));
+        }
+
         return userTask;
     }
 }
