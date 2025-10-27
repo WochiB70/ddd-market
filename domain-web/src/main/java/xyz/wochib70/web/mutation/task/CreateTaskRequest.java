@@ -1,5 +1,6 @@
 package xyz.wochib70.web.mutation.task;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -39,10 +40,12 @@ public class CreateTaskRequest {
 
     @NotNull
     @Schema(description = "开始时间", example = "2025-01-01T00:00:00")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startTime;
 
     @NotNull
     @Schema(description = "过期时间", example = "2025-12-31T23:59:59")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime expiredTime;
 
     @NotNull
