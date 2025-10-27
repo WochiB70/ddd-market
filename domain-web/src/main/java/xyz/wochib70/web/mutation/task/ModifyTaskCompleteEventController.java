@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ public class ModifyTaskCompleteEventController {
     private final ModifyTaskCompleteEventCmdHandler modifyTaskCompleteEventCmdHandler;
 
     @PostMapping("/modify-complete-event")
+    @Transactional
     @Operation(summary = "修改任务完成事件", description = "修改任务的完成事件条件")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "修改成功"),

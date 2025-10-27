@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ public class RemoveDrawItemController {
     private final RemoveDrawItemCmdHandler removeDrawItemCmdHandler;
 
     @PostMapping("/remove-item")
+    @Transactional
     @Operation(summary = "移除抽奖物品", description = "从抽奖池中移除指定的抽奖物品")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "移除成功"),

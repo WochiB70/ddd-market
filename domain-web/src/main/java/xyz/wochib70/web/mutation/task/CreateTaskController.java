@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ public class CreateTaskController {
     private final CreateTaskCmdHandler createTaskCmdHandler;
 
     @PostMapping("/create")
+    @Transactional
     @Operation(summary = "创建任务", description = "创建一个新的任务")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "任务创建成功", content = @Content(schema = @Schema(implementation = IdentifierId.class))),

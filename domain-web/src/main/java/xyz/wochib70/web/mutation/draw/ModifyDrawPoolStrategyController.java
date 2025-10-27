@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ public class ModifyDrawPoolStrategyController {
     private final ModifyDrawPoolStrategyCmdHandler modifyDrawPoolStrategyCmdHandler;
 
     @PostMapping("/modify-pool-strategy")
+    @Transactional
     @Operation(summary = "修改抽奖池策略", description = "修改抽奖池的抽奖策略（如权重、随机等）")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "修改成功"),

@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ public class ModifyDrawItemTypeController {
     private final ModifyDrawItemTypeCmdHandler modifyDrawItemTypeCmdHandler;
 
     @PostMapping("/modify-item-type")
+    @Transactional
     @Operation(summary = "修改抽奖物品类型", description = "修改抽奖物品的类型（如货币、道具等）")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "修改成功"),

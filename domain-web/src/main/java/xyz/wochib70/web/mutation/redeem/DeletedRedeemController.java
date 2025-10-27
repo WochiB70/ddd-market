@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ public class DeletedRedeemController {
     private final DeletedRedeemCmdHandler deletedRedeemCmdHandler;
 
     @PostMapping("/delete")
+    @Transactional
     @Operation(summary = "删除兑换", description = "删除指定的兑换活动")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "删除成功"),

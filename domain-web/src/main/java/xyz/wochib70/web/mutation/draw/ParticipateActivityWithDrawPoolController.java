@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ public class ParticipateActivityWithDrawPoolController {
     private final ParticipateActivityWithDrawPoolCmdHandler participateActivityWithDrawPoolCmdHandler;
 
     @PostMapping("/participate-activity")
+    @Transactional
     @Operation(summary = "参与抽奖活动", description = "用户参与抽奖活动进行抽奖")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "抽奖成功", content = @Content(schema = @Schema(implementation = IdentifierId.class))),
