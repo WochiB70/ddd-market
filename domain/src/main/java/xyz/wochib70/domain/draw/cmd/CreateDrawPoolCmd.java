@@ -1,6 +1,7 @@
 package xyz.wochib70.domain.draw.cmd;
 
 import xyz.wochib70.domain.IdentifierId;
+import xyz.wochib70.domain.draw.DrawPoolParticipateScope;
 import xyz.wochib70.domain.draw.DrawPrice;
 import xyz.wochib70.domain.draw.DrawStrategyType;
 
@@ -8,6 +9,7 @@ public record CreateDrawPoolCmd(
         String name,
         IdentifierId<Long> activityId,
         DrawStrategyType strategyType,
-        DrawPrice drawPrice
+        DrawPrice drawPrice,
+        DrawPoolParticipateScope scope
 ) {
 }

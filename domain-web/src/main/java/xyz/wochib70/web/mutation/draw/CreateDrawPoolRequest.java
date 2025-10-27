@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
+import xyz.wochib70.domain.draw.DrawPoolParticipateScope;
 import xyz.wochib70.domain.draw.DrawPrice;
 import xyz.wochib70.domain.draw.DrawStrategyType;
 import xyz.wochib70.domain.draw.cmd.CreateDrawPoolCmd;
@@ -29,6 +30,10 @@ public class CreateDrawPoolRequest {
     @Schema(description = "抽奖价格")
     private DrawPriceRequest drawPrice;
 
+    @NotNull
+    @Schema(description = "奖池的作用范围", example = "GLOBAL")
+    private DrawPoolParticipateScope scope;
+
 
     public record DrawPriceRequest(
             @NotNull
@@ -45,8 +50,11 @@ public class CreateDrawPoolRequest {
                 name,
                 new DefaultIdentifierId<>(activityId),
                 strategyType,
-                new DrawPrice(new DefaultIdentifierId<>(drawPrice.currencyId),
+                new DrawPrice(new DefaultIdentifierId<>(
+                        drawPrice.currencyId),
                         drawPrice.price
-                ));
+                ),
+                scope
+        );
     }
 }

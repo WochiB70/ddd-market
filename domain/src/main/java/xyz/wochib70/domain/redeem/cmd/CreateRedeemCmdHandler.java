@@ -19,7 +19,11 @@ public class CreateRedeemCmdHandler {
     private final ApplicationEventPublisher eventPublisher;
 
     public IdentifierId<Long> handle(CreateRedeemCmd cmd) {
-        Redeem redeem = redeemFactory.createRedeem(cmd.activityId(), cmd.name());
+        Redeem redeem = redeemFactory.createRedeem(
+                cmd.activityId(),
+                cmd.name(),
+                cmd.scope()
+        );
         redeemRepository.save(redeem);
         redeem.getEvents().forEach(eventPublisher::publishEvent);
         return redeem.getRedeemId();

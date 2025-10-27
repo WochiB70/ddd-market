@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.utils.ParameterUtil;
 
+import java.util.Objects;
+
 @RequiredArgsConstructor
 @Component
 public class DrawPoolFactory {
@@ -15,7 +17,8 @@ public class DrawPoolFactory {
             String name,
             IdentifierId<Long> activityId,
             DrawStrategyType strategyType,
-            DrawPrice drawPrice
+            DrawPrice drawPrice,
+            DrawPoolParticipateScope scope
     ) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("名字不能为空");
@@ -28,6 +31,7 @@ public class DrawPoolFactory {
         drawPool.setActivityId(activityId);
         drawPool.setStrategyType(strategyType);
         drawPool.setDrawPrice(drawPrice);
+        drawPool.setScope(Objects.isNull(scope) ? DrawPoolParticipateScope.GLOBAL : scope);
         return drawPool;
     }
 }
