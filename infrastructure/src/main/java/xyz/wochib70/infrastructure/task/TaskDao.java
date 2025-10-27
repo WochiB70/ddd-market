@@ -12,10 +12,10 @@ import java.util.Optional;
 @Repository
 public interface TaskDao extends JpaRepository<TaskEntity, Long> {
     @Query("SELECT t FROM TaskEntity t WHERE t.id = :id")
-    Optional<TaskEntity> queryTaskById(Long id);
-    
+    Optional<TaskEntity> queryTaskById(@Param("id") Long id);
+
     @Query("SELECT t FROM TaskEntity t WHERE t.activityId = :activityId")
     List<TaskEntity> findByActivityId(@Param("activityId") Long activityId);
-    
+
     List<TaskEntity> findByCompleteEvent(CompleteEvent completeEvent);
 }

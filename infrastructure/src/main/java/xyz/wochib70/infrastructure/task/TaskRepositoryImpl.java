@@ -44,6 +44,7 @@ public class TaskRepositoryImpl implements TaskRepository {
         TaskEntity entity = toEntity(task);
         TaskAwardEntity awardEntity = toAwardEntity(task.getTaskAward());
         awardEntity.setTaskId(entity.getId());
+        taskAwardDao.deleteByTaskId(entity.getId());
         taskDao.save(entity);
         taskAwardDao.save(awardEntity);
     }
