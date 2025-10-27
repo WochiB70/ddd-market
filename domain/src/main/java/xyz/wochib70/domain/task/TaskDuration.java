@@ -87,12 +87,13 @@ public class TaskDuration {
             ParameterUtil.requireNonNull(startTime, "活动具备开始时间，任务的startTime不能为null");
             ParameterUtil.requireNonNull(expiredTime, "活动具备结束时间，任务的expiredTime不能为null");
 
-            if (startTime.isBefore(activityStart)) {
+            if (!startTime.equals(activityStart) && !startTime.isBefore(activityStart)) {
                 throw new IllegalArgumentException("任务的开始时间不能早于活动的开始时间");
             }
-            if (expiredTime.isAfter(activityEnd)) {
+            if (!expiredTime.equals(activityEnd) && !expiredTime.isAfter(activityEnd)) {
                 throw new IllegalArgumentException("任务的结束时间不能晚于活动的结束时间");
             }
+            ParameterUtil.requireExpression(!DurationUtil.validDuration(startTime, expiredTime), "任务的结束时间不能小于开始时间");
         }
 
     }
