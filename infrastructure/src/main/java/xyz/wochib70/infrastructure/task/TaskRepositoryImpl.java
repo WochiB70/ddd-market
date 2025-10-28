@@ -73,7 +73,8 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     @Override
     public List<Task> queryReceivableTaskByCompleteEvent(CompleteEvent completeEvent) {
-        List<TaskEntity> taskEntities = taskDao.findByCompleteEvent(completeEvent);
+        LocalDateTime now = LocalDateTime.now();
+        List<TaskEntity> taskEntities = taskDao.findByCompleteEventAndExpiredTimeBeforeAndStartTimeIsAfter(completeEvent, now, now);
         return taskEntities.stream()
                 .map(entity -> {
                     TaskAwardEntity awardEntity = taskAwardDao.queryByTaskId(entity.getId());
