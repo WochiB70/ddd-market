@@ -76,6 +76,9 @@ public non-sealed class ActivityImpl extends AbstractAggregate<Long> implements 
         switch (status) {
             case INIT -> throw new ActivityStatusException("Activity未发布不能开始");
             case PUBLISHED, CLOSE -> {
+                if (!duration.inActiveTime()) {
+                    throw new ActivityStatusException("Activity不在配置好的活动范围内，不能开始");
+                }
                 status = ActivityStatus.ACTIVE;
                 publishEvent(new ActivityStartedEvent(
                         getActivityId()
@@ -88,6 +91,9 @@ public non-sealed class ActivityImpl extends AbstractAggregate<Long> implements 
 
     @Override
     public void participate(UserId userId) {
+        if (!Objects.equals(this.status, ActivityStatus.ACTIVE)) {
+            throw new ActivityStatusException("Activity未开始不能参与");
+        }
         countLimit.participate(getActivityId(), userId);
         publishEvent(new ActivityParticipatedEvent(
                 userId,
