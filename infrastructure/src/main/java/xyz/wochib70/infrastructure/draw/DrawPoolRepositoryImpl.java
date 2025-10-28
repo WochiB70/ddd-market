@@ -99,6 +99,7 @@ public class DrawPoolRepositoryImpl implements DrawPoolRepository {
                 new DefaultIdentifierId<>(entity.getCurrencyId()),
                 entity.getPrice()
         ));
+        drawPool.setScope(entity.getScope());
         return drawPool;
     }
     
@@ -111,6 +112,7 @@ public class DrawPoolRepositoryImpl implements DrawPoolRepository {
         entity.setStrategyType(impl.getStrategyType());
         entity.setCurrencyId(impl.getDrawPrice().currencyId().getId());
         entity.setPrice(impl.getDrawPrice().price());
+        entity.setScope(impl.getScope());
         return entity;
     }
     

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Component
 public class RedeemPoolRepositoryImpl implements RedeemRepository {
-    
+
     private final RedeemDao redeemDao;
     private final RedeemItemDao redeemItemDao;
 
@@ -21,12 +21,12 @@ public class RedeemPoolRepositoryImpl implements RedeemRepository {
     public Redeem findByIdOrThrow(IdentifierId<Long> redeemId) {
         RedeemEntity redeemEntity = redeemDao.findById(redeemId.getId())
                 .orElseThrow(() -> new NoSuchRedeemExistsException("兑换池不存在"));
-        
+
         List<RedeemItemEntity> itemEntities = redeemItemDao.findByRedeemId(redeemId.getId());
         Set<RedeemItem> redeemItems = itemEntities.stream()
                 .map(this::toRedeemItemDomain)
                 .collect(Collectors.toSet());
-        
+
         return toDomain(redeemEntity, redeemItems);
     }
 
@@ -34,7 +34,7 @@ public class RedeemPoolRepositoryImpl implements RedeemRepository {
     public void save(Redeem redeem) {
         RedeemEntity redeemEntity = toEntity(redeem);
         RedeemEntity savedEntity = redeemDao.save(redeemEntity);
-        
+
         // 保存兑换项
         RedeemImpl impl = (RedeemImpl) redeem;
         if (impl.getRedeemItems() != null) {
@@ -50,7 +50,7 @@ public class RedeemPoolRepositoryImpl implements RedeemRepository {
     public void delete(Redeem redeem) {
         RedeemEntity entity = toEntity(redeem);
         redeemDao.delete(entity);
-        
+
         // 删除关联的兑换项
         redeemItemDao.deleteAll(redeemItemDao.findByRedeemId(redeem.getRedeemId().getId()));
     }
@@ -59,10 +59,10 @@ public class RedeemPoolRepositoryImpl implements RedeemRepository {
     public void update(Redeem redeem) {
         RedeemEntity redeemEntity = toEntity(redeem);
         redeemDao.save(redeemEntity);
-        
+
         // 先删除现有的兑换项，再重新保存
         redeemItemDao.deleteAll(redeemItemDao.findByRedeemId(redeem.getRedeemId().getId()));
-        
+
         // 保存兑换项
         RedeemImpl impl = (RedeemImpl) redeem;
         if (impl.getRedeemItems() != null) {
@@ -77,7 +77,7 @@ public class RedeemPoolRepositoryImpl implements RedeemRepository {
     @Override
     public List<Redeem> findByActivityId(IdentifierId<Long> activityId) {
         List<RedeemEntity> redeemEntities = redeemDao.findByActivityId(activityId.getId());
-        
+
         return redeemEntities.stream()
                 .map(entity -> {
                     List<RedeemItemEntity> itemEntities = redeemItemDao.findByRedeemId(entity.getId());
@@ -88,24 +88,26 @@ public class RedeemPoolRepositoryImpl implements RedeemRepository {
                 })
                 .collect(Collectors.toList());
     }
-    
+
     private Redeem toDomain(RedeemEntity entity, Set<RedeemItem> redeemItems) {
         RedeemImpl redeem = new RedeemImpl(new DefaultIdentifierId<>(entity.getId()));
         redeem.setActivityId(new DefaultIdentifierId<>(entity.getActivityId()));
         redeem.setName(entity.getName());
         redeem.setRedeemItems(redeemItems);
+        redeem.setScope(entity.getScope());
         return redeem;
     }
-    
+
     private RedeemEntity toEntity(Redeem redeem) {
         RedeemImpl impl = (RedeemImpl) redeem;
         RedeemEntity entity = new RedeemEntity();
         entity.setId(impl.getRedeemId().getId());
         entity.setActivityId(impl.getActivityId().getId());
         entity.setName(impl.getName());
+        entity.setScope(impl.getScope());
         return entity;
     }
-    
+
     private RedeemItem toRedeemItemDomain(RedeemItemEntity entity) {
         RedeemItemInventory inventory = new RedeemItemInventory(entity.getInventoryType(), entity.getValidCount());
         RedeemItemPrice price = new RedeemItemPrice(new DefaultIdentifierId<>(entity.getCurrencyId()), entity.getPrice());
@@ -118,7 +120,7 @@ public class RedeemPoolRepositoryImpl implements RedeemRepository {
         redeemItem.setInventory(inventory);
         return redeemItem;
     }
-    
+
     private RedeemItemEntity toRedeemItemEntity(RedeemItem redeemItem) {
         RedeemItemEntity entity = new RedeemItemEntity();
         entity.setId(redeemItem.getId().getId());

@@ -1,10 +1,9 @@
 package xyz.wochib70.infrastructure.redeem;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import xyz.wochib70.domain.redeem.RedeemParticipateScope;
 
 @Getter
 @Setter
@@ -18,4 +17,7 @@ public class RedeemEntity {
     private Long activityId;
 
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    private RedeemParticipateScope scope;
 }
