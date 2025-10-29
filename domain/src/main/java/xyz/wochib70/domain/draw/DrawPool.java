@@ -6,6 +6,9 @@ import xyz.wochib70.domain.UserId;
 
 public sealed interface DrawPool extends Aggregate<Long, Long> permits DrawPoolImpl {
 
+
+    IdentifierId<Long> getActivityId();
+
     IdentifierId<Long> getDrawPoolId();
 
     DrawPrice getDrawPrice();

@@ -29,4 +29,7 @@ public sealed interface Activity extends Aggregate<Long, Long> permits ActivityI
     void modifyCredentialLimit(Boolean credentialLimit);
 
     void modifyAwardType(ActivityAwardType awardType);
+
+    boolean isInitialized();
+
 }

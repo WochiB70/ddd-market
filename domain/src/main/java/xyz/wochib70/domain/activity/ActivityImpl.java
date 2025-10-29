@@ -90,6 +90,11 @@ public non-sealed class ActivityImpl extends AbstractAggregate<Long> implements 
     }
 
     @Override
+    public boolean isInitialized() {
+        return Objects.equals(this.status, ActivityStatus.INIT);
+    }
+
+    @Override
     public void participate(UserId userId) {
         if (!Objects.equals(this.status, ActivityStatus.ACTIVE)) {
             throw new ActivityStatusException("Activity未开始不能参与");
