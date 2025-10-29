@@ -136,6 +136,18 @@ public non-sealed class TaskImpl extends AbstractAggregate<Long> implements Task
     }
 
     @Override
+    public void modifyTaskDuration(TaskDuration taskDuration) {
+        ParameterUtil.requireNonNull(taskDuration, "任务持续时间不能为空");
+        if (!Objects.equals(this.duration, taskDuration)) {
+            this.duration = taskDuration;
+            publishEvent(new TaskDurationModifiedEvent(
+                    getTaskId(),
+                    taskDuration
+            ));
+        }
+    }
+
+    @Override
     public void create() {
         publishEvent(new TaskCreatedEvent(
                 this

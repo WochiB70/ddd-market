@@ -17,6 +17,8 @@ public sealed interface Task extends Aggregate<Long, Long> permits TaskImpl {
 
     TaskAward getTaskAward();
 
+    TaskDuration getDuration();
+
     /**
      * 接收任务
      *
@@ -66,4 +68,11 @@ public sealed interface Task extends Aggregate<Long, Long> permits TaskImpl {
      * @param taskAward 奖品
      */
     void modifyTaskAward(TaskAward taskAward);
+
+    /**
+     * 修改任务时间
+     *
+     * @param taskDuration 时间
+     */
+    void modifyTaskDuration(TaskDuration taskDuration);
 }
