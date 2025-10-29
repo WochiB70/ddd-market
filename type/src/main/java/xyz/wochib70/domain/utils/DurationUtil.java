@@ -64,6 +64,30 @@ public class DurationUtil {
         return time1.isBefore(time2) ? time1 : time2;
     }
 
+    /**
+     * 获取两个时间中的最大时间
+     * <p>
+     * 当两个值都为null时返回null
+     * 当两个值有一个为null时返回另一个值
+     * 当两个值都不为null时返回较大的值
+     *
+     * @param time1 时间1
+     * @param time2 时间2
+     * @return 最大时间
+     */
+    public static LocalDateTime max(LocalDateTime time1, LocalDateTime time2) {
+        if (Objects.isNull(time1) && Objects.isNull(time2)) {
+            return null;
+        }
+        if (Objects.isNull(time1)) {
+            return time2;
+        }
+        if (Objects.isNull(time2)) {
+            return time1;
+        }
+        return time1.isAfter(time2) ? time1 : time2;
+    }
+
     public static boolean validDuration(LocalDateTime startTime, LocalDateTime endTime) {
         if (Objects.nonNull(startTime) && Objects.nonNull(endTime)) {
             return endTime.isAfter(startTime);
