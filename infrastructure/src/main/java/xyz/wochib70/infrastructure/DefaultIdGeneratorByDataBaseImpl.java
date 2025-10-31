@@ -11,6 +11,7 @@ import xyz.wochib70.domain.credential.CredentialIdGenerator;
 import xyz.wochib70.domain.currency.CurrencyIdGenerator;
 import xyz.wochib70.domain.draw.DrawItemIdGenerator;
 import xyz.wochib70.domain.draw.DrawPoolIdGenerator;
+import xyz.wochib70.domain.inventory.InventoryIdGenerator;
 import xyz.wochib70.domain.redeem.RedeemItemIdGenerator;
 import xyz.wochib70.domain.redeem.RedeemPoolIdGenerator;
 import xyz.wochib70.domain.task.TaskIdGenerator;
@@ -24,7 +25,8 @@ public class DefaultIdGeneratorByDataBaseImpl implements AccountIdGenerator, Act
         CredentialIdGenerator, CurrencyIdGenerator,
         DrawPoolIdGenerator, RedeemPoolIdGenerator,
         TaskIdGenerator, UserTaskIdGenerator,
-        DrawItemIdGenerator, RedeemItemIdGenerator {
+        DrawItemIdGenerator, RedeemItemIdGenerator,
+        InventoryIdGenerator {
 
     private final JdbcTemplate jdbcTemplate;
 
