@@ -1,7 +1,7 @@
 package xyz.wochib70.web.query;
 
 import lombok.Data;
-import xyz.wochib70.domain.redeem.RedeemItemInventoryType;
+import xyz.wochib70.domain.inventory.InventoryType;
 import xyz.wochib70.domain.redeem.RedeemItemType;
 
 @Data
@@ -23,7 +23,7 @@ public class QueryRedeemPoolItemResponse {
 
 
     public record RedeemItemInventory(
-            RedeemItemInventoryType type,
+            InventoryType type,
             Integer surplus
     ) {
     }

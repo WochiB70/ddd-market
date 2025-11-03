@@ -85,7 +85,6 @@ class RedeemImplTest extends AggregateTestBase {
         item.setId(itemId);
         item.setItemInfo("Test Item", "Description");
         item.setItemPrice(price);
-        item.setInventory(new RedeemItemInventory(RedeemItemInventoryType.LIMITED, 5));
         item.setItemType(RedeemItemType.COUPON);
         
         redeem.getRedeemItems().add(item);
@@ -120,7 +119,6 @@ class RedeemImplTest extends AggregateTestBase {
         item.setId(itemId);
         item.setItemInfo("Test Item", "Description");
         item.setItemPrice(new RedeemItemPrice(new DefaultIdentifierId<>(1L), 100));
-        item.setInventory(new RedeemItemInventory(RedeemItemInventoryType.LIMITED, 5));
         item.setItemType(RedeemItemType.COUPON);
         
         redeem.getRedeemItems().add(item);
@@ -190,8 +188,7 @@ class RedeemImplTest extends AggregateTestBase {
                 itemName,
                 "Description",
                 RedeemItemType.COUPON,
-                new RedeemItemPrice(new DefaultIdentifierId<>(1L), 100),
-                new RedeemItemInventory(RedeemItemInventoryType.LIMITED, 5)
+                new RedeemItemPrice(new DefaultIdentifierId<>(1L), 100)
         );
         
         // Mock the domain registry for redeem item id generator
@@ -218,7 +215,6 @@ class RedeemImplTest extends AggregateTestBase {
         existingItem.setId(new DefaultIdentifierId<>(1L));
         existingItem.setItemInfo(existingItemName, "Description");
         existingItem.setItemPrice(new RedeemItemPrice(new DefaultIdentifierId<>(1L), 100));
-        existingItem.setInventory(new RedeemItemInventory(RedeemItemInventoryType.LIMITED, 5));
         existingItem.setItemType(RedeemItemType.COUPON);
         
         redeem.getRedeemItems().add(existingItem);
@@ -227,8 +223,7 @@ class RedeemImplTest extends AggregateTestBase {
                 existingItemName,
                 "New Description",
                 RedeemItemType.VIP,
-                new RedeemItemPrice(new DefaultIdentifierId<>(2L), 200),
-                new RedeemItemInventory(RedeemItemInventoryType.LIMITED, 10)
+                new RedeemItemPrice(new DefaultIdentifierId<>(2L), 200)
         );
 
         // When & Then
@@ -246,7 +241,6 @@ class RedeemImplTest extends AggregateTestBase {
         item.setId(itemId);
         item.setItemInfo("Test Item", "Description");
         item.setItemPrice(new RedeemItemPrice(new DefaultIdentifierId<>(1L), 100));
-        item.setInventory(new RedeemItemInventory(RedeemItemInventoryType.LIMITED, 5));
         item.setItemType(RedeemItemType.COUPON);
         
         redeem.getRedeemItems().add(item);
@@ -287,7 +281,6 @@ class RedeemImplTest extends AggregateTestBase {
         item.setId(itemId);
         item.setItemInfo("Old Name", "Old Description");
         item.setItemPrice(new RedeemItemPrice(new DefaultIdentifierId<>(1L), 100));
-        item.setInventory(new RedeemItemInventory(RedeemItemInventoryType.LIMITED, 5));
         item.setItemType(RedeemItemType.COUPON);
         
         redeem.getRedeemItems().add(item);
@@ -322,47 +315,6 @@ class RedeemImplTest extends AggregateTestBase {
         assertEquals("兑换项不存在", exception.getMessage());
     }
 
-    @Test
-    void modifyRedeemItemInventory_shouldUpdateInventoryAndPublishEvent_whenItemExists() {
-        // Given
-        IdentifierId<Long> itemId = new DefaultIdentifierId<>(1L);
-        RedeemItemInventory newInventory = new RedeemItemInventory(RedeemItemInventoryType.INFINITE, 0);
-        
-        RedeemItem item = new RedeemItem();
-        item.setId(itemId);
-        item.setItemInfo("Test Item", "Description");
-        item.setItemPrice(new RedeemItemPrice(new DefaultIdentifierId<>(1L), 100));
-        item.setInventory(new RedeemItemInventory(RedeemItemInventoryType.LIMITED, 5));
-        item.setItemType(RedeemItemType.COUPON);
-        
-        redeem.getRedeemItems().add(item);
-
-        // When
-        redeem.modifyRedeemItemInventory(itemId, newInventory);
-
-        // Then
-        assertEquals(newInventory, item.getInventory());
-        assertEquals(1, redeem.getEvents().size());
-        assertInstanceOf(RedeemItemInventoryModifiedEvent.class, redeem.getEvents().getFirst());
-        
-        RedeemItemInventoryModifiedEvent event = (RedeemItemInventoryModifiedEvent) redeem.getEvents().getFirst();
-        assertEquals(REDEEM_ID, event.getRedeemId().getId());
-        assertEquals(itemId, event.getRedeemItemId());
-        assertEquals(newInventory, event.getInventory());
-    }
-
-    @Test
-    void modifyRedeemItemInventory_shouldThrowException_whenItemDoesNotExist() {
-        // Given
-        IdentifierId<Long> nonExistentItemId = new DefaultIdentifierId<>(999L);
-        RedeemItemInventory newInventory = new RedeemItemInventory(RedeemItemInventoryType.INFINITE, 0);
-
-        // When & Then
-        NoSuchRedeemItemException exception = assertThrows(NoSuchRedeemItemException.class, () -> {
-            redeem.modifyRedeemItemInventory(nonExistentItemId, newInventory);
-        });
-        assertEquals("兑换项不存在", exception.getMessage());
-    }
 
     @Test
     void modifyRedeemItemPrice_shouldUpdatePriceAndPublishEvent_whenItemExists() {
@@ -374,7 +326,6 @@ class RedeemImplTest extends AggregateTestBase {
         item.setId(itemId);
         item.setItemInfo("Test Item", "Description");
         item.setItemPrice(new RedeemItemPrice(new DefaultIdentifierId<>(1L), 100));
-        item.setInventory(new RedeemItemInventory(RedeemItemInventoryType.LIMITED, 5));
         item.setItemType(RedeemItemType.COUPON);
         
         redeem.getRedeemItems().add(item);
@@ -416,7 +367,6 @@ class RedeemImplTest extends AggregateTestBase {
         item.setId(itemId);
         item.setItemInfo("Test Item", "Description");
         item.setItemPrice(new RedeemItemPrice(new DefaultIdentifierId<>(1L), 100));
-        item.setInventory(new RedeemItemInventory(RedeemItemInventoryType.LIMITED, 5));
         item.setItemType(RedeemItemType.COUPON);
         
         redeem.getRedeemItems().add(item);

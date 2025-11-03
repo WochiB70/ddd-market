@@ -1,5 +1,6 @@
 package xyz.wochib70.web.query;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,6 +12,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.inventory.GoodsType;
+import xyz.wochib70.infrastructure.inventory.QInventoryEntity;
 import xyz.wochib70.infrastructure.redeem.QRedeemItemEntity;
 
 import java.util.List;
@@ -32,15 +35,14 @@ public class QueryRedeemPoolItemController {
             @PathVariable("redeemPoolId") Long redeemPoolId
     ) {
         QRedeemItemEntity redeemItem = QRedeemItemEntity.redeemItemEntity;
+        QInventoryEntity inventory = QInventoryEntity.inventoryEntity;
         return queryFactory.select(
                         redeemItem.id,
                         redeemItem.name,
                         redeemItem.description,
                         redeemItem.type,
                         redeemItem.currencyId,
-                        redeemItem.price,
-                        redeemItem.inventoryType,
-                        redeemItem.validCount
+                        redeemItem.price
                 )
                 .from(redeemItem)
                 .where(redeemItem.redeemId.eq(redeemPoolId))
@@ -57,9 +59,20 @@ public class QueryRedeemPoolItemController {
                             item.get(redeemItem.price)
 
                     ));
+                    Tuple inventoryTuple = queryFactory.select(
+                                    inventory.goodsId,
+                                    inventory.type,
+                                    inventory.inventoryType,
+                                    inventory.count
+                            )
+                            .from(inventory)
+                            .where(inventory.goodsId.eq(item.get(redeemItem.id))
+                                    .and(inventory.type.eq(GoodsType.REDEEM))
+                            )
+                            .fetchOne();
                     response.setInventory(new QueryRedeemPoolItemResponse.RedeemItemInventory(
-                            item.get(redeemItem.inventoryType),
-                            item.get(redeemItem.validCount)
+                            inventoryTuple.get(inventory.inventoryType),
+                            inventoryTuple.get(inventory.count)
                     ));
                     response.setRedeemPoolId(redeemPoolId);
                     return response;

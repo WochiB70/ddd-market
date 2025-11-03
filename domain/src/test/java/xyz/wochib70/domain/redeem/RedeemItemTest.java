@@ -13,40 +13,22 @@ class RedeemItemTest {
     private IdentifierId<Long> id;
     private String name = "Test Item";
     private String description = "Test Description";
-    private RedeemItemInventory inventory;
     private RedeemItemPrice price;
     private RedeemItemType type;
 
     @BeforeEach
     void setUp() {
         id = new DefaultIdentifierId<>(1L);
-        inventory = new RedeemItemInventory(RedeemItemInventoryType.LIMITED, 5);
         price = new RedeemItemPrice(new DefaultIdentifierId<>(1L), 100);
         type = RedeemItemType.COUPON;
         
         redeemItem = new RedeemItem();
         redeemItem.setId(id);
         redeemItem.setItemInfo(name, description);
-        redeemItem.setInventory(inventory);
         redeemItem.setItemPrice(price);
         redeemItem.setItemType(type);
     }
 
-    @Test
-    void redeem_shouldDelegateToInventory() {
-        // When & Then
-        assertDoesNotThrow(() -> {
-            redeemItem.redeem(1);
-        });
-    }
-
-    @Test
-    void redeem_shouldThrowException_whenCountExceedsInventory() {
-        // When & Then
-        assertThrows(InsufficientRedeemItemInventoryException.class, () -> {
-            redeemItem.redeem(10);
-        });
-    }
 
     @Test
     void setId_shouldUpdateId_whenIdIsValid() {
@@ -143,26 +125,9 @@ class RedeemItemTest {
         assertEquals("兑换项的价格不能为null", exception.getMessage());
     }
 
-    @Test
-    void setInventory_shouldUpdateInventory_whenInventoryIsValid() {
-        // Given
-        RedeemItemInventory newInventory = new RedeemItemInventory(RedeemItemInventoryType.INFINITE, 0);
 
-        // When
-        redeemItem.setInventory(newInventory);
 
-        // Then
-        assertEquals(newInventory, redeemItem.getInventory());
-    }
 
-    @Test
-    void setInventory_shouldThrowException_whenInventoryIsNull() {
-        // When & Then
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            redeemItem.setInventory(null);
-        });
-        assertEquals("兑换项的库存不能为null", exception.getMessage());
-    }
 
     @Test
     void equals_shouldReturnTrue_whenSameIdAndName() {
@@ -170,7 +135,6 @@ class RedeemItemTest {
         RedeemItem otherItem = new RedeemItem();
         otherItem.setId(id);
         otherItem.setItemInfo(name, "Other Description");
-        otherItem.setInventory(new RedeemItemInventory(RedeemItemInventoryType.LIMITED, 3));
         otherItem.setItemPrice(new RedeemItemPrice(new DefaultIdentifierId<>(2L), 50));
         otherItem.setItemType(RedeemItemType.VIP);
 
@@ -187,7 +151,6 @@ class RedeemItemTest {
         RedeemItem otherItem = new RedeemItem();
         otherItem.setId(new DefaultIdentifierId<>(2L));
         otherItem.setItemInfo(name, description);
-        otherItem.setInventory(inventory);
         otherItem.setItemPrice(price);
         otherItem.setItemType(type);
 
@@ -204,7 +167,6 @@ class RedeemItemTest {
         RedeemItem otherItem = new RedeemItem();
         otherItem.setId(id);
         otherItem.setItemInfo("Other Name", description);
-        otherItem.setInventory(inventory);
         otherItem.setItemPrice(price);
         otherItem.setItemType(type);
 
@@ -239,7 +201,6 @@ class RedeemItemTest {
         RedeemItem otherItem = new RedeemItem();
         otherItem.setId(id);
         otherItem.setItemInfo(name, "Other Description");
-        otherItem.setInventory(new RedeemItemInventory(RedeemItemInventoryType.LIMITED, 3));
         otherItem.setItemPrice(new RedeemItemPrice(new DefaultIdentifierId<>(2L), 50));
         otherItem.setItemType(RedeemItemType.VIP);
 
@@ -257,7 +218,6 @@ class RedeemItemTest {
         RedeemItem otherItem = new RedeemItem();
         otherItem.setId(new DefaultIdentifierId<>(2L));
         otherItem.setItemInfo(name, description);
-        otherItem.setInventory(inventory);
         otherItem.setItemPrice(price);
         otherItem.setItemType(type);
 

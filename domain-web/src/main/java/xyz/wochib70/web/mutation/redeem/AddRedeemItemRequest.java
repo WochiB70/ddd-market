@@ -4,6 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
+import xyz.wochib70.domain.IdentifierId;
+import xyz.wochib70.domain.inventory.GoodsType;
+import xyz.wochib70.domain.inventory.InventoryType;
+import xyz.wochib70.domain.inventory.cmd.CreateInventoryCmd;
 import xyz.wochib70.domain.redeem.*;
 import xyz.wochib70.domain.redeem.cmd.AddRedeemItemCmd;
 
@@ -50,7 +54,7 @@ public class AddRedeemItemRequest {
 
             @NotNull
             @Schema(description = "库存类型", example = "LIMITED")
-            RedeemItemInventoryType type,
+            InventoryType type,
 
             @Schema(description = "库存数量", example = "100")
             Integer validCount
@@ -62,11 +66,16 @@ public class AddRedeemItemRequest {
                 new DefaultIdentifierId<>(getPrice().currencyId()),
                 getPrice().price()
         );
-        RedeemItemInventory redeemItemInventory = new RedeemItemInventory(
-                getInventory().type(),
-                getInventory().validCount()
-        );
-        RedeemItemInfo info = new RedeemItemInfo(name, description, type, redeemItemPrice, redeemItemInventory);
+        RedeemItemInfo info = new RedeemItemInfo(name, description, type, redeemItemPrice);
         return new AddRedeemItemCmd(new DefaultIdentifierId<>(redeemId), info);
+    }
+
+    public CreateInventoryCmd toCreateInventoryCmd(IdentifierId<Long> goodsId) {
+        return new CreateInventoryCmd(
+                goodsId,
+                GoodsType.REDEEM,
+                getInventory().type,
+                getInventory().validCount
+        );
     }
 }

@@ -3,6 +3,7 @@ package xyz.wochib70.domain.redeem.cmd;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.redeem.Redeem;
 import xyz.wochib70.domain.redeem.RedeemRepository;
 
@@ -15,10 +16,11 @@ public class AddRedeemItemCmdHandler {
     private final ApplicationEventPublisher eventPublisher;
 
 
-    public void handle(AddRedeemItemCmd cmd) {
+    public IdentifierId<Long> handle(AddRedeemItemCmd cmd) {
         Redeem redeem = redeemRepository.findByIdOrThrow(cmd.redeemId());
-        redeem.addRedeemItem(cmd.info());
+        IdentifierId<Long> id = redeem.addRedeemItem(cmd.info());
         redeemRepository.update(redeem);
         redeem.getEvents().forEach(eventPublisher::publishEvent);
+        return id;
     }
 }

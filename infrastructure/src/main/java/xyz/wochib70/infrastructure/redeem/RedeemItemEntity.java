@@ -3,7 +3,6 @@ package xyz.wochib70.infrastructure.redeem;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import xyz.wochib70.domain.redeem.RedeemItemInventoryType;
 import xyz.wochib70.domain.redeem.RedeemItemType;
 
 @Getter
@@ -21,10 +20,6 @@ public class RedeemItemEntity {
 
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    private RedeemItemInventoryType inventoryType;
-
-    private Integer validCount;
 
     private Long currencyId;
 

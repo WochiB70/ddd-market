@@ -4,8 +4,7 @@ public record RedeemItemInfo(
         String name,
         String description,
         RedeemItemType type,
-        RedeemItemPrice price,
-        RedeemItemInventory inventory
+        RedeemItemPrice price
 ) {
 
     public RedeemItemInfo {
@@ -17,9 +16,6 @@ public record RedeemItemInfo(
         }
         if (price == null) {
             throw new IllegalArgumentException("兑换项的价格不能为null");
-        }
-        if (inventory == null) {
-            throw new IllegalArgumentException("兑换项的库存不能为null");
         }
     }
 }

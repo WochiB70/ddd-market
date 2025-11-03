@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.wochib70.domain.UserId;
-import xyz.wochib70.domain.redeem.cmd.ModifyRedeemItemInventoryCmdHandler;
+import xyz.wochib70.domain.redeem.cmd.ModifyRedeemItemInventoryTypeCmdHandler;
 import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
@@ -22,7 +22,7 @@ import xyz.wochib70.web.AuthorizedThreadLocal;
 @Tag(name = "兑换管理", description = "兑换创建、修改、参与等操作")
 public class ModifyRedeemItemInventoryController {
 
-    private final ModifyRedeemItemInventoryCmdHandler modifyRedeemItemInventoryCmdHandler;
+    private final ModifyRedeemItemInventoryTypeCmdHandler modifyRedeemItemInventoryCmdHandler;
 
     @PostMapping("/modify-item-inventory")
     @Transactional
@@ -35,7 +35,7 @@ public class ModifyRedeemItemInventoryController {
     })
     public void modifyRedeemItemInventory(
             @Parameter(description = "修改兑换物品库存请求参数", required = true)
-            @RequestBody @Valid ModifyRedeemItemInventoryRequest request
+            @RequestBody @Valid ModifyRedeemItemInventoryTypeRequest request
     ) {
         UserId adminId = AuthorizedThreadLocal.getAdminId();
         modifyRedeemItemInventoryCmdHandler.handle(request.toCmd());

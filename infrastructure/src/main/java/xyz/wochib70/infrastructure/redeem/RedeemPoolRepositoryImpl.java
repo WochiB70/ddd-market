@@ -109,7 +109,6 @@ public class RedeemPoolRepositoryImpl implements RedeemRepository {
     }
 
     private RedeemItem toRedeemItemDomain(RedeemItemEntity entity) {
-        RedeemItemInventory inventory = new RedeemItemInventory(entity.getInventoryType(), entity.getValidCount());
         RedeemItemPrice price = new RedeemItemPrice(new DefaultIdentifierId<>(entity.getCurrencyId()), entity.getPrice());
 
         RedeemItem redeemItem = new RedeemItem();
@@ -117,7 +116,6 @@ public class RedeemPoolRepositoryImpl implements RedeemRepository {
         redeemItem.setItemInfo(entity.getName(), entity.getDescription());
         redeemItem.setItemType(entity.getType());
         redeemItem.setItemPrice(price);
-        redeemItem.setInventory(inventory);
         return redeemItem;
     }
 
@@ -126,8 +124,6 @@ public class RedeemPoolRepositoryImpl implements RedeemRepository {
         entity.setId(redeemItem.getId().getId());
         entity.setName(redeemItem.getName());
         entity.setDescription(redeemItem.getDescription());
-        entity.setInventoryType(redeemItem.getInventory().getType());
-        entity.setValidCount(redeemItem.getInventory().getValidCount());
         entity.setCurrencyId(redeemItem.getPrice().currencyId().getId());
         entity.setPrice(redeemItem.getPrice().price());
         entity.setType(redeemItem.getType());

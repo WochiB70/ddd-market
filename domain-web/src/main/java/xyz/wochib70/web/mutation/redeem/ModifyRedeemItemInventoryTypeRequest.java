@@ -4,13 +4,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
-import xyz.wochib70.domain.redeem.RedeemItemInventory;
-import xyz.wochib70.domain.redeem.RedeemItemInventoryType;
-import xyz.wochib70.domain.redeem.cmd.ModifyRedeemItemInventoryCmd;
+import xyz.wochib70.domain.inventory.InventoryType;
+import xyz.wochib70.domain.redeem.cmd.ModifyRedeemItemInventoryTypeCmd;
 
 @Data
 @Schema(description = "修改兑换商品库存请求")
-public class ModifyRedeemItemInventoryRequest {
+public class ModifyRedeemItemInventoryTypeRequest {
 
     @NotNull
     @Schema(description = "兑换ID", example = "1")
@@ -22,17 +21,14 @@ public class ModifyRedeemItemInventoryRequest {
     
     @NotNull
     @Schema(description = "库存类型", example = "LIMITED")
-    private RedeemItemInventoryType type;
+    private InventoryType type;
     
-    @Schema(description = "有效数量", example = "100")
-    private Integer validCount;
 
-    public ModifyRedeemItemInventoryCmd toCmd() {
-        RedeemItemInventory inventory = new RedeemItemInventory(type, validCount);
-        return new ModifyRedeemItemInventoryCmd(
+    public ModifyRedeemItemInventoryTypeCmd toCmd() {
+        return new ModifyRedeemItemInventoryTypeCmd(
                 new DefaultIdentifierId<>(redeemId),
                 new DefaultIdentifierId<>(redeemItemId),
-                inventory
+                type
         );
     }
 }

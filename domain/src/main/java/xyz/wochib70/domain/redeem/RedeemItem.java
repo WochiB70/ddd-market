@@ -15,16 +15,11 @@ public class RedeemItem {
 
     private String description;
 
-    private RedeemItemInventory inventory;
-
     private RedeemItemPrice price;
 
     private RedeemItemType type;
 
 
-    public void redeem(int count) {
-        inventory.redeem(count);
-    }
 
     public void setId(IdentifierId<Long> id) {
         ParameterUtil.requireNonNull(id, "兑换项的id不能为null");
@@ -49,11 +44,6 @@ public class RedeemItem {
         this.price = price;
     }
 
-
-    public void setInventory(RedeemItemInventory inventory) {
-        ParameterUtil.requireNonNull(inventory, "兑换项的库存不能为null");
-        this.inventory = inventory;
-    }
 
 
     @Override

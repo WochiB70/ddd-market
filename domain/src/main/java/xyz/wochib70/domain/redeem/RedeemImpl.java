@@ -74,8 +74,7 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
         if (count <= 0) {
             throw new IllegalArgumentException("兑换数量不能小于0");
         }
-        RedeemItem redeemItem = findRedeemItemOrThrow(redeemItemId);
-        redeemItem.redeem(count);
+        findRedeemItemOrThrow(redeemItemId);
         publishEvent(new RedeemItemRedeemedEvent(
                 getRedeemId(),
                 redeemItemId,
@@ -85,7 +84,7 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
     }
 
     @Override
-    public void addRedeemItem(RedeemItemInfo info) {
+    public IdentifierId<Long> addRedeemItem(RedeemItemInfo info) {
         ParameterUtil.requireNonNull(info, "RedeemItemInfo不能为null");
         checkDuplicateRedeemItemName(info.name());
 
@@ -94,13 +93,13 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
         item.setItemInfo(info.name(), info.description());
         item.setItemType(info.type());
         item.setItemPrice(info.price());
-        item.setInventory(info.inventory());
 
         redeemItems.add(item);
         publishEvent(new RedeemItemAddedEvent(
                 getRedeemId(),
                 item
         ));
+        return item.getId();
     }
 
     @Override
@@ -125,19 +124,6 @@ public non-sealed class RedeemImpl extends AbstractAggregate<Long> implements Re
                 redeemItemId,
                 name,
                 description
-        ));
-    }
-
-    @Override
-    public void modifyRedeemItemInventory(IdentifierId<Long> redeemItemId, RedeemItemInventory inventory) {
-        ParameterUtil.requireNonNull(inventory, "RedeemItemInventory不能为null");
-
-        RedeemItem redeemItem = findRedeemItemOrThrow(redeemItemId);
-        redeemItem.setInventory(inventory);
-        publishEvent(new RedeemItemInventoryModifiedEvent(
-                getRedeemId(),
-                redeemItemId,
-                inventory
         ));
     }
 

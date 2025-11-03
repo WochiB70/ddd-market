@@ -43,7 +43,7 @@ public sealed interface Redeem extends Aggregate<Long, Long> permits RedeemImpl 
      * @param info 兑换项信息
      * @throws DuplicatedRedeemItemNameException 兑换项名称已存在
      */
-    void addRedeemItem(RedeemItemInfo info);
+    IdentifierId<Long> addRedeemItem(RedeemItemInfo info);
 
     /**
      * 删除兑换项
@@ -60,14 +60,6 @@ public sealed interface Redeem extends Aggregate<Long, Long> permits RedeemImpl 
      * @param description  描述
      */
     void modifyRedeemItemBasicInfo(IdentifierId<Long> redeemItemId, String name, String description);
-
-    /**
-     * 修改兑换项的库存
-     *
-     * @param redeemItemId 兑换项id
-     * @param inventory    库存
-     */
-    void modifyRedeemItemInventory(IdentifierId<Long> redeemItemId, RedeemItemInventory inventory);
 
 
     /**
