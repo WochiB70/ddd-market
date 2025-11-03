@@ -117,14 +117,12 @@ public class DrawPoolRepositoryImpl implements DrawPoolRepository {
     }
     
     private DrawItem toDrawItemDomain(DrawItemEntity entity) {
-        DrawItemInventory inventory = new DrawItemInventory(entity.getInventoryType(), entity.getInventorySurplus());
         return new DrawItem(new DefaultIdentifierId<>(
                 entity.getId()),
                 entity.getName(),
                 entity.getDescription(),
                 entity.getType(),
-                entity.getWeight(),
-                inventory
+                entity.getWeight()
         );
     }
     
@@ -135,8 +133,6 @@ public class DrawPoolRepositoryImpl implements DrawPoolRepository {
         entity.setDescription(drawItem.getDescription());
         entity.setType(drawItem.getType());
         entity.setWeight(drawItem.getWeight());
-        entity.setInventoryType(drawItem.getDrawItemInventory().getType());
-        entity.setInventorySurplus(drawItem.getDrawItemInventory().getSurplus());
         return entity;
     }
 }

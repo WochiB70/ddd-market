@@ -45,14 +45,6 @@ public sealed interface DrawPool extends Aggregate<Long, Long> permits DrawPoolI
      */
     void modifyParticipateScope(DrawPoolParticipateScope scope);
 
-    /**
-     * 修改奖品库存
-     *
-     * @param awardId   奖品Id
-     * @param inventory 库存
-     * @throws NoSuchAwardException 奖品不存在
-     */
-    void modifyDrawItemInventory(IdentifierId<Long> awardId, DrawItemInventory inventory);
 
     /**
      * 修改奖品信息

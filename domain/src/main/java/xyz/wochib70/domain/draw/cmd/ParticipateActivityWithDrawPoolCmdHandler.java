@@ -13,6 +13,9 @@ import xyz.wochib70.domain.draw.DrawPool;
 import xyz.wochib70.domain.draw.DrawPoolRepository;
 import xyz.wochib70.domain.draw.DrawPrice;
 import xyz.wochib70.domain.draw.Reward;
+import xyz.wochib70.domain.inventory.GoodsType;
+import xyz.wochib70.domain.inventory.Inventory;
+import xyz.wochib70.domain.inventory.InventoryRepository;
 
 @RequiredArgsConstructor
 @Service
@@ -25,6 +28,8 @@ public class ParticipateActivityWithDrawPoolCmdHandler {
     private final CredentialRepository credentialRepository;
 
     private final AccountRepository accountRepository;
+
+    private final InventoryRepository inventoryRepository;
 
     private final ApplicationEventPublisher eventPublisher;
 
@@ -46,9 +51,14 @@ public class ParticipateActivityWithDrawPoolCmdHandler {
 
         Reward draw = drawPool.draw(cmd.userId());
 
+        Inventory inventory = inventoryRepository.queryByGoodsIdAndGoodsTypeOrThrow(draw.awardId(), GoodsType.DRAW);
+        inventory.useInventory(1);
+        inventoryRepository.update(inventory);
+
         drawPoolRepository.update(drawPool);
         activityRepository.update(activity);
 
+        inventory.getEvents().forEach(eventPublisher::publishEvent);
         activity.getEvents().forEach(eventPublisher::publishEvent);
         drawPool.getEvents().forEach(eventPublisher::publishEvent);
         return draw;

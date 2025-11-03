@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.wochib70.domain.UserId;
-import xyz.wochib70.domain.draw.cmd.ModifyDrawItemInventoryCmdHandler;
+import xyz.wochib70.domain.draw.cmd.ModifyDrawItemInventoryTypeCmdHandler;
 import xyz.wochib70.web.AuthorizedThreadLocal;
 
 @RestController
 @RequestMapping("/draw")
 @RequiredArgsConstructor
 @Tag(name = "抽奖管理", description = "抽奖池创建、物品管理、抽奖操作等")
-public class ModifyDrawItemInventoryController {
+public class ModifyDrawItemInventoryTypeController {
 
-    private final ModifyDrawItemInventoryCmdHandler modifyDrawItemInventoryCmdHandler;
+    private final ModifyDrawItemInventoryTypeCmdHandler modifyDrawItemInventoryCmdHandler;
 
     @PostMapping("/modify-item-inventory")
     @Transactional
@@ -35,7 +35,7 @@ public class ModifyDrawItemInventoryController {
     })
     public void modifyDrawItemInventory(
             @Parameter(description = "修改抽奖物品库存请求参数", required = true)
-            @RequestBody @Valid ModifyDrawItemInventoryRequest request
+            @RequestBody @Valid ModifyDrawItemInventoryTypeRequest request
     ) {
         UserId adminId = AuthorizedThreadLocal.getAdminId();
         modifyDrawItemInventoryCmdHandler.handle(request.toCmd());

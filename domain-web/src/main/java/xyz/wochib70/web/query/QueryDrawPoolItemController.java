@@ -1,5 +1,6 @@
 package xyz.wochib70.web.query;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,7 +12,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.wochib70.domain.inventory.GoodsType;
 import xyz.wochib70.infrastructure.draw.QDrawItemEntity;
+import xyz.wochib70.infrastructure.inventory.QInventoryEntity;
 
 import java.util.List;
 
@@ -33,15 +36,14 @@ public class QueryDrawPoolItemController {
     ) {
 
         QDrawItemEntity drawItem = QDrawItemEntity.drawItemEntity;
+        QInventoryEntity inventory = QInventoryEntity.inventoryEntity;
 
         return queryFactory.select(
                         drawItem.id,
                         drawItem.name,
                         drawItem.description,
                         drawItem.type,
-                        drawItem.weight,
-                        drawItem.inventoryType,
-                        drawItem.inventorySurplus
+                        drawItem.weight
                 )
                 .from(drawItem)
                 .where(drawItem.drawPoolId.eq(drawPoolId))
@@ -54,9 +56,21 @@ public class QueryDrawPoolItemController {
                     response.setDescription(item.get(drawItem.description));
                     response.setType(item.get(drawItem.type));
                     response.setWeight(item.get(drawItem.weight));
+                    Tuple inventoryTuple = queryFactory.select(
+                                    inventory.id,
+                                    inventory.goodsId,
+                                    inventory.type,
+                                    inventory.count
+                            )
+                            .from(inventory)
+                            .where(inventory.goodsId.eq(item.get(drawItem.id))
+                                    .and(inventory.type.eq(GoodsType.DRAW))
+                            )
+                            .fetchOne();
+
                     response.setInventory(new QueryDrawPoolItemResponse.DrawInventory(
-                            item.get(drawItem.inventoryType),
-                            item.get(drawItem.inventorySurplus)
+                            inventoryTuple.get(inventory.inventoryType),
+                            inventoryTuple.get(inventory.count)
                     ));
                     response.setDrawPoolId(drawPoolId);
                     return response;

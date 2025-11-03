@@ -104,18 +104,6 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
         }
     }
 
-    @Override
-    public void modifyDrawItemInventory(IdentifierId<Long> awardId, DrawItemInventory inventory) {
-        DrawItem award = findDrawItemOrThrow(awardId);
-        if (!Objects.equals(award.getDrawItemInventory(), inventory)) {
-            award.setDrawItemInventory(inventory);
-            publishEvent(new DrawItemInventoryModifiedEvent(
-                    getDrawPoolId(),
-                    awardId,
-                    inventory
-            ));
-        }
-    }
 
     @Override
     public void modifyDrawItemBasicInfo(IdentifierId<Long> awardId, String name, String description) {
@@ -178,8 +166,7 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
                 drawItemInfo.name(),
                 drawItemInfo.description(),
                 drawItemInfo.type(),
-                drawItemInfo.weight(),
-                drawItemInfo.inventory()
+                drawItemInfo.weight()
         );
         drawItems.add(drawItem);
         publishEvent(new DrawItemAddedEvent(

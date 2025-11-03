@@ -1,8 +1,8 @@
 package xyz.wochib70.web.query;
 
 import lombok.Data;
-import xyz.wochib70.domain.draw.DrawInventoryType;
 import xyz.wochib70.domain.draw.DrawItemType;
+import xyz.wochib70.domain.inventory.InventoryType;
 
 @Data
 public class QueryDrawPoolItemResponse {
@@ -22,7 +22,7 @@ public class QueryDrawPoolItemResponse {
     private DrawInventory inventory;
 
     public record DrawInventory(
-            DrawInventoryType type,
+            InventoryType type,
             Integer surplus
     ) {
     }

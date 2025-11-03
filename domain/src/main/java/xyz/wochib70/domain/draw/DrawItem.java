@@ -22,38 +22,18 @@ public class DrawItem {
 
     private Integer weight;
 
-    private DrawItemInventory drawItemInventory;
-
-
     public DrawItem(
             IdentifierId<Long> id,
             String name,
             String description,
             DrawItemType type,
-            Integer weight,
-            DrawItemInventory drawItemInventory
+            Integer weight
     ) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.type = type;
         this.weight = weight;
-        this.drawItemInventory = drawItemInventory;
-    }
-
-
-    /**
-     * @throws DomainException 如果领取失败
-     */
-    public void receive() {
-        drawItemInventory.receive();
-    }
-
-    /**
-     * @return true 如果还有库存， false 没有库存
-     */
-    public boolean validateInventory() {
-        return drawItemInventory.validInventory();
     }
 
     public void setWeight(Integer weight) {
@@ -63,10 +43,6 @@ public class DrawItem {
         this.weight = weight;
     }
 
-    public void setInventory(DrawItemInventory inventory) {
-        ParameterUtil.requireNonNull(inventory, "奖品数量不能为空");
-        this.drawItemInventory = inventory;
-    }
 
 
     @Override

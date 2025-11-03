@@ -16,32 +16,33 @@ public class RandomDrawStrategy implements DrawStrategy {
 
     @Override
     public IdentifierId<Long> draw(Set<DrawItem> drawItems, UserId userId) {
-        int allWeight = drawItems.stream()
-                .filter(DrawItem::validateInventory)
-                .map(DrawItem::getWeight)
-                .mapToInt(Integer::intValue)
-                .sum();
-        if (allWeight == 0) {
-            throw new InsufficientInventoryException("奖池已经空啦！！");
-        }
-        long[] randomNumbers = new long[allWeight];
-        int index = 0;
-        for (DrawItem drawItem : drawItems) {
-            if (!drawItem.validateInventory()) {
-                continue;
-            }
-            for (int i = 0; i < drawItem.getWeight(); i++) {
-                randomNumbers[index + i] = drawItem.getId().getId();
-            }
-            index += drawItem.getWeight();
-        }
-        int idx = RANDOM.nextInt(allWeight);
-
-        DrawItem drawDrawItem = drawItems.stream()
-                .filter(award -> Objects.equals(award.getId().getId(), randomNumbers[idx]))
-                .findFirst()
-                .orElseThrow(() -> new InsufficientInventoryException("奖池已经空啦！！"));
-        drawDrawItem.receive();
-        return drawDrawItem.getId();
+//        int allWeight = drawItems.stream()
+//                .filter(DrawItem::validateInventory)
+//                .map(DrawItem::getWeight)
+//                .mapToInt(Integer::intValue)
+//                .sum();
+//        if (allWeight == 0) {
+//            throw new InsufficientInventoryException("奖池已经空啦！！");
+//        }
+//        long[] randomNumbers = new long[allWeight];
+//        int index = 0;
+//        for (DrawItem drawItem : drawItems) {
+//            if (!drawItem.validateInventory()) {
+//                continue;
+//            }
+//            for (int i = 0; i < drawItem.getWeight(); i++) {
+//                randomNumbers[index + i] = drawItem.getId().getId();
+//            }
+//            index += drawItem.getWeight();
+//        }
+//        int idx = RANDOM.nextInt(allWeight);
+//
+//        DrawItem drawDrawItem = drawItems.stream()
+//                .filter(award -> Objects.equals(award.getId().getId(), randomNumbers[idx]))
+//                .findFirst()
+//                .orElseThrow(() -> new InsufficientInventoryException("奖池已经空啦！！"));
+//        drawDrawItem.receive();
+//        return drawDrawItem.getId();
+        return null;
     }
 }

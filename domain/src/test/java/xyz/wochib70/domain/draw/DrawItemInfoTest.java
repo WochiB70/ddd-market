@@ -13,10 +13,9 @@ class DrawItemInfoTest {
         String description = "Test Description";
         DrawItemType type = DrawItemType.COUPON;
         Integer weight = 10;
-        DrawItemInventory inventory = new DrawItemInventory(DrawInventoryType.LIMITED, 5);
 
         // When
-        DrawItemInfo drawItemInfo = new DrawItemInfo(name, description, type, weight, inventory);
+        DrawItemInfo drawItemInfo = new DrawItemInfo(name, description, type, weight);
 
         // Then
         assertNotNull(drawItemInfo);
@@ -24,7 +23,6 @@ class DrawItemInfoTest {
         assertEquals(description, drawItemInfo.description());
         assertEquals(type, drawItemInfo.type());
         assertEquals(weight, drawItemInfo.weight());
-        assertEquals(inventory, drawItemInfo.inventory());
     }
 
     @Test
@@ -34,11 +32,10 @@ class DrawItemInfoTest {
         String description = "Test Description";
         DrawItemType type = DrawItemType.COUPON;
         Integer weight = 10;
-        DrawItemInventory inventory = new DrawItemInventory(DrawInventoryType.LIMITED, 5);
 
         // When & Then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new DrawItemInfo(name, description, type, weight, inventory);
+            new DrawItemInfo(name, description, type, weight);
         });
         assertEquals("DrawItem的name不能为null或者是空白字符串", exception.getMessage());
     }
@@ -50,11 +47,10 @@ class DrawItemInfoTest {
         String description = "Test Description";
         DrawItemType type = DrawItemType.COUPON;
         Integer weight = 10;
-        DrawItemInventory inventory = new DrawItemInventory(DrawInventoryType.LIMITED, 5);
 
         // When & Then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new DrawItemInfo(name, description, type, weight, inventory);
+            new DrawItemInfo(name, description, type, weight);
         });
         assertEquals("DrawItem的name不能为null或者是空白字符串", exception.getMessage());
     }
@@ -66,11 +62,10 @@ class DrawItemInfoTest {
         String description = "Test Description";
         DrawItemType type = null;
         Integer weight = 10;
-        DrawItemInventory inventory = new DrawItemInventory(DrawInventoryType.LIMITED, 5);
 
         // When & Then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new DrawItemInfo(name, description, type, weight, inventory);
+            new DrawItemInfo(name, description, type, weight);
         });
         assertEquals("DrawItem的type不能null", exception.getMessage());
     }
@@ -82,11 +77,10 @@ class DrawItemInfoTest {
         String description = "Test Description";
         DrawItemType type = DrawItemType.COUPON;
         Integer weight = null;
-        DrawItemInventory inventory = new DrawItemInventory(DrawInventoryType.LIMITED, 5);
 
         // When & Then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new DrawItemInfo(name, description, type, weight, inventory);
+            new DrawItemInfo(name, description, type, weight);
         });
         assertEquals("DrawItem的weight不能为null 或者 小于等于0", exception.getMessage());
     }
@@ -98,11 +92,10 @@ class DrawItemInfoTest {
         String description = "Test Description";
         DrawItemType type = DrawItemType.COUPON;
         Integer weight = 0;
-        DrawItemInventory inventory = new DrawItemInventory(DrawInventoryType.LIMITED, 5);
 
         // When & Then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new DrawItemInfo(name, description, type, weight, inventory);
+            new DrawItemInfo(name, description, type, weight);
         });
         assertEquals("DrawItem的weight不能为null 或者 小于等于0", exception.getMessage());
     }
@@ -114,11 +107,10 @@ class DrawItemInfoTest {
         String description = "Test Description";
         DrawItemType type = DrawItemType.COUPON;
         Integer weight = -1;
-        DrawItemInventory inventory = new DrawItemInventory(DrawInventoryType.LIMITED, 5);
 
         // When & Then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new DrawItemInfo(name, description, type, weight, inventory);
+            new DrawItemInfo(name, description, type, weight);
         });
         assertEquals("DrawItem的weight不能为null 或者 小于等于0", exception.getMessage());
     }
@@ -130,11 +122,10 @@ class DrawItemInfoTest {
         String description = "Test Description";
         DrawItemType type = DrawItemType.COUPON;
         Integer weight = 10;
-        DrawItemInventory inventory = null;
 
         // When & Then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new DrawItemInfo(name, description, type, weight, inventory);
+            new DrawItemInfo(name, description, type, weight);
         });
         assertEquals("DrawItem inventory不能为null", exception.getMessage());
     }

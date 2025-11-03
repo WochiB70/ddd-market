@@ -44,29 +44,27 @@ class DrawPoolImplTest extends AggregateTestBase {
     void draw_shouldReturnRewardAndPublishEvent() {
         // Given
         UserId userId = new UserId(1L);
-        
+
         // Mock the domain registry for award id generator
         try (MockedStatic<DrawDomainRegistry> mockedRegistry = mockStatic(DrawDomainRegistry.class)) {
             DrawItemIdGenerator idGenerator = mock(DrawItemIdGenerator.class);
             AtomicLong counter = new AtomicLong(1);
             when(idGenerator.nextAwardId()).thenReturn(new DefaultIdentifierId<>(counter.incrementAndGet()));
             mockedRegistry.when(DrawDomainRegistry::awardIdGenerator).thenReturn(idGenerator);
-            
+
             // Add items to the pool
-            DrawItemInventory inventory = new DrawItemInventory(DrawInventoryType.LIMITED, 5);
-            DrawItemInfo itemInfo = new DrawItemInfo("Test Item", "Description", DrawItemType.COUPON, 10, inventory);
+            DrawItemInfo itemInfo = new DrawItemInfo("Test Item", "Description", DrawItemType.COUPON, 10);
             HashSet<DrawItem> items = new HashSet<>();
             items.add(new DrawItem(
                     new DefaultIdentifierId<>(1L),
                     itemInfo.name(),
                     itemInfo.description(),
                     itemInfo.type(),
-                    itemInfo.weight(),
-                    itemInfo.inventory()
+                    itemInfo.weight()
             ));
             drawPool.setDrawItems(items);
         }
-        
+
         // Clear events from addDrawItem
 
 
@@ -91,7 +89,7 @@ class DrawPoolImplTest extends AggregateTestBase {
         assertEquals(newName, drawPool.getName());
         assertEquals(1, drawPool.getEvents().size());
         assertInstanceOf(DrawPoolNameModifiedEvent.class, drawPool.getEvents().getFirst());
-        
+
         DrawPoolNameModifiedEvent event = (DrawPoolNameModifiedEvent) drawPool.getEvents().getFirst();
         assertEquals(DRAW_POOL_ID, event.getDrawPoolId().getId());
         assertEquals(newName, event.getName());
@@ -141,7 +139,7 @@ class DrawPoolImplTest extends AggregateTestBase {
         assertEquals(newStrategy, drawPool.getStrategyType());
         assertEquals(1, drawPool.getEvents().size());
         assertInstanceOf(DrawStrategyModifiedEvent.class, drawPool.getEvents().getFirst());
-        
+
         DrawStrategyModifiedEvent event = (DrawStrategyModifiedEvent) drawPool.getEvents().getFirst();
         assertEquals(DRAW_POOL_ID, event.getDrawPoolId().getId());
         assertEquals(newStrategy, event.getDrawStrategyType());
@@ -171,7 +169,7 @@ class DrawPoolImplTest extends AggregateTestBase {
         assertEquals(newPrice, drawPool.getDrawPrice());
         assertEquals(1, drawPool.getEvents().size());
         assertInstanceOf(DrawPoolPriceModifiedEvent.class, drawPool.getEvents().getFirst());
-        
+
         DrawPoolPriceModifiedEvent event = (DrawPoolPriceModifiedEvent) drawPool.getEvents().getFirst();
         assertEquals(DRAW_POOL_ID, event.getDrawPoolId().getId());
         assertEquals(newPrice, event.getPrice());
@@ -201,9 +199,8 @@ class DrawPoolImplTest extends AggregateTestBase {
     @Test
     void addDrawItem_shouldAddItemAndPublishEvent_whenItemNameDoesNotExist() {
         // Given
-        DrawItemInventory inventory = new DrawItemInventory(DrawInventoryType.LIMITED, 5);
-        DrawItemInfo itemInfo = new DrawItemInfo("New Item", "Description", DrawItemType.COUPON, 10, inventory);
-        
+        DrawItemInfo itemInfo = new DrawItemInfo("New Item", "Description", DrawItemType.COUPON, 10);
+
         // Mock the domain registry for award id generator
         try (MockedStatic<DrawDomainRegistry> mockedRegistry = mockStatic(DrawDomainRegistry.class)) {
             DrawItemIdGenerator idGenerator = mock(DrawItemIdGenerator.class);
@@ -223,16 +220,15 @@ class DrawPoolImplTest extends AggregateTestBase {
     @Test
     void addDrawItem_shouldThrowException_whenItemNameAlreadyExists() {
         // Given
-        DrawItemInventory inventory = new DrawItemInventory(DrawInventoryType.LIMITED, 5);
-        DrawItemInfo itemInfo1 = new DrawItemInfo("Existing Item", "Description", DrawItemType.COUPON, 10, inventory);
-        DrawItemInfo itemInfo2 = new DrawItemInfo("Existing Item", "Another Description", DrawItemType.VIP, 20, inventory);
-        
+        DrawItemInfo itemInfo1 = new DrawItemInfo("Existing Item", "Description", DrawItemType.COUPON, 10);
+        DrawItemInfo itemInfo2 = new DrawItemInfo("Existing Item", "Another Description", DrawItemType.VIP, 20);
+
         // Mock the domain registry for award id generator
         try (MockedStatic<DrawDomainRegistry> mockedRegistry = mockStatic(DrawDomainRegistry.class)) {
             DrawItemIdGenerator idGenerator = mock(DrawItemIdGenerator.class);
             when(idGenerator.nextAwardId()).thenReturn(new DefaultIdentifierId<>(1L));
             mockedRegistry.when(DrawDomainRegistry::awardIdGenerator).thenReturn(idGenerator);
-            
+
             // Add first item
             drawPool.addDrawItem(itemInfo1);
 
@@ -248,22 +244,20 @@ class DrawPoolImplTest extends AggregateTestBase {
     void removeDrawItem_shouldRemoveItemAndPublishEvent_whenItemExists() {
         // Given
         IdentifierId<Long> itemId = new DefaultIdentifierId<>(1L);
-        DrawItemInventory inventory = new DrawItemInventory(DrawInventoryType.LIMITED, 5);
-        
+
         // Mock the domain registry for award id generator
         try (MockedStatic<DrawDomainRegistry> mockedRegistry = mockStatic(DrawDomainRegistry.class)) {
             DrawItemIdGenerator idGenerator = mock(DrawItemIdGenerator.class);
             when(idGenerator.nextAwardId()).thenReturn(itemId);
             mockedRegistry.when(DrawDomainRegistry::awardIdGenerator).thenReturn(idGenerator);
-            
-            DrawItemInfo itemInfo = new DrawItemInfo("Item to Remove", "Description", DrawItemType.COUPON, 10, inventory);
+
+            DrawItemInfo itemInfo = new DrawItemInfo("Item to Remove", "Description", DrawItemType.COUPON, 10);
             DrawItem drawItem = new DrawItem(
                     itemId,
                     itemInfo.name(),
                     itemInfo.description(),
                     itemInfo.type(),
-                    itemInfo.weight(),
-                    itemInfo.inventory()
+                    itemInfo.weight()
             );
             HashSet<DrawItem> items = new HashSet<>();
             items.add(drawItem);
@@ -277,7 +271,7 @@ class DrawPoolImplTest extends AggregateTestBase {
             assertEquals(0, drawPool.getDrawItems().size());
             assertEquals(1, drawPool.getEvents().size());
             assertInstanceOf(DrawItemRemovedEvent.class, drawPool.getEvents().getFirst());
-            
+
             DrawItemRemovedEvent event = (DrawItemRemovedEvent) drawPool.getEvents().getFirst();
             assertEquals(DRAW_POOL_ID, event.getDrawPoolId().getId());
             assertEquals(itemId, event.getAwardId());

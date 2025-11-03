@@ -6,11 +6,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
-import xyz.wochib70.domain.draw.DrawInventoryType;
+import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.draw.DrawItemInfo;
-import xyz.wochib70.domain.draw.DrawItemInventory;
 import xyz.wochib70.domain.draw.DrawItemType;
 import xyz.wochib70.domain.draw.cmd.AddDrawItemCmd;
+import xyz.wochib70.domain.inventory.GoodsType;
+import xyz.wochib70.domain.inventory.InventoryType;
+import xyz.wochib70.domain.inventory.cmd.CreateInventoryCmd;
 
 @Data
 @Schema(description = "添加抽奖物品请求")
@@ -43,7 +45,7 @@ public class AddDrawItemRequest {
     public record InventoryRequest(
             @NotNull
             @Schema(description = "库存类型", example = "LIMITED")
-            DrawInventoryType type,
+            InventoryType type,
 
             @NotNull
             @Schema(description = "剩余库存数量", example = "100")
@@ -51,9 +53,17 @@ public class AddDrawItemRequest {
     ) {
     }
 
-    public AddDrawItemCmd toCmd() {
-        DrawItemInventory inventory = new DrawItemInventory(getInventory().type, getInventory().surplus());
-        DrawItemInfo drawItemInfo = new DrawItemInfo(name, description, type, weight, inventory);
+    public AddDrawItemCmd toDrawItemCmd() {
+        DrawItemInfo drawItemInfo = new DrawItemInfo(name, description, type, weight);
         return new AddDrawItemCmd(new DefaultIdentifierId<>(drawPoolId), drawItemInfo);
+    }
+
+    public CreateInventoryCmd toCreateInventoryCmd(IdentifierId<Long> goodsId) {
+        return new CreateInventoryCmd(
+                goodsId,
+                GoodsType.DRAW,
+                InventoryType.LIMITED,
+                inventory.surplus()
+        );
     }
 }

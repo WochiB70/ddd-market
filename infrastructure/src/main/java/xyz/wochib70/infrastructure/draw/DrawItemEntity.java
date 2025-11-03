@@ -3,7 +3,6 @@ package xyz.wochib70.infrastructure.draw;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import xyz.wochib70.domain.draw.DrawInventoryType;
 import xyz.wochib70.domain.draw.DrawItemType;
 
 @Getter
@@ -25,9 +24,5 @@ public class DrawItemEntity {
     private DrawItemType type;
     
     private Integer weight;
-    
-    @Enumerated(EnumType.STRING)
-    private DrawInventoryType inventoryType;
-    
-    private Integer inventorySurplus;
+
 }

@@ -5,13 +5,12 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import xyz.wochib70.domain.DefaultIdentifierId;
-import xyz.wochib70.domain.draw.DrawInventoryType;
-import xyz.wochib70.domain.draw.DrawItemInventory;
-import xyz.wochib70.domain.draw.cmd.ModifyDrawItemInventoryCmd;
+import xyz.wochib70.domain.draw.cmd.ModifyDrawItemInventoryTypeCmd;
+import xyz.wochib70.domain.inventory.InventoryType;
 
 @Data
 @Schema(description = "修改抽奖物品库存请求")
-public class ModifyDrawItemInventoryRequest {
+public class ModifyDrawItemInventoryTypeRequest {
 
     @NotNull
     @Schema(description = "抽奖池ID", example = "1")
@@ -23,19 +22,14 @@ public class ModifyDrawItemInventoryRequest {
     
     @NotNull
     @Schema(description = "库存类型", example = "LIMITED")
-    private DrawInventoryType inventoryType;
-    
-    @NotNull
-    @Min(0)
-    @Schema(description = "剩余库存数量", example = "100")
-    private Integer surplus;
+    private InventoryType  inventoryType;
 
-    public ModifyDrawItemInventoryCmd toCmd() {
-        DrawItemInventory inventory = new DrawItemInventory(inventoryType, surplus);
-        return new ModifyDrawItemInventoryCmd(
+
+    public ModifyDrawItemInventoryTypeCmd toCmd() {
+        return new ModifyDrawItemInventoryTypeCmd(
                 new DefaultIdentifierId<>(drawPoolId),
                 new DefaultIdentifierId<>(awardId),
-                inventory
+                inventoryType
         );
     }
 }

@@ -3,6 +3,7 @@ package xyz.wochib70.domain.inventory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import xyz.wochib70.domain.DefaultIdentifierId;
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.utils.ParameterUtil;
 
@@ -13,7 +14,7 @@ public class InventoryFactory {
 
     private final InventoryIdGenerator inventoryIdGenerator;
 
-    public void createInventory(
+    public Inventory createInventory(
             IdentifierId<Long> goodsId,
             GoodsType goodsType,
             InventoryType inventoryType,
@@ -25,5 +26,11 @@ public class InventoryFactory {
         ParameterUtil.requireExpression(inventoryType == InventoryType.LIMITED && (count == null || count < 0),
                 "库存类型为LIMITED， 库存数量不能为空 且 库存数量不能小于0");
 
+        InventoryImpl inventory = new InventoryImpl(inventoryIdGenerator.nextInventoryId());
+        inventory.setGoodsId(goodsId);
+        inventory.setGoodsType(goodsType);
+        inventory.setType(inventoryType);
+        inventory.setCount(count);
+        return inventory;
     }
 }

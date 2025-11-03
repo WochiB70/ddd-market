@@ -1,11 +1,11 @@
 package xyz.wochib70.domain.draw.cmd;
 
 import xyz.wochib70.domain.IdentifierId;
-import xyz.wochib70.domain.draw.DrawItemInventory;
+import xyz.wochib70.domain.inventory.InventoryType;
 
-public record ModifyDrawItemInventoryCmd(
+public record ModifyDrawItemInventoryTypeCmd(
         IdentifierId<Long> drawPoolId,
         IdentifierId<Long> awardId,
-        DrawItemInventory inventory
+        InventoryType inventoryType
 ) {
 }
