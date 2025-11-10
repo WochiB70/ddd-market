@@ -15,7 +15,6 @@ import xyz.wochib70.domain.inventory.InventoryType;
 public class InventoryEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "goods_id", nullable = false)
