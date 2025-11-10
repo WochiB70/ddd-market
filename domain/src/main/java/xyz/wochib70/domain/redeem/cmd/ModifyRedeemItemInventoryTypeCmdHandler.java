@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import xyz.wochib70.domain.inventory.GoodsType;
 import xyz.wochib70.domain.inventory.Inventory;
 import xyz.wochib70.domain.inventory.InventoryRepository;
-import xyz.wochib70.domain.redeem.Redeem;
 import xyz.wochib70.domain.redeem.RedeemRepository;
 
 @RequiredArgsConstructor
@@ -24,6 +23,7 @@ public class ModifyRedeemItemInventoryTypeCmdHandler {
         Inventory inventory = inventoryRepository.queryByGoodsIdAndGoodsTypeOrThrow(cmd.redeemItemId(), GoodsType.REDEEM);
         inventory.modifyInventory(cmd.inventoryType());
 
+        inventoryRepository.update(inventory);
         inventory.getEvents().forEach(eventPublisher::publishEvent);
     }
 }
