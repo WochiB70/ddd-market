@@ -26,4 +26,6 @@ public class EventEntity {
 
     @Column(columnDefinition = "TEXT")
     private String content;
+
+    private String userId;
 }

@@ -15,6 +15,8 @@ public class DomainEventListener {
 
     private final EventDao eventDao;
 
+    private final EventUserIdAware eventUserIdAware;
+
     @EventListener
     public void handle(AbstractAggregateEvent<Long> event) throws JsonProcessingException {
         EventEntity entity = new EventEntity();
@@ -23,6 +25,13 @@ public class DomainEventListener {
         entity.setEventClass(event.eventClass().getName());
         entity.setCreatedTime(event.createTime());
         entity.setContent(objectMapper.writeValueAsString(event));
+        entity.setUserId(userId());
         eventDao.save(entity);
+    }
+
+
+    private String userId() {
+        Long userId = eventUserIdAware.getUserId();
+        return userId == null ? "withoutUserId" : userId.toString();
     }
 }
