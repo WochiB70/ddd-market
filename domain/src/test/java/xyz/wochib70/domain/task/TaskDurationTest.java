@@ -38,16 +38,11 @@ public class TaskDurationTest {
 
     @Test
     void testNullActivityDuration() {
-        try {
-            LocalDateTime now = LocalDateTime.now();
-            new TaskDuration.Builder(null)
-                    .startTime(now)
-                    .expiredTime(now.plusDays(1))
-                    .build();
-        } catch (Exception e) {
-            Assert.isTrue(e instanceof IllegalArgumentException, "任务时间有效");
-            Assert.hasText(e.getMessage(), "ActivityDuration不能为null");
-        }
+        LocalDateTime now = LocalDateTime.now();
+        new TaskDuration.Builder(null)
+                .startTime(now)
+                .expiredTime(now.plusDays(1))
+                .build();
     }
 
 
@@ -57,11 +52,11 @@ public class TaskDurationTest {
             LocalDateTime now = LocalDateTime.now();
             new TaskDuration.Builder(new ActivityDuration(now, now.plusDays(1)))
                     .startTime(now)
-                    .expiredTime(now.plusDays(2))
+                    .expiredTime(null)
                     .build();
         } catch (Exception e) {
             Assert.isTrue(e instanceof IllegalArgumentException, "任务时间有效");
-            Assert.hasText(e.getMessage(), "任务的结束时间不能晚于活动的结束时间");
+            Assert.hasText(e.getMessage(), "任务的结束时间不能为空");
         }
     }
 

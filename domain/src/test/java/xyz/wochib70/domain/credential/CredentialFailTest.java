@@ -7,6 +7,7 @@ import xyz.wochib70.domain.AggregateTestBase;
 import xyz.wochib70.domain.DefaultIdentifierId;
 import xyz.wochib70.domain.UserId;
 import xyz.wochib70.domain.activity.ActivityDuration;
+import xyz.wochib70.domain.utils.DurationUtil;
 
 import java.time.LocalDateTime;
 
@@ -81,7 +82,9 @@ public class CredentialFailTest extends AggregateTestBase {
     @Test
     void participateWithOtherUserFailTest() {
         try {
-            CredentialDuration duration = new CredentialDuration.Builder(new ActivityDuration(null, null))
+            CredentialDuration duration = new CredentialDuration.Builder(new ActivityDuration(
+                    DurationUtil.MIN_TIME,
+                    DurationUtil.MAX_TIME))
                     .startTime(LocalDateTime.now().minusDays(1))
                     .expiredTime(LocalDateTime.now().plusDays(1))
                     .build();
@@ -101,7 +104,9 @@ public class CredentialFailTest extends AggregateTestBase {
     @Test
     void participateWithExpiredCredentialFailTest() {
         try {
-            CredentialDuration duration = new CredentialDuration.Builder(new ActivityDuration(null, null))
+            CredentialDuration duration = new CredentialDuration.Builder(new ActivityDuration(
+                    DurationUtil.MIN_TIME,
+                    DurationUtil.MAX_TIME))
                     .startTime(LocalDateTime.now().minusDays(4))
                     .expiredTime(LocalDateTime.now().minusDays(2))
                     .build();
@@ -121,7 +126,8 @@ public class CredentialFailTest extends AggregateTestBase {
     @Test
     void participateWithUsedCredentialFailTest() {
         try {
-            CredentialDuration duration = new CredentialDuration.Builder(new ActivityDuration(null, null))
+            CredentialDuration duration = new CredentialDuration.Builder(new ActivityDuration(
+                    DurationUtil.MIN_TIME, DurationUtil.MAX_TIME))
                     .startTime(LocalDateTime.now().minusDays(1))
                     .expiredTime(LocalDateTime.now().plusDays(1))
                     .build();
@@ -139,7 +145,9 @@ public class CredentialFailTest extends AggregateTestBase {
     @Test
     void participateWithInvalidCredentialFailTest() {
         try {
-            CredentialDuration duration = new CredentialDuration.Builder(new ActivityDuration(null, null))
+            CredentialDuration duration = new CredentialDuration.Builder(new ActivityDuration(
+                    DurationUtil.MIN_TIME,
+                    DurationUtil.MAX_TIME))
                     .startTime(LocalDateTime.now().minusDays(1))
                     .expiredTime(LocalDateTime.now().plusDays(1))
                     .build();

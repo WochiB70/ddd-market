@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import xyz.wochib70.domain.activity.Activity;
 import xyz.wochib70.domain.activity.ActivityDuration;
 import xyz.wochib70.domain.activity.ActivityImpl;
+import xyz.wochib70.domain.utils.DurationUtil;
 
 import java.time.LocalDateTime;
 
@@ -99,7 +100,7 @@ class ReceivedTaskExpireTimeTest {
     void calculate_shouldReturnNextDayStart_whenTypeIsExpireTodayEnd() {
         ReceivedTaskExpireTime expireTime = new ReceivedTaskExpireTime(ReceivedTaskExpireTimeType.EXPIRE_TODAY_END, 100L);
         ActivityImpl mock = mock(ActivityImpl.class);
-        ActivityDuration activityDuration = new ActivityDuration(LocalDateTime.now().minusDays(1), null);
+        ActivityDuration activityDuration = new ActivityDuration(LocalDateTime.now().minusDays(1), DurationUtil.MAX_TIME);
         when(mock.getDuration()).thenReturn(activityDuration);
         LocalDateTime result = expireTime.calculate(mock);
         LocalDateTime expected = LocalDateTime.now().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
@@ -112,7 +113,8 @@ class ReceivedTaskExpireTimeTest {
     void calculate_shouldReturnWeekEnd_whenTypeIsExpireThisWeekEnd() {
         ReceivedTaskExpireTime expireTime = new ReceivedTaskExpireTime(ReceivedTaskExpireTimeType.EXPIRE_THIS_WEEK_END, 100L);
         ActivityImpl mock = mock(ActivityImpl.class);
-        ActivityDuration activityDuration = new ActivityDuration(LocalDateTime.now().minusDays(7), null);
+        ActivityDuration activityDuration = new ActivityDuration(LocalDateTime.now().minusDays(7),
+                DurationUtil.MAX_TIME);
         when(mock.getDuration()).thenReturn(activityDuration);
         LocalDateTime result = expireTime.calculate(mock);
         LocalDateTime now = LocalDateTime.now();

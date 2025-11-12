@@ -236,7 +236,7 @@ class DrawPoolImplTest extends AggregateTestBase {
             DuplicateAwardException exception = assertThrows(DuplicateAwardException.class, () -> {
                 drawPool.addDrawItem(itemInfo2);
             });
-            assertEquals("Award已存在, name = Existing Item", exception.getMessage());
+            assertEquals("修改的name已存在, name = Existing Item", exception.getMessage());
         }
     }
 

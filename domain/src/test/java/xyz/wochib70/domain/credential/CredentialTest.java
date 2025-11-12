@@ -10,6 +10,7 @@ import xyz.wochib70.domain.activity.ActivityDuration;
 import xyz.wochib70.domain.credential.events.CredentialInvalidatedEvent;
 import xyz.wochib70.domain.credential.events.CredentialUsedEvent;
 import xyz.wochib70.domain.credential.events.CredentialValidatedEvent;
+import xyz.wochib70.domain.utils.DurationUtil;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -27,7 +28,9 @@ public class CredentialTest extends AggregateTestBase {
 
         CredentialFactory factory = new CredentialFactory(credentialIdGenerator);
 
-        CredentialDuration duration = new CredentialDuration.Builder(new ActivityDuration(null, null))
+        CredentialDuration duration = new CredentialDuration.Builder(new ActivityDuration(
+                DurationUtil.MIN_TIME,
+                DurationUtil.MAX_TIME))
                 .startTime(LocalDateTime.now())
                 .expiredTime(LocalDateTime.now().plusDays(1))
                 .build();
@@ -40,7 +43,9 @@ public class CredentialTest extends AggregateTestBase {
 
     @Test
     void participate() {
-        CredentialDuration duration = new CredentialDuration.Builder(new ActivityDuration(null, null))
+        CredentialDuration duration = new CredentialDuration.Builder(new ActivityDuration(
+                LocalDateTime.of(1990, 1, 1, 0, 0, 0, 0),
+                LocalDateTime.of(2999, 1, 1, 0, 0, 0, 0)))
                 .startTime(LocalDateTime.now().minusDays(1))
                 .expiredTime(LocalDateTime.now().plusDays(1))
                 .build();

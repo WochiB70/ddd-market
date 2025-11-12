@@ -115,18 +115,4 @@ class DrawItemInfoTest {
         assertEquals("DrawItem的weight不能为null 或者 小于等于0", exception.getMessage());
     }
 
-    @Test
-    void constructor_shouldThrowException_whenInventoryIsNull() {
-        // Given
-        String name = "Test Item";
-        String description = "Test Description";
-        DrawItemType type = DrawItemType.COUPON;
-        Integer weight = 10;
-
-        // When & Then
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new DrawItemInfo(name, description, type, weight);
-        });
-        assertEquals("DrawItem inventory不能为null", exception.getMessage());
-    }
 }

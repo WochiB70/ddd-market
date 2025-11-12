@@ -109,7 +109,7 @@ public class ActivityTest extends AggregateTestBase {
         IdentifierId<Long> id = new DefaultIdentifierId<>(0L);
         ActivityImpl activity = new ActivityImpl(id);
         activity.setStatus(ActivityStatus.PUBLISHED);
-
+        activity.setDuration(new ActivityDuration(LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1)));
         activity.start();
         for (Object event : activity.getEvents()) {
             Assert.isTrue(event instanceof ActivityStartedEvent, "事件类型应该为ActivityStartedEvent");
