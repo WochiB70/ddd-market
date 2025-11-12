@@ -30,16 +30,18 @@ public record CredentialDuration(
 
 
         public Builder(ActivityDuration activityDuration) {
-            ParameterUtil.requireNonNull(activityDuration, "ActivityDuration不能为null");
+            ParameterUtil.requireNonNull(activityDuration, "ActivityDuration不能为空");
             this.activityDuration = activityDuration;
         }
 
         public Builder startTime(LocalDateTime startTime) {
+            ParameterUtil.requireNonNull(startTime, "凭证的开始时间不能为空");
             this.startTime = startTime;
             return this;
         }
 
         public Builder expiredTime(LocalDateTime expiredTime) {
+            ParameterUtil.requireNonNull(expiredTime, "凭证的结束时间不能为空");
             this.expiredTime = expiredTime;
             return this;
         }
@@ -57,32 +59,20 @@ public record CredentialDuration(
             LocalDateTime activityStart = activityDuration.startTime();
             LocalDateTime activityEnd = activityDuration.endTime();
 
-            // 情况1：活动无时间限制，凭证时间只要自身合理即可
-            if (Objects.isNull(activityStart) && Objects.isNull(activityEnd)) {
-                ParameterUtil.requireExpression(!DurationUtil.validDuration(startTime, expiredTime), "活动无时间限制，凭证的结束时间不能小于开始时间");
-                return;
+            // 凭证的开始时间应该大于等于活动的开始时间
+            if (activityStart.isAfter(startTime)) {
+                throw new IllegalArgumentException("凭证的开始时间不能早于活动的开始时间");
             }
 
-            // 情况2：活动只有开始时间，凭证需在其后开始
-            if (Objects.isNull(activityEnd)) {
-                ParameterUtil.requireNonNull(startTime, "活动具备开始时间，凭证的startTime不能为null");
-                ParameterUtil.requireExpression(startTime.isBefore(activityStart), "凭证的开始时间不能早于活动的开始时间");
-                return;
+            // 凭证的结束时间应该小于等于活动的结束时间
+            if (activityEnd.isBefore(expiredTime)) {
+                throw new IllegalArgumentException("凭证的结束时间不能晚于活动的结束时间");
             }
 
-            // 情况3：活动只有结束时间，凭证需在其前结束
-            if (Objects.isNull(activityStart)) {
-                ParameterUtil.requireNonNull(expiredTime, "活动具备结束时间，凭证的expiredTime不能为null");
-                ParameterUtil.requireExpression(expiredTime.isAfter(activityEnd), "凭证的结束时间不能晚于活动的结束时间");
-                return;
+            // 凭证的开始时间应该小于等于凭证的结束时间
+            if (startTime.isAfter(expiredTime)) {
+                throw new IllegalArgumentException("凭证的结束时间不能早于开始时间");
             }
-
-            // 情况4：活动有明确的时间范围，凭证需在其范围内
-            ParameterUtil.requireNonNull(startTime, "活动具备开始时间，凭证的startTime不能为null");
-            ParameterUtil.requireNonNull(expiredTime, "活动具备结束时间，凭证的expiredTime不能为null");
-
-            ParameterUtil.requireExpression(startTime.isBefore(activityStart), "凭证的开始时间不能早于活动的开始时间");
-            ParameterUtil.requireExpression(expiredTime.isAfter(activityEnd), "凭证的结束时间不能晚于活动的结束时间");
         }
     }
 

@@ -26,23 +26,26 @@ public class TaskDuration {
 
     public static class Builder {
 
+
         private final ActivityDuration activityDuration;
 
         private LocalDateTime startTime;
 
         private LocalDateTime expiredTime;
 
+
         public Builder(ActivityDuration activityDuration) {
-            ParameterUtil.requireNonNull(activityDuration, "ActivityDuration不能为null");
             this.activityDuration = activityDuration;
         }
 
         public Builder startTime(LocalDateTime startTime) {
+            ParameterUtil.requireNonNull(startTime, "任务的开始时间不能为空");
             this.startTime = startTime;
             return this;
         }
 
         public Builder expiredTime(LocalDateTime expiredTime) {
+            ParameterUtil.requireNonNull(expiredTime, "任务的结束时间不能为空");
             this.expiredTime = expiredTime;
             return this;
         }
@@ -52,49 +55,33 @@ public class TaskDuration {
             return new TaskDuration(startTime, expiredTime);
         }
 
+
         private void validateWithActivityDuration(ActivityDuration activityDuration,
                                                   LocalDateTime startTime,
                                                   LocalDateTime expiredTime
         ) {
+            // 凭证的开始时间应该小于等于凭证的结束时间
+            if (startTime.isAfter(expiredTime)) {
+                throw new IllegalArgumentException("任务的结束时间不能早于开始时间");
+            }
+
+            if (Objects.isNull(activityDuration)){
+                return;
+            }
+
             LocalDateTime activityStart = activityDuration.startTime();
             LocalDateTime activityEnd = activityDuration.endTime();
 
-            // 情况1：活动无时间限制，任务时间只要自身合理即可
-            if (Objects.isNull(activityStart) && Objects.isNull(activityEnd)) {
-                ParameterUtil.requireExpression(!DurationUtil.validDuration(startTime, expiredTime), "活动无时间限制，任务的结束时间不能小于开始时间");
-                return;
-            }
-
-            // 情况2：活动只有开始时间，任务需在其后开始
-            if (Objects.isNull(activityEnd)) {
-                ParameterUtil.requireNonNull(startTime, "活动具备开始时间，任务的startTime不能为null");
-                if (startTime.isBefore(activityStart)) {
-                    throw new IllegalArgumentException("任务的开始时间不能早于活动的开始时间");
-                }
-                return;
-            }
-
-            // 情况3：活动只有结束时间，任务需在其前结束
-            if (Objects.isNull(activityStart)) {
-                ParameterUtil.requireNonNull(expiredTime, "活动具备结束时间，任务的expiredTime不能为null");
-                if (expiredTime.isAfter(activityEnd)) {
-                    throw new IllegalArgumentException("任务的结束时间不能晚于活动的结束时间");
-                }
-                return;
-            }
-
-            // 情况4：活动有明确的时间范围，任务需在其范围内
-            ParameterUtil.requireNonNull(startTime, "活动具备开始时间，任务的startTime不能为null");
-            ParameterUtil.requireNonNull(expiredTime, "活动具备结束时间，任务的expiredTime不能为null");
-
-            if (!startTime.equals(activityStart) && !startTime.isBefore(activityStart)) {
+            // 凭证的开始时间应该大于等于活动的开始时间
+            if (activityStart.isAfter(startTime)) {
                 throw new IllegalArgumentException("任务的开始时间不能早于活动的开始时间");
             }
-            if (!expiredTime.equals(activityEnd) && !expiredTime.isAfter(activityEnd)) {
+
+            // 凭证的结束时间应该小于等于活动的结束时间
+            if (activityEnd.isBefore(expiredTime)) {
                 throw new IllegalArgumentException("任务的结束时间不能晚于活动的结束时间");
             }
-            ParameterUtil.requireExpression(!DurationUtil.validDuration(startTime, expiredTime), "任务的结束时间不能小于开始时间");
-        }
 
+        }
     }
 }
