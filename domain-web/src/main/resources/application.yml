@@ -1,3 +1,6 @@
+server:
+  port: 8082
+
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -16,6 +19,17 @@ spring:
   data:
     jdbc:
       dialect: postgresql
+
+rocketmq:
+  producer:
+    group: ddd-marketing-producer-group
+    send-message-timeout: 3000
+  name-server: 127.0.0.1:9876
+
+outbox:
+  draw-award-received:
+    topic: drawAwardReceived
+    max-retry-count: 5
 
 logging:
   level:
