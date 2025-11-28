@@ -2,6 +2,7 @@ package xyz.wochib70.domain.draw.strategy;
 
 import xyz.wochib70.domain.IdentifierId;
 import xyz.wochib70.domain.UserId;
+import xyz.wochib70.domain.draw.DrawAward;
 import xyz.wochib70.domain.draw.DrawItem;
 import xyz.wochib70.domain.draw.DrawStrategy;
 import xyz.wochib70.domain.draw.InsufficientInventoryException;
@@ -15,7 +16,7 @@ public class RandomDrawStrategy implements DrawStrategy {
     public static final SecureRandom RANDOM = new SecureRandom();
 
     @Override
-    public IdentifierId<Long> draw(Set<DrawItem> drawItems, UserId userId) {
+    public DrawAward draw(Set<DrawItem> drawItems, UserId userId) {
 //        int allWeight = drawItems.stream()
 //                .filter(DrawItem::validateInventory)
 //                .map(DrawItem::getWeight)

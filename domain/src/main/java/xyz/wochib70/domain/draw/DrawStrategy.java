@@ -9,5 +9,5 @@ import java.util.Set;
 public interface DrawStrategy {
 
 
-    IdentifierId<Long> draw(Set<DrawItem> drawItem, UserId userId);
+    DrawAward draw(Set<DrawItem> drawItem, UserId userId);
 }

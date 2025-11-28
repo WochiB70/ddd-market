@@ -41,17 +41,18 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
     @Override
     public Reward draw(UserId userId) {
         ParameterUtil.requireNonNull(userId, "用户id不能为null");
-        IdentifierId<Long> awardId = switch (strategyType) {
+        DrawAward drawAward = switch (strategyType) {
             case RANDOM -> new RandomDrawStrategy().draw(drawItems, userId);
         };
         publishEvent(new AwardReceivedEvent(
                 getDrawPoolId(),
                 getActivityId(),
-                awardId,
+                drawAward.awardId(),
+                drawAward.awardType(),
                 userId,
                 1
         ));
-        return new Reward(awardId, 1);
+        return new Reward(drawAward.awardId(), 1);
     }
 
     @Override
@@ -83,7 +84,7 @@ public non-sealed class DrawPoolImpl extends AbstractAggregate<Long> implements 
     @Override
     public void modifyDrawPrice(DrawPrice drawPrice) {
         ParameterUtil.requireNonNull(drawPrice, "抽奖价格不能为null");
-        if (!Objects.equals(this.drawPrice, drawPrice)){
+        if (!Objects.equals(this.drawPrice, drawPrice)) {
             this.drawPrice = drawPrice;
             publishEvent(new DrawPoolPriceModifiedEvent(
                     getDrawPoolId(),
